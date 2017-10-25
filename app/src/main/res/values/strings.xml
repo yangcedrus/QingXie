@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">掌上青协</string>
+    <string name="title_home">Home</string>
+    <string name="title_me">Me</string>
+    <string name="title_message">Message</string>
+    <string name="title_favourite">Favourite</string>
+</resources>

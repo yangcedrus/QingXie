@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="whut.qingxie.activity.PSWActivity">
+
+    <EditText
+        android:id="@+id/edit_accent"
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="用户"
+        tools:layout_editor_absoluteX="104dp"
+        tools:layout_editor_absoluteY="260dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/edit_psw"
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="密码"
+        tools:layout_editor_absoluteX="104dp"
+        tools:layout_editor_absoluteY="309dp"
+        android:layout_below="@+id/edit_accent"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/edit_psw"
+        android:layout_below="@+id/edit_psw"
+        app:srcCompat="@drawable/ic_dashboard_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/edit_psw"
+        android:layout_below="@+id/edit_psw"
+        app:srcCompat="@drawable/ic_dashboard_black_24dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_above="@+id/edit_accent"
+        android:layout_alignStart="@+id/edit_accent"
+        android:layout_marginBottom="24dp"
+        app:srcCompat="@drawable/ic_home_black_24dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/imageView"
+        android:text="TextView"
+        android:gravity="center_vertical"
+        android:layout_alignEnd="@+id/edit_accent"
+        android:layout_toEndOf="@+id/imageView" />
+
+
+</RelativeLayout>
