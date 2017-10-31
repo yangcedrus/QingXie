@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import whut.qingxie.R;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(requestCode){
             case 1:
-                state=data.getIntExtra("data_return",1);
+                state=data.getIntExtra("data_return",0);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -59,43 +60,36 @@ public class MainActivity extends AppCompatActivity {
                         FragmentTransaction transaction = manager.beginTransaction();
 
                         //在切换之前判断是否已经登录
-                        switch(item.getItemId()) {
-                            case R.id.navigation_home:
-                                if (mHomeFragment == null) {
-                                    mHomeFragment = new HomeFragment();
-                                }
-                                transaction.replace(R.id.content, mHomeFragment);
-                                break;
-                            case R.id.navigation_me:
-                                if (mMeFragment == null && mMessageFragment == null && mFavouriteFragment == null) {
-                                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                                    startActivityForResult(intent, 1);
-                                    mMeFragment = new MeFragment();
-                                } else if (mMeFragment == null) {
-                                    mMeFragment = new MeFragment();
-                                }
-                                transaction.replace(R.id.content, mMeFragment);
-                                break;
-                            case R.id.navigation_message:
-                                if (mMeFragment == null && mMessageFragment == null && mFavouriteFragment == null) {
-                                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                                    startActivityForResult(intent, 1);
-                                    mMessageFragment = new MessageFragment();
-                                }else if(mMessageFragment==null){
-                                    mMessageFragment=new MessageFragment();
-                                }
-                                transaction.replace(R.id.content, mMessageFragment);
-                                break;
-                            case R.id.navigation_favourite:
-                                if (mMeFragment == null && mMessageFragment == null && mFavouriteFragment == null) {
-                                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                                    startActivityForResult(intent, 1);
-                                    mFavouriteFragment = new FavouriteFragment();
-                                }else if(mFavouriteFragment==null){
-                                    mFavouriteFragment=new FavouriteFragment();
-                                }
-                                transaction.replace(R.id.content, mFavouriteFragment);
-                                break;
+                        if(state==0&&item.getItemId()!=R.id.navigation_home){
+                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivityForResult(intent, 1);
+                        }else{
+                            switch(item.getItemId()){
+                                case R.id.navigation_home:
+                                    if (mHomeFragment == null) {
+                                        mHomeFragment = new HomeFragment();
+                                    }
+                                    transaction.replace(R.id.content, mHomeFragment);
+                                    break;
+                                case R.id.navigation_me:
+                                    if (mMeFragment == null) {
+                                        mMeFragment = new MeFragment();
+                                    }
+                                    transaction.replace(R.id.content, mMeFragment);
+                                    break;
+                                case R.id.navigation_message:
+                                    if(mMessageFragment==null){
+                                        mMessageFragment=new MessageFragment();
+                                    }
+                                    transaction.replace(R.id.content, mMessageFragment);
+                                    break;
+                                case R.id.navigation_favourite:
+                                    if(mFavouriteFragment==null){
+                                        mFavouriteFragment=new FavouriteFragment();
+                                    }
+                                    transaction.replace(R.id.content, mFavouriteFragment);
+                                    break;
+                            }
                         }
                         //在登录之前不更新Fragment
                         if(state==0){
@@ -116,6 +110,24 @@ public class MainActivity extends AppCompatActivity {
         mHomeFragment = new HomeFragment();
         transaction.replace(R.id.content,mHomeFragment);
         transaction.commit();
+    }
+
+    //显示“系统”菜单按钮
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar,menu);
+        return true;
+    }
+
+    //设置“系统”菜单按钮响应
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.settings:
+                Intent intent = new Intent(MainActivity.this, SystemSeetingsActivity.class);
+                startActivity(intent);
+        }
+        return true;
     }
 
 }

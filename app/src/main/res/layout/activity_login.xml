@@ -6,22 +6,19 @@
     android:layout_height="match_parent"
     tools:context="whut.qingxie.activity.LoginActivity">
 
-    <ImageButton
-        android:id="@+id/Helps"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        app:srcCompat="@android:drawable/ic_menu_help"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_login"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:layout_alignParentStart="true">
 
-    <ImageButton
-        android:id="@+id/Back_Home"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        app:srcCompat="@drawable/ic_home_black_24dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20sp" />
+    </android.support.v7.widget.Toolbar>
 
     <Button
         android:id="@+id/Login_Button"
@@ -29,5 +26,5 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="Button" />
+        android:text="请先登录" />
 </RelativeLayout>

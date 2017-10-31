@@ -31,7 +31,7 @@
         android:layout_centerHorizontal="true" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/Login_OK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/edit_psw"
@@ -39,7 +39,7 @@
         app:srcCompat="@drawable/ic_dashboard_black_24dp" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/Login_Cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/edit_psw"
@@ -56,7 +56,7 @@
         app:srcCompat="@drawable/ic_home_black_24dp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/psw_textView"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_alignBottom="@+id/imageView"
