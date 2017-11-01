@@ -1,10 +1,8 @@
 package whut.qingxie.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,22 +14,6 @@ import whut.qingxie.R;
 public class LoginActivity extends AppCompatActivity {
     //储存登录信息
     private int state=0;
-
-    //返回登录者身份信息
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch(requestCode){
-            case 2:
-                state=data.getIntExtra("data_return",0);
-        }
-        if(state==1) {
-            Intent intent=new Intent();
-            intent.putExtra("data_return",state);
-            setResult(RESULT_OK,intent);
-            finish();
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,26 +30,28 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        final String items[]={"学生","青协工作者","管理员"};
-        //dialog参数设置
-        final AlertDialog.Builder builder=new AlertDialog.Builder(this);  //先得到构造器
-        builder.setIcon(R.mipmap.ic_launcher);//设置图标，图片id即可
-        builder.setItems(items,new DialogInterface.OnClickListener() {
+        Button button_login=(Button)findViewById(R.id.Login_login);
+        button_login.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                Intent intent= new Intent(LoginActivity.this,PSWActivity.class);
-                intent.putExtra("extra_info",items[which]);
-                startActivityForResult(intent,2);
+            public void onClick(View v) {
+                //返回信息给上个活动
+                state=1;
+                Intent intent=new Intent();
+                intent.putExtra("data_return",state);
+                setResult(RESULT_OK,intent);
+                finish();
             }
         });
 
-        //登录按钮点击事件响应
-        Button loginButton=(Button)findViewById(R.id.Login_Button);
-        loginButton.setOnClickListener(new View.OnClickListener(){
+        Button button_signup=(Button)findViewById(R.id.Login_signup);
+        button_signup.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                builder.create().show();
+                state=0;
+                Intent intent=new Intent();
+                intent.putExtra("data_return",state);
+                setResult(RESULT_OK,intent);
+                finish();
             }
         });
     }

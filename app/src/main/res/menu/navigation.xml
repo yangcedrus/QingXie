@@ -12,11 +12,6 @@
         android:title="@string/title_me" />
 
     <item
-        android:id="@+id/navigation_message"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_message" />
-
-    <item
         android:id="@+id/navigation_favourite"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_favourite"/>

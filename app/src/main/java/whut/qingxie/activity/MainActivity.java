@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private HomeFragment mHomeFragment;
     private MeFragment mMeFragment;
     private FavouriteFragment mFavouriteFragment;
-    private MessageFragment mMessageFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,12 +75,6 @@ public class MainActivity extends AppCompatActivity {
                                         mMeFragment = new MeFragment();
                                     }
                                     transaction.replace(R.id.content, mMeFragment);
-                                    break;
-                                case R.id.navigation_message:
-                                    if(mMessageFragment==null){
-                                        mMessageFragment=new MessageFragment();
-                                    }
-                                    transaction.replace(R.id.content, mMessageFragment);
                                     break;
                                 case R.id.navigation_favourite:
                                     if(mFavouriteFragment==null){

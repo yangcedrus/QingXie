@@ -32,6 +32,8 @@ public class MeFragment extends Fragment {
     }
 
     private void initItems(){
+        if(myItemList.size()!=0)
+            return;
         myItemList.add(new MyItem("查看我的简历"));
         myItemList.add(new MyItem("我的志愿活动"));
         myItemList.add(new MyItem("我的志愿工时"));
