@@ -25,18 +25,31 @@
     </android.support.v7.widget.Toolbar>
 
     <ListView
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp"/>
 
     <ListView
-        android:layout_weight="3"
         android:id="@+id/system_list_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"/>
+        android:layout_height="0dp"
+        android:layout_weight="6" />
 
     <ListView
         android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="注销"
+        android:background="?android:attr/selectableItemBackground"/>
+
+    <ListView
+        android:layout_weight="4"
         android:layout_width="match_parent"
         android:layout_height="0dp"/>
 

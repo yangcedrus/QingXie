@@ -1,17 +1,41 @@
 package whut.qingxie.fragment;
 
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import whut.qingxie.R;
+import whut.qingxie.bean.FavouriteItem;
+import whut.qingxie.adapter.FavouriteItemAdapter;
 
 public class FavouriteFragment extends Fragment {
+
+    private List<FavouriteItem> favouriteItems=new ArrayList<>();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_favouritefragment,container,false);
+        if(favouriteItems==null)
+            initItem();
+        FavouriteItemAdapter adapter=new FavouriteItemAdapter(getActivity(),R.layout.favourite_item,favouriteItems);
+        View view = inflater.inflate(R.layout.activity_favouritefragment, container, false);
+        ListView listView=(ListView)view.findViewById(R.id.favourite_listview);
+        listView.setAdapter(adapter);
+
+        return view;
+    }
+
+    public void initItem(){
+        favouriteItems.add(new FavouriteItem("张三","详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情"));
+        favouriteItems.add(new FavouriteItem("张三","详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情"));
+        favouriteItems.add(new FavouriteItem("张三","详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情"));
+        favouriteItems.add(new FavouriteItem("张三","详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情"));
+        favouriteItems.add(new FavouriteItem("张三","详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情"));
+        favouriteItems.add(new FavouriteItem("张三","详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情"));
     }
 }

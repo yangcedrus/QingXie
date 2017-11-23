@@ -5,11 +5,11 @@ import android.os.Bundle;
 
 import whut.qingxie.R;
 
-public class FeedbackActivity extends AppCompatActivity {
+public class HelpInfoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_feedback);
+        setContentView(R.layout.activity_help_info);
     }
 }

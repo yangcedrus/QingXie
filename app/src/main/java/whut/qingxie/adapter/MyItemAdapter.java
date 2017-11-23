@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import whut.qingxie.R;
+import whut.qingxie.bean.MyItem;
 
 public class MyItemAdapter extends ArrayAdapter {
     private int resourceId;

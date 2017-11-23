@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent;
         switch(item.getItemId()) {
             case R.id.settings:
-                intent = new Intent(LoginActivity.this, FeedbackActivity.class);
+                intent = new Intent(LoginActivity.this, HelpInfoActivity.class);
                 startActivity(intent);
                 break;
             case android.R.id.home:

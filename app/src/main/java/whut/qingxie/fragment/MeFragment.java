@@ -1,44 +1,84 @@
 package whut.qingxie.fragment;
 
+import android.content.ClipData;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.widget.LinearLayout;
 
 import whut.qingxie.R;
-import whut.qingxie.adapter.MyItem;
-import whut.qingxie.adapter.MyItemAdapter;
+import whut.qingxie.activity.MyHoursActivity;
+import whut.qingxie.activity.MyMessageActivity;
+import whut.qingxie.activity.MyResumeActivity;
+import whut.qingxie.activity.MyServiceActivity;
+import whut.qingxie.bean.MyMessageItem;
 
 public class MeFragment extends Fragment {
 
-    private List<MyItem> myItemList=new ArrayList<>();
+    private LinearLayout layout1;
+    private LinearLayout layout2;
+    private LinearLayout layout3;
+    private LinearLayout layout4;
+    private LinearLayout layout5;
 
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        //创建ListView
-        initItems();
-        MyItemAdapter adapter=new MyItemAdapter(getActivity(), R.layout.my_item,myItemList);
-        View view = inflater.inflate(R.layout.activity_mefragment, container, false);
-        ListView listView=(ListView) view.findViewById(R.id.me_list_view);
-        listView.setAdapter(adapter);
-
-        return view;
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.activity_mefragment,container,false);
     }
 
-    private void initItems(){
-        if(myItemList.size()!=0)
-            return;
-        myItemList.add(new MyItem("查看我的简历"));
-        myItemList.add(new MyItem("我的志愿活动"));
-        myItemList.add(new MyItem("我的志愿工时"));
-        myItemList.add(new MyItem("设置个人信息"));
+    //添加监听注册
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        layout1=(LinearLayout)getActivity().findViewById(R.id.me_layout1);
+        layout2=(LinearLayout)getActivity().findViewById(R.id.me_layout2);
+        layout3=(LinearLayout)getActivity().findViewById(R.id.me_layout3);
+        layout4=(LinearLayout)getActivity().findViewById(R.id.me_layout4);
+        layout5=(LinearLayout)getActivity().findViewById(R.id.me_layout5);
+
+        layout1.setOnClickListener(new MyListener());
+        layout2.setOnClickListener(new MyListener());
+        layout3.setOnClickListener(new MyListener());
+        layout4.setOnClickListener(new MyListener());
+        layout5.setOnClickListener(new MyListener());
+    }
+
+    //新建监听类
+    class MyListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Intent intent;
+            switch (v.getId()) {
+                case R.id.me_layout1:
+                    intent=new Intent(getActivity(), MyResumeActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.me_layout2:
+                    intent=new Intent(getActivity(), MyMessageActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.me_layout3:
+                    intent=new Intent(getActivity(), MyServiceActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.me_layout4:
+                    intent=new Intent(getActivity(), MyHoursActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.me_layout5:
+                    break;
+
+            }
+        }
 
     }
+
 }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -19,77 +19,68 @@
     </android.support.v7.widget.Toolbar>
 
     <TextView
-        android:id="@+id/sign_info"
+        android:id="@+id/signup_info"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:text="报名信息"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar_signup"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:text="武汉理工大学管理学院"
+        android:textSize="15dp"/>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="2">
+    <Button
+        android:id="@+id/signip_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_above="@+id/signup_chat"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/shape_blue"
+        android:text="点此快速报名" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:baselineAligned="false">
+    <Button
+        android:id="@+id/signup_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/shape_white"
+        android:text="报名后点此加入群聊" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:layout_weight="1">
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/signip_confirm"
+        android:layout_marginBottom="23dp"
+        android:layout_toStartOf="@+id/signup_chat"
+        android:text="已报名：" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="需要人数:"
-                    android:textSize="18sp"/>
-                <TextView
-                    android:id="@+id/people_need"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/textView_people_have"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView"
+        android:layout_toEndOf="@+id/textView"
+        android:text="TextView" />
 
-            </LinearLayout>
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView_people_have"
+        android:layout_alignBottom="@+id/textView_people_have"
+        android:layout_alignEnd="@+id/signup_chat"
+        android:text="共需要：" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_horizontal">
+    <TextView
+        android:id="@+id/textView_people_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView3"
+        android:layout_toEndOf="@+id/textView3"
+        android:text="TextView" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="报名人数:"
-                    android:textSize="18sp"/>
-
-                <TextView
-                    android:id="@+id/people_have"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/sign_up"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="点此快速报名"
-            android:layout_gravity="center"/>
-
-        <Button
-            android:id="@+id/join_chat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="报名后点此加入群聊"
-            android:layout_gravity="center"/>
-
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

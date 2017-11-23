@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import whut.qingxie.R;
-import whut.qingxie.adapter.MyItem;
+import whut.qingxie.bean.MyItem;
 import whut.qingxie.adapter.MyItemAdapter;
 
 public class SystemSeetingsActivity extends AppCompatActivity {
@@ -23,7 +23,8 @@ public class SystemSeetingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_systemseetings);
 
         //创建ListView
-        initItems();
+        if(myItemList==null)
+            initItems();
         MyItemAdapter adapter=new MyItemAdapter(SystemSeetingsActivity.this,
                 R.layout.my_item,myItemList);
         ListView listView=(ListView)findViewById(R.id.system_list_view);

@@ -27,7 +27,9 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="请输入账号"
-        android:gravity="center" />
+        android:drawableLeft="@drawable/ic_home_black_24dp"
+        android:drawablePadding="0dp"
+        android:singleLine="true"/>
 
     <EditText
         android:id="@+id/text_psw"
@@ -36,9 +38,11 @@
         android:layout_alignStart="@+id/text_name"
         android:layout_below="@+id/text_name"
         android:ems="10"
-        android:gravity="center"
         android:hint="请输入密码"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:drawableLeft="@drawable/ic_home_black_24dp"
+        android:drawablePadding="0dp"
+        android:singleLine="true"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -49,19 +53,19 @@
         android:textSize="20dp"/>
 
     <Button
-        android:layout_width="100dp"
+        android:id="@+id/Login_login"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_below="@+id/text_psw"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="44dp"
         android:background="@drawable/shape_blue"
         android:gravity="center"
-        android:text="登录"
-        android:id="@+id/Login_login" />
+        android:text="登录" />
 
     <Button
         android:id="@+id/Login_signup"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_below="@+id/Login_login"
         android:layout_centerHorizontal="true"

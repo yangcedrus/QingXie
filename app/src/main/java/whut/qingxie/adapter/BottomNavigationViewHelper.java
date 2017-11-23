@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
 
 /*
  * 取消NavigationView中的位移动画
- * 在MainActivity中调用
+ * 若有需要在MainActivity中调用
  */
 
 public class BottomNavigationViewHelper {

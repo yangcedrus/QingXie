@@ -34,7 +34,7 @@ public class SignUpActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.settings:
-                Intent intent = new Intent(SignUpActivity.this, FeedbackActivity.class);
+                Intent intent = new Intent(SignUpActivity.this, HelpInfoActivity.class);
                 startActivity(intent);
         }
         return true;

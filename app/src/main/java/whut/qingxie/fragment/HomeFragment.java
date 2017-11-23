@@ -17,8 +17,7 @@ public class HomeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: 2017/9/20
-        //新建类以及适配器，显示帖子
+        // TODO: 2017/9/20 新建类以及适配器，显示帖子
         return inflater.inflate(R.layout.activity_homefragment,container,false);
     }
 
