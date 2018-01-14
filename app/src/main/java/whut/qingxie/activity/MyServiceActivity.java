@@ -16,7 +16,7 @@ import whut.qingxie.adapter.ServiceItemAdapter;
 public class MyServiceActivity extends AppCompatActivity {
 
     private List<ServiceItem> serviceItemList=new ArrayList<>();
-    static int num=1;
+    static int num=1;   //自增长编号
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class MyServiceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_service);
 
         //创建ListView
-        if(serviceItemList==null)
+        if(serviceItemList.size()==0)
             initItems();
         ServiceItemAdapter adapter=new ServiceItemAdapter(MyServiceActivity.this,
                 R.layout.vol_service,serviceItemList);

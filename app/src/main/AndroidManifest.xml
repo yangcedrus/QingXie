@@ -26,7 +26,14 @@
         <activity android:name=".activity.MyServiceActivity" />
         <activity android:name=".activity.MyResumeActivity" />
         <activity android:name=".activity.MyMessageActivity" />
-        <activity android:name=".activity.MyInfoActivity"></activity>
+        <activity android:name=".activity.MyInfoActivity" />
+        <activity android:name=".activity.ReleaseWorkActivity" />
+        <activity android:name=".activity.ReleaseTweetActivity" />
+        <activity android:name=".activity.ManageWorkTimeActivity" />
+        <activity android:name=".activity.ManageWorkAvtivity" />
+        <activity android:name=".fragment.OperationHistoryFragment" />
+        <activity android:name=".fragment.AdministratorFragment" />
+        <activity android:name=".activity.ReleaseNoticeActivity"></activity>
     </application>
 
 </manifest>

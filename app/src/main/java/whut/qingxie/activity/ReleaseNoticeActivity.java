@@ -7,14 +7,15 @@ import android.view.MenuItem;
 
 import whut.qingxie.R;
 
-public class HelpInfoActivity extends AppCompatActivity {
+public class ReleaseNoticeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_help_info);
+        setContentView(R.layout.activity_release_notice);
+
         //显示返回按钮
-        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar_help);
+        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar_release_notice);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -24,10 +25,8 @@ public class HelpInfoActivity extends AppCompatActivity {
     //返回按钮响应
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==android.R.id.home){
+        if(item.getItemId()==android.R.id.home)
             finish();
-        }
         return super.onOptionsItemSelected(item);
     }
-
 }

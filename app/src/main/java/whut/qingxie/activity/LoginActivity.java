@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import whut.qingxie.R;
 
@@ -35,7 +36,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //返回信息给上个活动
-                state=1;
+                // TODO: 2018/1/9 读取数据库信息
+                TextView textView=(TextView)findViewById(R.id.text_name);
+                String s=textView.getText().toString();
+                if(!s.equals(""))
+                    state=Integer.parseInt(s);
+
                 Intent intent=new Intent();
                 intent.putExtra("data_return",state);
                 setResult(RESULT_OK,intent);

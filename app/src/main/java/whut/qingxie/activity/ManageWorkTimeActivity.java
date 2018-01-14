@@ -7,14 +7,15 @@ import android.view.MenuItem;
 
 import whut.qingxie.R;
 
-public class HelpInfoActivity extends AppCompatActivity {
+public class ManageWorkTimeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_help_info);
+        setContentView(R.layout.activity_manage_work_time);
+
         //显示返回按钮
-        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar_help);
+        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar_manage_work_time);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -29,5 +30,4 @@ public class HelpInfoActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

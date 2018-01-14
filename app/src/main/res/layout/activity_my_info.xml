@@ -24,7 +24,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="4dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -58,20 +58,108 @@
             android:layout_height="wrap_content"
             android:text="基本信息"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="0dp"/>
 
         <ListView
-            android:layout_width="match_parent"
+            android:id="@+id/info_listview"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@id/info_text1"/>
+            android:layout_below="@id/info_text1"
+            android:layout_marginTop="15dp"
+            android:divider="#00000000" />
 
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/info_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="其他信息"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="0dp"/>
+
+        <LinearLayout
+            android:id="@+id/my_info_layout1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_below="@id/info_text2"
+            android:layout_marginTop="15dp"
+            android:background="?android:attr/selectableItemBackground">
+
+            <TextView
+                android:id="@+id/my_info_text1_1"
+                android:layout_weight="8"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:text="手机"/>
+
+            <TextView
+                android:id="@+id/my_info_text1_2"
+                android:layout_weight="8"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="right"
+                android:layout_marginRight="20dp"/>
+
+            <ImageView
+                android:id="@+id/my_info_image_1"
+                android:layout_weight="1"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_dashboard_black_24dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/my_info_layout2"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_below="@id/my_info_layout1"
+            android:background="?android:attr/selectableItemBackground">
+
+            <TextView
+                android:id="@+id/my_info_text2_1"
+                android:layout_weight="8"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:text="邮箱"/>
+
+            <TextView
+                android:id="@+id/my_info_text2_2"
+                android:layout_weight="8"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="right"
+                android:layout_marginRight="20dp"/>
+
+            <ImageView
+                android:id="@+id/my_info_image_2"
+                android:layout_weight="1"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/ic_dashboard_black_24dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>

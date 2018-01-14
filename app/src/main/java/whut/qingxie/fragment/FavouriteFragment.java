@@ -20,7 +20,7 @@ public class FavouriteFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if(favouriteItems==null)
+        if(favouriteItems.size()==0)
             initItem();
         FavouriteItemAdapter adapter=new FavouriteItemAdapter(getActivity(),R.layout.favourite_item,favouriteItems);
         View view = inflater.inflate(R.layout.activity_favouritefragment, container, false);

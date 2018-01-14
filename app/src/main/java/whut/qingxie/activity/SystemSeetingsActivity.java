@@ -23,7 +23,7 @@ public class SystemSeetingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_systemseetings);
 
         //创建ListView
-        if(myItemList==null)
+        if(myItemList.size()==0)
             initItems();
         MyItemAdapter adapter=new MyItemAdapter(SystemSeetingsActivity.this,
                 R.layout.my_item,myItemList);

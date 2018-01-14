@@ -18,7 +18,7 @@ import whut.qingxie.fragment.*;
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
-    private int state=0;
+    private int state=0;    //0为未登录，1为学生，2为工作人员，3为管理员
 
     //返回登录者身份信息
     @Override
@@ -33,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
     private HomeFragment mHomeFragment;
     private MeFragment mMeFragment;
     private FavouriteFragment mFavouriteFragment;
+    private WorkerMeFragment mWorkerMeFragment;
+    private WorkerWorkFragment mWorkerWorkFragment;
+    private OperationHistoryFragment mOperationHistoryFragment;
+    private AdministratorFragment mAdministratorFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,16 +75,54 @@ public class MainActivity extends AppCompatActivity {
                                     transaction.replace(R.id.content, mHomeFragment);
                                     break;
                                 case R.id.navigation_me:
-                                    if (mMeFragment == null) {
-                                        mMeFragment = new MeFragment();
+                                    //判断登陆状态
+                                    switch(state) {
+                                        case 1:
+                                            if (mMeFragment == null) {
+                                                mMeFragment = new MeFragment();
+                                            }
+                                            transaction.replace(R.id.content, mMeFragment);
+                                            break;
+                                        case 2:
+                                            if (mWorkerMeFragment == null) {
+                                                mWorkerMeFragment = new WorkerMeFragment();
+                                            }
+                                            // TODO: 2018/1/13 更改图标
+                                            transaction.replace(R.id.content, mWorkerMeFragment);
+                                            break;
+                                        case 3:
+                                            if (mOperationHistoryFragment == null) {
+                                                mOperationHistoryFragment = new OperationHistoryFragment();
+                                            }
+                                            // TODO: 2018/1/13 更改图标
+                                            transaction.replace(R.id.content, mOperationHistoryFragment);
+                                            break;
                                     }
-                                    transaction.replace(R.id.content, mMeFragment);
                                     break;
                                 case R.id.navigation_favourite:
-                                    if(mFavouriteFragment==null){
-                                        mFavouriteFragment=new FavouriteFragment();
+                                    //判断登陆状态
+                                    switch(state) {
+                                        case 1:
+                                            if (mFavouriteFragment == null) {
+                                                mFavouriteFragment = new FavouriteFragment();
+                                            }
+                                            transaction.replace(R.id.content, mFavouriteFragment);
+                                            break;
+                                        case 2:
+                                            if (mWorkerWorkFragment == null) {
+                                                mWorkerWorkFragment = new WorkerWorkFragment();
+                                            }
+                                            // TODO: 2018/1/13 更改图标
+                                            transaction.replace(R.id.content, mWorkerWorkFragment);
+                                            break;
+                                        case 3:
+                                            if (mAdministratorFragment == null) {
+                                                mAdministratorFragment = new AdministratorFragment();
+                                            }
+                                            // TODO: 2018/1/13 更改图标
+                                            transaction.replace(R.id.content, mAdministratorFragment);
+                                            break;
                                     }
-                                    transaction.replace(R.id.content, mFavouriteFragment);
                                     break;
                             }
                         }
