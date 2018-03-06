@@ -13,8 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import whut.qingxie.R;
-import whut.qingxie.bean.MyInfoItem;
-import whut.qingxie.bean.ReleaseWorkItem;
+import whut.qingxie.Item.ReleaseWorkItem;
 
 public class ReleaseWorkItemAdapter extends ArrayAdapter {
     private int resourceId;

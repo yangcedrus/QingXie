@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="whut.qingxie.activity.SystemSeetingsActivity"
+    tools:context="whut.qingxie.activity.SystemSettingsActivity"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -23,7 +23,7 @@
             android:text="系统设置" />
     </android.support.v7.widget.Toolbar>
 
-    <ListView
+    <TextView
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp"/>
@@ -34,7 +34,7 @@
         android:layout_height="0dp"
         android:layout_weight="6" />
 
-    <ListView
+    <TextView
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp"/>
@@ -47,7 +47,7 @@
         android:text="注销"
         android:background="?android:attr/selectableItemBackground"/>
 
-    <ListView
+    <TextView
         android:layout_weight="4"
         android:layout_width="match_parent"
         android:layout_height="0dp"/>

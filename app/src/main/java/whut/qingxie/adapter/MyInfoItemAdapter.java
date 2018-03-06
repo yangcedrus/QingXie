@@ -13,8 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import whut.qingxie.R;
-import whut.qingxie.bean.MyInfoItem;
-import whut.qingxie.bean.MyItem;
+import whut.qingxie.Item.MyInfoItem;
 
 public class MyInfoItemAdapter extends ArrayAdapter {
     private int resourceId;
@@ -29,10 +28,8 @@ public class MyInfoItemAdapter extends ArrayAdapter {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         MyInfoItem myInfo= (MyInfoItem) getItem(position);
         View view= LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
-        ImageView itemimage=(ImageView)view.findViewById(R.id.my_info_image);
         TextView textView1=(TextView)view.findViewById(R.id.my_info_text1);
         TextView textView2=(TextView)view.findViewById(R.id.my_info_text2);
-        itemimage.setImageResource(myInfo.getImage());
         textView1.setText(myInfo.getS1());
         textView2.setText(myInfo.getS2());
 

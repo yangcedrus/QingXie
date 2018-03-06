@@ -1,7 +1,6 @@
 package whut.qingxie.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -14,8 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import whut.qingxie.R;
-import whut.qingxie.bean.MyMessageItem;
-import whut.qingxie.bean.ServiceItem;
+import whut.qingxie.Item.MyMessageItem;
 
 public class MyMessageItemAdapter extends ArrayAdapter {
     private int resourceId;

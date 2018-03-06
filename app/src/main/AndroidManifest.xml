@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="whut.qingxie">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,7 +23,7 @@
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.SignUpActivity" />
         <activity android:name=".activity.HelpInfoActivity" />
-        <activity android:name=".activity.SystemSeetingsActivity" />
+        <activity android:name=".activity.SystemSettingsActivity" />
         <activity android:name=".activity.MyHoursActivity" />
         <activity android:name=".activity.MyServiceActivity" />
         <activity android:name=".activity.MyResumeActivity" />
@@ -31,9 +33,9 @@
         <activity android:name=".activity.ReleaseTweetActivity" />
         <activity android:name=".activity.ManageWorkTimeActivity" />
         <activity android:name=".activity.ManageWorkAvtivity" />
-        <activity android:name=".fragment.OperationHistoryFragment" />
-        <activity android:name=".fragment.AdministratorFragment" />
-        <activity android:name=".activity.ReleaseNoticeActivity"></activity>
+        <activity android:name=".activity.ReleaseNoticeActivity" />
+        <activity android:name=".activity.ManageWorkerAccountActivity" />
+        <activity android:name=".activity.ManageVolunteerActivity"></activity>
     </application>
 
 </manifest>

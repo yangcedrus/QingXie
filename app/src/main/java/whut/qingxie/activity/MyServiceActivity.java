@@ -10,13 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import whut.qingxie.R;
-import whut.qingxie.bean.ServiceItem;
+import whut.qingxie.Item.volServiceItem;
 import whut.qingxie.adapter.ServiceItemAdapter;
 
 public class MyServiceActivity extends AppCompatActivity {
 
-    private List<ServiceItem> serviceItemList=new ArrayList<>();
-    static int num=1;   //自增长编号
+    private List<volServiceItem> volServiceItemList =new ArrayList<>();
+    private int num=1;   //自增长编号
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +24,10 @@ public class MyServiceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_service);
 
         //创建ListView
-        if(serviceItemList.size()==0)
+        if(volServiceItemList.size()==0)
             initItems();
         ServiceItemAdapter adapter=new ServiceItemAdapter(MyServiceActivity.this,
-                R.layout.vol_service,serviceItemList);
+                R.layout.vol_service, volServiceItemList);
         ListView listView=(ListView)findViewById(R.id.service_listview);
         listView.setAdapter(adapter);
 
@@ -35,18 +35,19 @@ public class MyServiceActivity extends AppCompatActivity {
         Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar_myservice);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+        //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     private void initItems(){
-        serviceItemList.add(new ServiceItem("XYZ活动","2017-11-11/武汉理工大学",
+        volServiceItemList.add(new volServiceItem("XYZ活动","2017-11-11/武汉理工大学",
                 num++,"详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情",1));
-        serviceItemList.add(new ServiceItem("ABC活动","2017-11-11/武汉理工大学",
+        volServiceItemList.add(new volServiceItem("ABC活动","2017-11-11/武汉理工大学",
                 num++,"详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情",2));
-        serviceItemList.add(new ServiceItem("守卫南湖大草原活动","2017-11-11/武汉理工大学",
+        volServiceItemList.add(new volServiceItem("守卫南湖大草原活动","2017-11-11/武汉理工大学",
                 num++,"详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情",1));
-        serviceItemList.add(new ServiceItem("不知道什么活动","2017-11-11/武汉理工大学",
+        volServiceItemList.add(new volServiceItem("不知道什么活动","2017-11-11/武汉理工大学",
                 num++,"详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情",2));
     }
 

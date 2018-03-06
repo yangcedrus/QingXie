@@ -67,28 +67,28 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/ic_dashboard_black_24dp"/>
+            android:background="@drawable/ic_home_black_24dp"/>
 
         <Button
             android:id="@+id/release_tweet_button2"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/ic_dashboard_black_24dp"/>
+            android:background="@drawable/ic_home_black_24dp"/>
 
         <Button
             android:id="@+id/release_tweet_button3"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/ic_dashboard_black_24dp"/>
+            android:background="@drawable/ic_home_black_24dp"/>
 
         <Button
             android:id="@+id/release_tweet_button4"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/ic_dashboard_black_24dp"/>
+            android:background="@drawable/ic_home_black_24dp"/>
 
     </LinearLayout>
 

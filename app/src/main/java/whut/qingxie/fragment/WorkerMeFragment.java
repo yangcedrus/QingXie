@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import whut.qingxie.R;
 import whut.qingxie.activity.MyHoursActivity;
@@ -17,15 +17,15 @@ import whut.qingxie.activity.MyServiceActivity;
 
 public class WorkerMeFragment extends Fragment {
 
-    private LinearLayout layout1;
-    private LinearLayout layout2;
-    private LinearLayout layout3;
-    private LinearLayout layout4;
+    private RelativeLayout layout1;
+    private RelativeLayout layout2;
+    private RelativeLayout layout3;
+    private RelativeLayout layout4;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_worker_me_fragment,container,false);
+        return inflater.inflate(R.layout.fragment_worker_me,container,false);
     }
 
     //添加监听注册
@@ -33,10 +33,10 @@ public class WorkerMeFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        layout1=(LinearLayout)getActivity().findViewById(R.id.worker_me_layout1);
-        layout2=(LinearLayout)getActivity().findViewById(R.id.worker_me_layout2);
-        layout3=(LinearLayout)getActivity().findViewById(R.id.worker_me_layout3);
-        layout4=(LinearLayout)getActivity().findViewById(R.id.worker_me_layout4);
+        layout1=(RelativeLayout)getActivity().findViewById(R.id.worker_me_layout1);
+        layout2=(RelativeLayout)getActivity().findViewById(R.id.worker_me_layout2);
+        layout3=(RelativeLayout)getActivity().findViewById(R.id.worker_me_layout3);
+        layout4=(RelativeLayout)getActivity().findViewById(R.id.worker_me_layout4);
 
         layout1.setOnClickListener(new WorkerMeFragment.MyListener());
         layout2.setOnClickListener(new WorkerMeFragment.MyListener());

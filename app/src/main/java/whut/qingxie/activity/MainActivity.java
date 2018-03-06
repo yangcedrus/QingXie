@@ -13,20 +13,35 @@ import android.view.MenuItem;
 
 import whut.qingxie.R;
 import whut.qingxie.adapter.BottomNavigationViewHelper;
-import whut.qingxie.fragment.*;
+import whut.qingxie.fragment.AdministratorFragment;
+import whut.qingxie.fragment.FavouriteFragment;
+import whut.qingxie.fragment.HomeFragment;
+import whut.qingxie.fragment.MeFragment;
+import whut.qingxie.fragment.OperationHistoryFragment;
+import whut.qingxie.fragment.WorkerMeFragment;
+import whut.qingxie.fragment.WorkerWorkFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private BottomNavigationView bottomNavigationView;
-    private int state=0;    //0为未登录，1为学生，2为工作人员，3为管理员
+    private static final int NOLOGIN=0;     //未登录
+    private static final int STUDENT=1;     //学生
+    private static final int WORKER=2;      //工作人员
+    private static final int ADMIN=3;       //管理员
+
+    private int state=NOLOGIN;
 
     //返回登录者身份信息
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(requestCode){
             case 1:
-                state=data.getIntExtra("data_return",0);
+                state=data.getIntExtra("login_state_return",0);
         }
+        //无法重新填充布局
+        //bottomNavigationView = (BottomNavigationView)findViewById(R.id.navigation);
+        //if(state==2||state==3){
+        //    bottomNavigationView.inflateMenu(R.menu.navigation_worker);
+        //}
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -52,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         setDefaultFragment();
 
         //底部导航栏切换操作
+        BottomNavigationView bottomNavigationView;
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.navigation);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(
@@ -63,75 +79,73 @@ public class MainActivity extends AppCompatActivity {
                         FragmentTransaction transaction = manager.beginTransaction();
 
                         //在切换之前判断是否已经登录
-                        if(state==0&&item.getItemId()!=R.id.navigation_home){
+                        if(state==NOLOGIN&&item.getItemId()!=R.id.navigation_home){
                             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                             startActivityForResult(intent, 1);
                         }else{
                             switch(item.getItemId()){
                                 case R.id.navigation_home:
+                                    //点击第一个Item
                                     if (mHomeFragment == null) {
                                         mHomeFragment = new HomeFragment();
                                     }
                                     transaction.replace(R.id.content, mHomeFragment);
                                     break;
                                 case R.id.navigation_me:
+                                    //点击第二个Item
                                     //判断登陆状态
                                     switch(state) {
-                                        case 1:
+                                        case STUDENT:
                                             if (mMeFragment == null) {
                                                 mMeFragment = new MeFragment();
                                             }
                                             transaction.replace(R.id.content, mMeFragment);
                                             break;
-                                        case 2:
+                                        case WORKER:
                                             if (mWorkerMeFragment == null) {
                                                 mWorkerMeFragment = new WorkerMeFragment();
                                             }
-                                            // TODO: 2018/1/13 更改图标
                                             transaction.replace(R.id.content, mWorkerMeFragment);
                                             break;
-                                        case 3:
+                                        case ADMIN:
                                             if (mOperationHistoryFragment == null) {
                                                 mOperationHistoryFragment = new OperationHistoryFragment();
                                             }
-                                            // TODO: 2018/1/13 更改图标
                                             transaction.replace(R.id.content, mOperationHistoryFragment);
+                                            break;
+                                        case NOLOGIN:
                                             break;
                                     }
                                     break;
                                 case R.id.navigation_favourite:
+                                    //点击第三个Item
                                     //判断登陆状态
                                     switch(state) {
-                                        case 1:
+                                        case STUDENT:
                                             if (mFavouriteFragment == null) {
                                                 mFavouriteFragment = new FavouriteFragment();
                                             }
                                             transaction.replace(R.id.content, mFavouriteFragment);
                                             break;
-                                        case 2:
+                                        case WORKER:
                                             if (mWorkerWorkFragment == null) {
                                                 mWorkerWorkFragment = new WorkerWorkFragment();
                                             }
-                                            // TODO: 2018/1/13 更改图标
                                             transaction.replace(R.id.content, mWorkerWorkFragment);
                                             break;
-                                        case 3:
+                                        case ADMIN:
                                             if (mAdministratorFragment == null) {
                                                 mAdministratorFragment = new AdministratorFragment();
                                             }
-                                            // TODO: 2018/1/13 更改图标
                                             transaction.replace(R.id.content, mAdministratorFragment);
+                                            break;
+                                        case NOLOGIN:
                                             break;
                                     }
                                     break;
                             }
                         }
-                        //在登录之前不更新Fragment
-                        if(state==0){
-                            return true;
-                        }else{
-                            transaction.commit();
-                        }
+                        transaction.commit();
                         return true;
                     }
                 });
@@ -159,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.settings:
-                Intent intent = new Intent(MainActivity.this, SystemSeetingsActivity.class);
+                Intent intent = new Intent(MainActivity.this, SystemSettingsActivity.class);
                 startActivity(intent);
         }
         return true;

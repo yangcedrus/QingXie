@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import whut.qingxie.R;
-import whut.qingxie.bean.FavouriteItem;
+import whut.qingxie.Item.FavouriteItem;
 import whut.qingxie.adapter.FavouriteItemAdapter;
 
 public class FavouriteFragment extends Fragment {
@@ -23,7 +23,7 @@ public class FavouriteFragment extends Fragment {
         if(favouriteItems.size()==0)
             initItem();
         FavouriteItemAdapter adapter=new FavouriteItemAdapter(getActivity(),R.layout.favourite_item,favouriteItems);
-        View view = inflater.inflate(R.layout.activity_favouritefragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_favourite, container, false);
         ListView listView=(ListView)view.findViewById(R.id.favourite_listview);
         listView.setAdapter(adapter);
 

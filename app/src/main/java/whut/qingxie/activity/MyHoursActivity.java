@@ -19,8 +19,7 @@ import whut.qingxie.R;
 
 public class MyHoursActivity extends AppCompatActivity {
 
-    private LinearLayout mContentView;
-    final ArrayList<ArrayList<String>> mTableDatas=new ArrayList<ArrayList<String>>();
+    final ArrayList<ArrayList<String>> mTableDatas=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +33,13 @@ public class MyHoursActivity extends AppCompatActivity {
 
         //显示返回按钮
         setSupportActionBar(toolbar);
+        //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
         initInfo();
-        mContentView = (LinearLayout) findViewById(R.id.my_hours_contentView);
-        final LockTableView lockTableView=new LockTableView(this,mContentView,mTableDatas);
+        LinearLayout mContentView = (LinearLayout) findViewById(R.id.my_hours_contentView);
+        final LockTableView lockTableView=new LockTableView(this, mContentView,mTableDatas);
         lockTableView.setLockFristColumn(false) //是否锁定第一列
                 .setLockFristRow(true) //是否锁定第一行
                 .setMaxColumnWidth(40) //列最大宽度
@@ -52,7 +52,7 @@ public class MyHoursActivity extends AppCompatActivity {
                 .setTableContentTextColor(R.color.border_color)//单元格字体颜色
                 .setNullableString("N/A") //空值替换值
                 .setOnLoadingListener(new LockTableView.OnLoadingListener() {//下拉刷新、上拉加载监听
-                    // @Override
+                    @Override
                     public void onRefresh(final XRecyclerView mXRecyclerView, final ArrayList<ArrayList<String>> mTableDatas) {
                         Handler handler = new Handler();
                         handler.postDelayed(new Runnable() {
@@ -62,7 +62,7 @@ public class MyHoursActivity extends AppCompatActivity {
                                 mTableDatas.clear();
                                 initInfo();
                                 for (int i = 0; i < 20; i++) {
-                                    ArrayList<String> mRowDatas = new ArrayList<String>();
+                                    ArrayList<String> mRowDatas = new ArrayList<>();
                                     for (int j = 0; j < 5; j++) {
                                         mRowDatas.add("数据" + j);
                                     }
@@ -82,7 +82,7 @@ public class MyHoursActivity extends AppCompatActivity {
                             public void run() {
                                 if (mTableDatas.size() <= 60) {
                                     for (int i = 0; i < 10; i++) {
-                                        ArrayList<String> mRowDatas = new ArrayList<String>();
+                                        ArrayList<String> mRowDatas = new ArrayList<>();
                                         for (int j = 0; j < 5; j++) {
                                             mRowDatas.add("数据" + j);
                                         }
@@ -125,7 +125,7 @@ public class MyHoursActivity extends AppCompatActivity {
     }
 
     private void initInfo(){
-        ArrayList<String> rowdatas=new ArrayList<String>();
+        ArrayList<String> rowdatas=new ArrayList<>();
         rowdatas.add("服务时间");
         rowdatas.add("服务地点");
         rowdatas.add("服务对象");

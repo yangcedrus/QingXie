@@ -13,7 +13,7 @@ import java.util.List;
 
 import whut.qingxie.R;
 import whut.qingxie.adapter.OperationHistoryItemAdapter;
-import whut.qingxie.bean.OperationHistoryItem;
+import whut.qingxie.Item.OperationHistoryItem;
 
 public class OperationHistoryFragment extends Fragment {
     private List<OperationHistoryItem> operationHistoryItemList=new ArrayList<>();
@@ -25,7 +25,7 @@ public class OperationHistoryFragment extends Fragment {
             initItem();
         OperationHistoryItemAdapter operationHistoryItemAdapter=new OperationHistoryItemAdapter(getActivity(),
                 R.layout.operation_history_item,operationHistoryItemList);
-        View view = inflater.inflate(R.layout.activity_operation_history_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_operation_history, container, false);
         ListView listView=(ListView)view.findViewById(R.id.operation_listview);
         listView.setAdapter(operationHistoryItemAdapter);
 
