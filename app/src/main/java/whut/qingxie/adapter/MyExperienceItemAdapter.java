@@ -12,21 +12,25 @@ import android.widget.TextView;
 import java.util.List;
 
 import whut.qingxie.R;
-import whut.qingxie.bean.MyMessageItem;
+import whut.qingxie.Item.ExperienceItem;
 
 public class MyExperienceItemAdapter extends ArrayAdapter {
     private int resourceId;
 
-    public MyExperienceItemAdapter(Context context, int textViewResourceId, List<String> objects){
+    public MyExperienceItemAdapter(Context context, int textViewResourceId, List<ExperienceItem> objects){
         super(context,textViewResourceId,objects);
         resourceId=textViewResourceId;
     }
 
+    @NonNull
+    @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        String s = (String) getItem(position);
+        ExperienceItem experienceItem=(ExperienceItem)getItem(position);
         View view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
-        TextView textView=(TextView)view.findViewById(R.id.experience_text);
-        textView.setText(s);
+        TextView textView=(TextView)view.findViewById(R.id.experience_time);
+        TextView textView2=(TextView)view.findViewById(R.id.experience_name);
+        textView.setText(experienceItem.getTime());
+        textView2.setText(experienceItem.getName());
         return view;
     }
 }

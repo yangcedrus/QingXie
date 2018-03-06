@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import whut.qingxie.R;
-import whut.qingxie.bean.FavouriteItem;
+import whut.qingxie.Item.FavouriteItem;
 
 public class FavouriteItemAdapter extends ArrayAdapter {
     private int resourceId;

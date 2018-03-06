@@ -13,13 +13,13 @@ import android.widget.TextView;
 import java.util.List;
 
 import whut.qingxie.R;
-import whut.qingxie.bean.ServiceItem;
+import whut.qingxie.Item.volServiceItem;
 
 public class ServiceItemAdapter extends ArrayAdapter {
 
     private int resourceId;
 
-    public ServiceItemAdapter(Context context, int textViewResourceId, List<ServiceItem> objects){
+    public ServiceItemAdapter(Context context, int textViewResourceId, List<volServiceItem> objects){
         super(context,textViewResourceId,objects);
         resourceId=textViewResourceId;
     }
@@ -27,7 +27,7 @@ public class ServiceItemAdapter extends ArrayAdapter {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        ServiceItem serviceItem= (ServiceItem) getItem(position);
+        volServiceItem volServiceItem = (volServiceItem) getItem(position);
         View view= LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
         TextView name=(TextView)view.findViewById(R.id.service_name);
         TextView time=(TextView)view.findViewById(R.id.service_time);
@@ -35,17 +35,17 @@ public class ServiceItemAdapter extends ArrayAdapter {
         TextView info=(TextView)view.findViewById(R.id.service_info);
         TextView status=(TextView)view.findViewById(R.id.service_status);
 
-        name.setText(serviceItem.getName());
-        time.setText(serviceItem.getTime());
-        int Num=serviceItem.getNum();
+        name.setText(volServiceItem.getName());
+        time.setText(volServiceItem.getTime());
+        int Num= volServiceItem.getNum();
         num.setText(Integer.toString(Num));
-        info.setText(serviceItem.getInfo());
+        info.setText(volServiceItem.getInfo());
         Drawable drawable;
         // TODO: 2017/11/11 根据状态不同导入不同图片源文件
-        switch (serviceItem.getStatus()){
+        switch (volServiceItem.getStatus()){
             case 1:
                 status.setText("未开始");
-                drawable=view.getResources().getDrawable(R.drawable.ic_dashboard_black_24dp);
+                drawable=view.getResources().getDrawable(R.drawable.ic_person_black_24dp);
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 status.setCompoundDrawables(drawable,null,null,null);
                 break;

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="whut.qingxie.activity.ManageWorkTimeActivity">
 
     <android.support.v7.widget.Toolbar
@@ -19,5 +20,11 @@
             android:text="工时信息管理"
             android:textSize="20sp" />
     </android.support.v7.widget.Toolbar>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/manage_work_time_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp" />
 
 </LinearLayout>

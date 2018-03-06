@@ -12,7 +12,7 @@ import java.util.List;
 
 import whut.qingxie.R;
 import whut.qingxie.adapter.ReleaseWorkItemAdapter;
-import whut.qingxie.bean.ReleaseWorkItem;
+import whut.qingxie.Item.ReleaseWorkItem;
 
 public class ReleaseWorkActivity extends AppCompatActivity {
     private List<ReleaseWorkItem> releaseWorkItemArrayList=new ArrayList<>();;
@@ -34,6 +34,7 @@ public class ReleaseWorkActivity extends AppCompatActivity {
         Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar_release_work);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+        //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
     }

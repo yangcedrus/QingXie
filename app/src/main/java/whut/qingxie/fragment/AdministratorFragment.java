@@ -7,21 +7,22 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import whut.qingxie.R;
+import whut.qingxie.activity.ManageWorkerAccountActivity;
 import whut.qingxie.activity.ReleaseNoticeActivity;
 
 public class AdministratorFragment extends Fragment {
 
-    private LinearLayout layout1;
-    private LinearLayout layout2;
-    private LinearLayout layout3;
+    private RelativeLayout layout1;
+    private RelativeLayout layout2;
+    private RelativeLayout layout3;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_administrator_fragment,container,false);
+        return inflater.inflate(R.layout.fragment_administrator,container,false);
     }
 
     //添加监听注册
@@ -29,9 +30,9 @@ public class AdministratorFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        layout1=(LinearLayout)getActivity().findViewById(R.id.admin_layout1);
-        layout2=(LinearLayout)getActivity().findViewById(R.id.admin_layout2);
-        layout3=(LinearLayout)getActivity().findViewById(R.id.admin_layout3);
+        layout1=(RelativeLayout)getActivity().findViewById(R.id.admin_layout1);
+        layout2=(RelativeLayout)getActivity().findViewById(R.id.admin_layout2);
+        layout3=(RelativeLayout)getActivity().findViewById(R.id.admin_layout3);
 
         layout1.setOnClickListener(new AdministratorFragment.MyListener());
         layout2.setOnClickListener(new AdministratorFragment.MyListener());
@@ -47,6 +48,8 @@ public class AdministratorFragment extends Fragment {
                 case R.id.admin_layout1:
                     break;
                 case R.id.admin_layout2:
+                    intent=new Intent(getActivity(), ManageWorkerAccountActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.admin_layout3:
                     intent=new Intent(getActivity(), ReleaseNoticeActivity.class);

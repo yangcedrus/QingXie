@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //显示返回按钮
         setSupportActionBar(toolbar);
+        //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
@@ -35,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         button_login.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //返回信息给上个活动
+                //点击登录，登录成功返回信息给上个活动
                 // TODO: 2018/1/9 读取数据库信息
                 TextView textView=(TextView)findViewById(R.id.text_name);
                 String s=textView.getText().toString();
@@ -43,19 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                     state=Integer.parseInt(s);
 
                 Intent intent=new Intent();
-                intent.putExtra("data_return",state);
-                setResult(RESULT_OK,intent);
-                finish();
-            }
-        });
-
-        Button button_signup=(Button)findViewById(R.id.Login_signup);
-        button_signup.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                state=0;
-                Intent intent=new Intent();
-                intent.putExtra("data_return",state);
+                intent.putExtra("login_state_return",state);
                 setResult(RESULT_OK,intent);
                 finish();
             }
@@ -80,9 +69,9 @@ public class LoginActivity extends AppCompatActivity {
                 break;
             case android.R.id.home:
             {
-                //返回信息给上个活动
+                //点击返回键返回信息给上个活动
                 intent=new Intent();
-                intent.putExtra("data_return",state);
+                intent.putExtra("login_state_return",state);
                 setResult(RESULT_OK,intent);
                 finish();
                 break;
@@ -93,9 +82,9 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //返回信息给上个活动
+        //点击虚拟返回按钮返回信息给上个活动
         Intent intent=new Intent();
-        intent.putExtra("data_return",state);
+        intent.putExtra("login_state_return",state);
         setResult(RESULT_OK,intent);
         finish();
         super.onBackPressed();

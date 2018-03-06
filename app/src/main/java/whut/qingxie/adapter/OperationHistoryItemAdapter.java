@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import whut.qingxie.R;
-import whut.qingxie.bean.OperationHistoryItem;
+import whut.qingxie.Item.OperationHistoryItem;
 
 public class OperationHistoryItemAdapter extends ArrayAdapter {
     private int resourceId;

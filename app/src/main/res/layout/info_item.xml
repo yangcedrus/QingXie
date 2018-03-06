@@ -20,12 +20,4 @@
         android:gravity="right"
         android:layout_marginRight="20dp"/>
 
-    <ImageView
-        android:id="@+id/my_info_image"
-        android:layout_weight="1"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginRight="20dp"/>
-
 </LinearLayout>

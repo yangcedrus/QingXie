@@ -1,11 +1,16 @@
 <resources>
     <string name="app_name">掌上青协</string>
-    <string name="title_home">Home</string>
-    <string name="title_me">Me</string>
-    <string name="title_message">Message</string>
-    <string name="title_favourite">Favourite</string>
+    <string name="title_home">首页</string>
+    <string name="title_me">我</string>
+    <string name="title_favourite">收藏</string>
+    <string name="title_group">群组</string>
+
+    <string name="worker_release_work">青协推文</string>
+    <string name="worker_manage_work_time">工时信息管理</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">页面加载失败</string>
+    <string name="worker_manage_vol_activity">志愿活动管理</string>
 
 </resources>

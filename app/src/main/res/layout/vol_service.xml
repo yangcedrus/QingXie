@@ -50,8 +50,7 @@
         android:layout_alignEnd="@+id/circle"
         android:layout_alignStart="@+id/service_time"
         android:layout_below="@+id/service_time"
-        android:maxLines="3"
-        android:text="" />
+        android:maxLines="3" />
 
     <TextView
         android:id="@+id/service_status"
