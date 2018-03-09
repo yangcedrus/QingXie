@@ -1,36 +1,76 @@
 package whut.qingxie.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Color;
 import android.media.Image;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import com.bumptech.glide.Glide;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import whut.qingxie.R;
 import whut.qingxie.activity.SignUpActivity;
 import whut.qingxie.adapter.CardActivityItemAdapter;
 import whut.qingxie.Item.CardActivityItem;
+import whut.qingxie.bean.VolActivityInfo;
+import whut.qingxie.network.HttpUtil;
+import whut.qingxie.network.parseJSON;
+
+import static whut.qingxie.network.sendRequest.requestForFiveActivity;
 
 //主页页面
 public class HomeFragment extends Fragment implements ViewPager.OnPageChangeListener{
-    private List<CardActivityItem> cardActivityItems = new ArrayList<>();
+    private static List<VolActivityInfo> cardActivityItems = new ArrayList<>();
     private View view;
+    private static RecyclerView recyclerView;
+    private static LinearLayoutManager linearLayoutManager;
+    private static CardActivityItemAdapter adapter;
+    private static SwipeRefreshLayout swipeRefresh;
+    private static View headerView;
+
+    private static String SERVE_URL="http://123.207.87.34:8080/";
+    private static String GET_ALL_ACTIVITIES="activity/getAllActivities";
+
+    @SuppressLint("HandlerLeak")
+    private static Handler mHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(msg.what==0)
+            {
+                cardActivityItems.addAll(parseJSON.parseActivity(msg.obj.toString()));
+                reFresh();
+            }else{
+                Log.d("HomeFragment","message error");
+            }
+        }
+    };
 
     //存放图片组
     private int picNum=4;
@@ -40,9 +80,20 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     private int lastPosition;
     private boolean isRunning=false;// 是否自动轮询
 
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.fragment_home,container,false);
+
+        swipeRefresh=(SwipeRefreshLayout)view.findViewById(R.id.home_refresh);
+        swipeRefresh.setColorSchemeColors(Color.BLUE);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //requestForFiveActivity();
+                reFresh();
+            }
+        });
         return view;
     }
 
@@ -50,33 +101,94 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        //初始化轮询控件信息
-        initViews();
-        initData();
-        initAdapter();
+        recyclerView=(RecyclerView) view.findViewById(R.id.activity_card_recyclerView);
+        linearLayoutManager =new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        adapter=new CardActivityItemAdapter(cardActivityItems);
+        headerView=LayoutInflater.from(getActivity()).inflate(R.layout.home_header,recyclerView,false);
+        adapter.setHeaderView(headerView);
+        recyclerView.setAdapter(adapter);
 
         if(cardActivityItems.size()==0)
             init();
-        RecyclerView recyclerView=(RecyclerView) getActivity().findViewById(R.id.activity_card_recyclerView);
-        LinearLayoutManager linearLayoutManager =new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        CardActivityItemAdapter adapter=new CardActivityItemAdapter(cardActivityItems);
-        recyclerView.setAdapter(adapter);
+
+        initViews();
+        initData();
+        initAdapter();
     }
 
-    private void init(){
-        cardActivityItems.add(new CardActivityItem("000001","武汉理工大学管理学院","随便什么计划1",1,false));
-        cardActivityItems.add(new CardActivityItem("000002","武汉理工大学管理学院","随便什么计划2",1,true));
-        cardActivityItems.add(new CardActivityItem("000003","武汉理工大学管理学院","随便什么计划3",1,false));
-        cardActivityItems.add(new CardActivityItem("000004","武汉理工大学管理学院","随便什么计划4",1,true));
-        cardActivityItems.add(new CardActivityItem("000005","武汉理工大学管理学院","随便什么计划5",1,false));
-        cardActivityItems.add(new CardActivityItem("000006","武汉理工大学管理学院","随便什么计划6",1,true));
+    //刷新页面
+    public static void reFresh(){
+        adapter.notifyDataSetChanged();
+        swipeRefresh.setRefreshing(false);
+    }
+
+    //初始化列表数据
+    private static void init(){
+
+
+        cardActivityItems.add(new VolActivityInfo(1,"敬老院活动",1,
+                "2",0,4,2,10,
+                "东院敬老院","东院敬老院活动，打扫卫生",null,
+                "2018-3-30 11:11:11",null,null,null,
+                null,null));
+        cardActivityItems.add(new VolActivityInfo(1,"敬老院活动",1,
+                "2",0,4,2,10,
+                "东院敬老院","东院敬老院活动，打扫卫生",null,
+                "2018-3-30 11:11:11",null,null,null,
+                null,null));
+        cardActivityItems.add(new VolActivityInfo(1,"敬老院活动",1,
+                "2",0,4,2,10,
+                "东院敬老院","东院敬老院活动，打扫卫生",null,
+                "2018-3-30 11:11:11",null,null,null,
+                null,null));
+        cardActivityItems.add(new VolActivityInfo(1,"敬老院活动",1,
+                "2",0,4,2,10,
+                "东院敬老院","东院敬老院活动，打扫卫生",null,
+                "2018-3-30 11:11:11",null,null,null,
+                null,null));
+        cardActivityItems.add(new VolActivityInfo(1,"敬老院活动",1,
+                "2",0,4,2,10,
+                "东院敬老院","东院敬老院活动，打扫卫生",null,
+                "2018-3-30 11:11:11",null,null,null,
+                null,null));
+        reFresh();
+
+        //请求五个活动信息
+        // TODO: 2018/3/7 从本地读取
+        //requestForFiveActivity();
+    }
+
+    //请求五个活动信息
+    public static void requestForFiveActivity(){
+        HttpUtil.sendOkHttpRequest(SERVE_URL + GET_ALL_ACTIVITIES, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Message message=mHandler.obtainMessage();
+                message.what=404;
+                mHandler.sendMessage(message);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseData=response.body().string();
+
+                Message message=mHandler.obtainMessage();
+                if(response.code()==200){
+                    message.obj=responseData;
+                }else{
+                    message.what=response.code();
+                }
+                mHandler.sendMessage(message);
+
+            }
+        });
     }
 
     //初始化视图
     private void initViews(){
-        point=(LinearLayout)view.findViewById(R.id.home_viewPager_point);
-        vp=(ViewPager)view.findViewById(R.id.home_viewPager);
+        point=(LinearLayout)headerView.findViewById(R.id.home_viewPager_point);
+        vp=(ViewPager)headerView.findViewById(R.id.home_viewPager);
         vp.setOnPageChangeListener(this);
     }
 
@@ -88,9 +200,11 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         for(int i=0;i<4;i++){
             imageView=new ImageView(getContext());
             if(i%2==0)
-                Glide.with(this).load("http://123.207.87.34:8080/qingxie-img/394458467239727056.jpg").centerCrop().into(imageView);
+                //Glide.with(this).load("http://123.207.87.34:8080/qingxie-img/394458467239727056.jpg").centerCrop().into(imageView);
+                imageView.setImageResource(R.drawable.ic_home_black_24dp);
             else
-                Glide.with(this).load("http://123.207.87.34:8080/qingxie-img/745230278946470272.jpg").centerCrop().into(imageView);
+                //Glide.with(this).load("http://123.207.87.34:8080/qingxie-img/745230278946470272.jpg").centerCrop().into(imageView);
+                imageView.setImageResource(R.drawable.ic_detail_black_24dp);
             imageViews.add(imageView);
 
             //加点
@@ -162,6 +276,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
 
     }
 
+    //开始轮询
     @Override
     public void onStart() {
         super.onStart();

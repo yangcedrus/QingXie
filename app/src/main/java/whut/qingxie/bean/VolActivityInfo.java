@@ -1,39 +1,39 @@
 package whut.qingxie.bean;
 
 public class VolActivityInfo {
-    private Integer id;
+    private Integer id;     //活动ID
 
-    private String name;
+    private String name;       //活动名称
 
-    private Integer managerId;
+    private Integer managerId;  //活动管理人ID
 
-    private String type;
+    private String type;    //活动类型
 
-    private Integer status;
+    private Integer status; //活动状态
 
-    private double hours;
+    private double hours;   //活动总工时
 
-    private double hourPerTime;
+    private double hourPerTime; //活动每次工时
 
-    private Integer needVolunteers;
+    private Integer needVolunteers; //活动需要人数
 
-    private String place;
+    private String place;   //活动地点
 
-    private String general;
+    private String general;     //活动概况
 
-    private String descriptions;
+    private String descriptions;    //活动详情
 
-    private String regTime;
+    private String regTime;     //活动报名时间
 
-    private String regEndTime;
+    private String regEndTime;      //活动报名截止时间
 
-    private String interviewTime;
+    private String interviewTime;   //活动面试时间
 
-    private String startTime;
+    private String startTime;   //活动开始时间
 
-    private String endTime;
+    private String endTime; //活动截止时间
 
-    private String createTime;
+    private String createTime;  //活动创建时间
 
     public VolActivityInfo(Integer id, String name, Integer managerId, String type, Integer status, double hours, double hourPerTime, Integer needVolunteers, String place, String general, String descriptions, String regTime, String regEndTime, String interviewTime, String startTime, String endTime, String createTime) {
         this.id = id;

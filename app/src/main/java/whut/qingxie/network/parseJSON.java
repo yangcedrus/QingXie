@@ -3,6 +3,7 @@ package whut.qingxie.network;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import whut.qingxie.bean.JSONInfo;
@@ -17,6 +18,7 @@ public class parseJSON {
 
     //处理活动JSON
     public static List<VolActivityInfo> parseActivity(String jsonData){
+        List<VolActivityInfo> a=new ArrayList<>();
         try{
             Gson gson=new Gson();
             JSONInfo jsonInfo=gson.fromJson(jsonData,JSONInfo.class);
