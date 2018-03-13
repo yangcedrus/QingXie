@@ -19,7 +19,7 @@
         <TextView
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="ID"/>
@@ -27,7 +27,7 @@
         <TextView
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="账号ID"/>
@@ -35,7 +35,7 @@
         <TextView
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="是否授权"/>
@@ -43,7 +43,7 @@
         <TextView
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="时间"/>
@@ -52,10 +52,10 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/manage_worker_account_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignStart="@id/manage_worker_account_linearlayout"
         android:layout_alignEnd="@id/manage_worker_account_linearlayout"
         android:layout_below="@id/manage_worker_account_linearlayout"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="10dp" />
 
 </RelativeLayout>

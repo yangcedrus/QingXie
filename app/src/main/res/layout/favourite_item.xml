@@ -10,7 +10,9 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="25dp"
         android:layout_marginTop="25dp"
-        android:singleLine="true"/>
+        android:layout_toLeftOf="@id/favourite_item_image"
+        android:singleLine="true"
+        android:background="@color/colorPrimary"/>
 
     <ImageView
         android:id="@+id/favourite_item_image"
@@ -19,7 +21,9 @@
         android:layout_alignBottom="@id/favourite_item_title"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/favourite_item_title"
-        android:layout_marginEnd="25dp" />
+        android:layout_marginEnd="25dp"
+        android:background="@color/colorPrimary"
+        android:src="@drawable/ic_expand_more_white_24dp"/>
 
     <TextView
         android:id="@+id/favourite_item_text"

@@ -1,6 +1,8 @@
 package whut.qingxie.Item;
 
-/*操作历史*/
+/**
+ * 操作历史
+ */
 
 public class OperationHistoryItem {
     private String title,date,text;

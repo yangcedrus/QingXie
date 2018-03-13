@@ -1,70 +1,104 @@
 package whut.qingxie.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
+import whut.qingxie.Item.ManageWorkerAccountItem;
 import whut.qingxie.R;
-import whut.qingxie.Item.volServiceItem;
+import whut.qingxie.activity.SignUpActivity;
+import whut.qingxie.entity.activity.VolActivityInfo;
 
-public class ServiceItemAdapter extends ArrayAdapter {
+public class ServiceItemAdapter extends RecyclerView.Adapter<ServiceItemAdapter.ViewHolder> {
 
-    private int resourceId;
+    public List<VolActivityInfo> volActivityInfos;
 
-    public ServiceItemAdapter(Context context, int textViewResourceId, List<volServiceItem> objects){
-        super(context,textViewResourceId,objects);
-        resourceId=textViewResourceId;
+    static class ViewHolder extends RecyclerView.ViewHolder{
+        TextView name,time,num,info,status;
+        Drawable drawable0,drawable1,drawable2,drawable3;
+        View serviceView;
+
+        private ViewHolder(View view){
+            super(view);
+            serviceView=view;
+            name=(TextView)view.findViewById(R.id.service_name);
+            time=(TextView)view.findViewById(R.id.service_time);
+            num=(TextView)view.findViewById(R.id.service_num);
+            info=(TextView)view.findViewById(R.id.service_info);
+            status=(TextView)view.findViewById(R.id.service_status);
+            drawable0=view.getResources().getDrawable(R.drawable.ic_person_black_24dp);
+            drawable1=view.getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp);
+            drawable2=view.getResources().getDrawable(R.drawable.ic_check_black_24dp);
+            drawable3=view.getResources().getDrawable(R.drawable.ic_close_black_24dp);
+
+            drawable0.setBounds(0, 0, drawable0.getMinimumWidth(), drawable0.getMinimumHeight());
+            drawable1.setBounds(0, 0, drawable1.getMinimumWidth(), drawable1.getMinimumHeight());
+            drawable2.setBounds(0, 0, drawable2.getMinimumWidth(), drawable2.getMinimumHeight());
+            drawable3.setBounds(0, 0, drawable3.getMinimumWidth(), drawable3.getMinimumHeight());
+
+        }
     }
 
-    @NonNull
-    @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        volServiceItem volServiceItem = (volServiceItem) getItem(position);
-        View view= LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
-        TextView name=(TextView)view.findViewById(R.id.service_name);
-        TextView time=(TextView)view.findViewById(R.id.service_time);
-        TextView num=(TextView)view.findViewById(R.id.service_num);
-        TextView info=(TextView)view.findViewById(R.id.service_info);
-        TextView status=(TextView)view.findViewById(R.id.service_status);
+    public ServiceItemAdapter(List<VolActivityInfo> volActivityInfoList){
+        volActivityInfos=volActivityInfoList;
+    }
 
-        name.setText(volServiceItem.getName());
-        time.setText(volServiceItem.getTime());
-        int Num= volServiceItem.getNum();
-        num.setText(Integer.toString(Num));
-        info.setText(volServiceItem.getInfo());
-        Drawable drawable;
-        // TODO: 2017/11/11 根据状态不同导入不同图片源文件
-        switch (volServiceItem.getStatus()){
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.vol_service,parent,false);
+        ViewHolder holder;
+        holder=new ViewHolder(view);
+        holder.serviceView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                // TODO: 2018/3/13 我的志愿活动，item点击响应 
+            }
+        });
+        return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        VolActivityInfo activityInfo=volActivityInfos.get(position);
+        holder.name.setText(activityInfo.getName());
+        holder.time.setText(activityInfo.getRegTime());
+        holder.num.setText(Integer.toString(position));
+        holder.info.setText(activityInfo.getGeneral());
+        switch(activityInfo.getStatus()){
+            case 0:
+                holder.status.setText("未开始");
+                holder.status.setCompoundDrawables(holder.drawable0,null,null,null);
+                break;
             case 1:
-                status.setText("未开始");
-                drawable=view.getResources().getDrawable(R.drawable.ic_person_black_24dp);
-                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                status.setCompoundDrawables(drawable,null,null,null);
+                holder.status.setText("面试中");
+                holder.status.setCompoundDrawables(holder.drawable1,null,null,null);
                 break;
             case 2:
-                drawable=view.getResources().getDrawable(R.drawable.ic_home_black_24dp);
-                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                status.setCompoundDrawables(drawable,null,null,null);
-                status.setText("面试中");
+                holder.status.setText("进行中");
+                holder.status.setCompoundDrawables(holder.drawable2,null,null,null);
                 break;
             case 3:
-                status.setText("进行中");
+                holder.status.setText("已结束");
+                holder.status.setCompoundDrawables(holder.drawable3,null,null,null);
                 break;
-            case 4:
-                status.setText("已完成");
-            default:
-                // TODO: 2017/11/11 异常处理
-                break;
+                default:
         }
+    }
 
-        return view;
+    @Override
+    public int getItemCount() {
+        return volActivityInfos.size();
     }
 }

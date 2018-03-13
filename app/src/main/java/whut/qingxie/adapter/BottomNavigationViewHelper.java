@@ -7,8 +7,8 @@ import android.util.Log;
 
 import java.lang.reflect.Field;
 
-/*
- * 取消NavigationView中的位移动画
+/**
+ * 取消NavigationView中的位移动画,当menu数量超过三个，就会调用位移动画
  * 若有需要在MainActivity中调用
  */
 

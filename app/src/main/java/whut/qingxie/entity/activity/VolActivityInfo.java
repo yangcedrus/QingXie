@@ -1,6 +1,9 @@
-package whut.qingxie.bean;
+package whut.qingxie.entity.activity;
 
-public class VolActivityInfo {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class VolActivityInfo implements Parcelable {
     private Integer id;     //活动ID
 
     private String name;       //活动名称
@@ -193,4 +196,60 @@ public class VolActivityInfo {
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeInt(managerId);
+        dest.writeString(type);
+        dest.writeInt(status);
+        dest.writeDouble(hours);
+        dest.writeDouble(hourPerTime);
+        dest.writeInt(needVolunteers);
+        dest.writeString(place);
+        dest.writeString(general);
+        dest.writeString(descriptions);
+        dest.writeString(regTime);
+        dest.writeString(regEndTime);
+        dest.writeString(interviewTime);
+        dest.writeString(startTime);
+        dest.writeString(endTime);
+        dest.writeString(createTime);
+    }
+
+    public static final Parcelable.Creator<VolActivityInfo> CREATOR=new Parcelable.Creator<VolActivityInfo>(){
+        @Override
+        public VolActivityInfo createFromParcel(Parcel source) {
+            VolActivityInfo item=new VolActivityInfo();
+            item.id=source.readInt();
+            item.name=source.readString();
+            item.managerId=source.readInt();
+            item.type=source.readString();
+            item.status=source.readInt();
+            item.hours=source.readDouble();
+            item.hourPerTime=source.readDouble();
+            item.needVolunteers=source.readInt();
+            item.place=source.readString();
+            item.general=source.readString();
+            item.descriptions=source.readString();
+            item.regTime=source.readString();
+            item.regEndTime=source.readString();
+            item.interviewTime=source.readString();
+            item.startTime=source.readString();
+            item.endTime=source.readString();
+            item.createTime=source.readString();
+            return item;
+        }
+
+        @Override
+        public VolActivityInfo[] newArray(int size) {
+            return new VolActivityInfo[size];
+        }
+    };
 }

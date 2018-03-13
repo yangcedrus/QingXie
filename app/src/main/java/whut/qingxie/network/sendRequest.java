@@ -3,19 +3,12 @@ package whut.qingxie.network;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.Response;
-import whut.qingxie.bean.UserInfo;
-import whut.qingxie.bean.VolActivityInfo;
-import whut.qingxie.network.parseJSON;
+import whut.qingxie.entity.user.UserInfo;
+import whut.qingxie.entity.activity.VolActivityInfo;
 
 public class sendRequest {
 
@@ -27,56 +20,6 @@ public class sendRequest {
         VolActivityInfo activityInfos=new VolActivityInfo();
 
         return  activityInfos;
-    }
-
-    //请求五个活动信息
-    public static List<VolActivityInfo> requestForFiveActivity(){
-        List<VolActivityInfo> activityInfos=new ArrayList<>();
-
-        HttpUtil.sendOkHttpRequest(SERVE_URL + GET_ALL_ACTIVITIES, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String responseData=response.body().string();
-
-
-            }
-        });
-
-
-/*
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try{
-                    OkHttpClient client=new OkHttpClient.Builder()
-                            .connectTimeout(10, TimeUnit.SECONDS)
-                            .readTimeout(10,TimeUnit.SECONDS)
-                            .writeTimeout(10,TimeUnit.SECONDS)
-                            .build();
-
-                    Request request=new Request.Builder()
-                            .url(SERVE_URL+GET_ALL_ACTIVITIES)
-                            .build();
-
-                    Response response=client.newCall(request).execute();
-                    if(response.isSuccessful()){
-                        String responseData=response.body().string();
-
-                        parseJSON.parseActivity(responseData);
-                    }
-                }catch (Exception e){
-                    // TODO: 2018/3/6 异常捕获处理 
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-*/
-        return null;
     }
 
     //请求个人信息

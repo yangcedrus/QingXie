@@ -12,24 +12,24 @@ import android.widget.TextView;
 import java.util.List;
 
 import whut.qingxie.R;
-import whut.qingxie.Item.FavouriteItem;
+import whut.qingxie.entity.activity.VolActivityInfo;
 
 public class FavouriteItemAdapter extends ArrayAdapter {
     private int resourceId;
 
-    public FavouriteItemAdapter(Context context, int textViewResourceId, List<FavouriteItem> objects){
+    public FavouriteItemAdapter(Context context, int textViewResourceId, List<VolActivityInfo> objects){
         super(context,textViewResourceId,objects);
         resourceId=textViewResourceId;
     }
 
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
-        FavouriteItem favouriteItem= (FavouriteItem) getItem(position);
+        VolActivityInfo favouriteItem= (VolActivityInfo) getItem(position);
         View view= LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
         TextView title=(TextView)view.findViewById(R.id.favourite_item_title);
         TextView text=(TextView)view.findViewById(R.id.favourite_item_text);
 
-        title.setText(favouriteItem.getTitle());
-        text.setText(favouriteItem.getText());
+        title.setText(favouriteItem.getName());
+        text.setText(favouriteItem.getGeneral());
         return view;
     }
 }

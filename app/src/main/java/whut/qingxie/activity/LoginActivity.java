@@ -9,12 +9,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import whut.qingxie.R;
 
 public class LoginActivity extends AppCompatActivity {
     //储存登录信息
     private int state=0;
+    
+    private static String TAG="LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +42,22 @@ public class LoginActivity extends AppCompatActivity {
                 //点击登录，登录成功返回信息给上个活动
                 // TODO: 2018/1/9 读取数据库信息
                 TextView textView=(TextView)findViewById(R.id.text_name);
-                String s=textView.getText().toString();
-                if(!s.equals(""))
-                    state=Integer.parseInt(s);
-
+                TextView textView1=(TextView)findViewById(R.id.text_psw); 
+                String name=textView.getText().toString();
+                String psw=textView1.getText().toString();
+                
+                if(name.length()==0){
+                    Toast.makeText(LoginActivity.this,"请输入账号",Toast.LENGTH_SHORT).show();
+                    return;
+             //   }else if(psw.length()==0){
+                    //Toast.makeText(LoginActivity.this,"请输入密码",Toast.LENGTH_SHORT).show();
+                    // TODO: 2018/3/9 密码为空 
+                }else{
+                    // TODO: 2018/3/9 判断是否登陆成功 
+                    state=Integer.parseInt(name);
+                    // TODO: 2018/3/9 拉取个人信息,在个人页面中获取 
+                }
+                
                 Intent intent=new Intent();
                 intent.putExtra("login_state_return",state);
                 setResult(RESULT_OK,intent);

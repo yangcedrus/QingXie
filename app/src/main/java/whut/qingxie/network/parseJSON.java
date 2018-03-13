@@ -6,9 +6,9 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.List;
 
-import whut.qingxie.bean.JSONInfo;
-import whut.qingxie.bean.UserInfo;
-import whut.qingxie.bean.VolActivityInfo;
+import whut.qingxie.dto.Msg;
+import whut.qingxie.entity.user.UserInfo;
+import whut.qingxie.entity.activity.VolActivityInfo;
 
 public class parseJSON {
 
@@ -21,10 +21,10 @@ public class parseJSON {
         List<VolActivityInfo> a=new ArrayList<>();
         try{
             Gson gson=new Gson();
-            JSONInfo jsonInfo=gson.fromJson(jsonData,JSONInfo.class);
+            Msg msg =gson.fromJson(jsonData,Msg.class);
 
             //得到实例
-            String jsonActivates=gson.toJson(jsonInfo.getData().get(ACTIVITY_KEY));
+            String jsonActivates=gson.toJson(msg.getData().get(ACTIVITY_KEY));
             return gson.fromJson(jsonActivates,new TypeToken<List<VolActivityInfo>>(){}.getType());
         }catch (Exception e){
             // TODO: 2018/3/5 捕获处理
@@ -37,10 +37,10 @@ public class parseJSON {
     public static List<UserInfo> parseUser(String jsonData){
         try{
             Gson gson=new Gson();
-            JSONInfo jsonInfo=gson.fromJson(jsonData,JSONInfo.class);
+            Msg msg =gson.fromJson(jsonData,Msg.class);
 
             //得到实例
-            String jsonUsers=gson.toJson(jsonInfo.getData().get(USERS_KEY));
+            String jsonUsers=gson.toJson(msg.getData().get(USERS_KEY));
             return gson.fromJson(jsonUsers,new TypeToken<List<UserInfo>>(){}.getType());
         }catch (Exception e){
             // TODO: 2018/3/5 捕获处理
@@ -53,10 +53,10 @@ public class parseJSON {
     public static List<String> parseURL(String jsonData){
         try{
             Gson gson=new Gson();
-            JSONInfo jsonInfo=gson.fromJson(jsonData,JSONInfo.class);
+            Msg msg =gson.fromJson(jsonData,Msg.class);
 
             //得到实例
-            String jsonUsrls=gson.toJson(jsonInfo.getData().get(HOME_PICTURES_URLS_KEY));
+            String jsonUsrls=gson.toJson(msg.getData().get(HOME_PICTURES_URLS_KEY));
             return gson.fromJson(jsonUsrls,new TypeToken<List<String>>(){}.getType());
         }catch (Exception e){
             // TODO: 2018/3/5 捕获处理

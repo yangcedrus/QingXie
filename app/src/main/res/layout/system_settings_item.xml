@@ -4,7 +4,7 @@
     android:layout_height="40dp">
 
     <TextView
-        android:id="@+id/my_item_text"
+        android:id="@+id/system_setting_item_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -12,7 +12,7 @@
         android:layout_centerVertical="true"/>
 
     <ImageView
-        android:id="@+id/my_item_image"
+        android:id="@+id/system_setting_item_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

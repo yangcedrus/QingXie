@@ -1,5 +1,6 @@
 package whut.qingxie.fragment;
 
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,27 +9,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import whut.qingxie.R;
 import whut.qingxie.activity.MyHoursActivity;
 import whut.qingxie.activity.MyInfoActivity;
 import whut.qingxie.activity.MyMessageActivity;
 import whut.qingxie.activity.MyResumeActivity;
 import whut.qingxie.activity.MyServiceActivity;
+import whut.qingxie.entity.user.UserInfo;
 
 public class MeFragment extends Fragment {
+    private static UserInfo myInfo;
 
     private RelativeLayout layout1;
     private RelativeLayout layout2;
     private RelativeLayout layout3;
     private RelativeLayout layout4;
     private RelativeLayout layout5;
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_me,container,false);
-    }
+    private CircleImageView circleImageView;
+    private TextView textView;
 
     //添加监听注册
     @Override
@@ -40,12 +41,39 @@ public class MeFragment extends Fragment {
         layout3=(RelativeLayout)getActivity().findViewById(R.id.me_layout3);
         layout4=(RelativeLayout)getActivity().findViewById(R.id.me_layout4);
         layout5=(RelativeLayout)getActivity().findViewById(R.id.me_layout5);
+        circleImageView=(CircleImageView)getActivity().findViewById(R.id.icon_me);
+        textView=(TextView)getActivity().findViewById(R.id.name_me);
 
         layout1.setOnClickListener(new MyListener());
         layout2.setOnClickListener(new MyListener());
         layout3.setOnClickListener(new MyListener());
         layout4.setOnClickListener(new MyListener());
         layout5.setOnClickListener(new MyListener());
+
+        //虚构个人信息
+        // TODO: 2018/3/9 从本地读取
+        myInfo=new UserInfo(1,"01215xxxxxxxx","张三","123456","M",
+                1,"M",1,12,2,null,null,
+                null,null,null,null,"2018-2-1 00:00:00");
+        textView.setText(myInfo.getName());
+        if(myInfo.getGender().equals("M")){
+            Drawable drawable=getActivity().getResources().getDrawable(R.drawable.ic_favorite_black_24dp);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            textView.setCompoundDrawables(null,null,drawable,null);
+        }else{
+            Drawable drawable=getActivity().getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            textView.setCompoundDrawables(null,null,drawable,null);
+        }
+
+        //Glide.with(getContext()).load(myInfo.getIconId()).centerCrop().into(circleImageView);
+
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_me,container,false);
     }
 
     //新建监听类
@@ -57,6 +85,7 @@ public class MeFragment extends Fragment {
             switch (v.getId()) {
                 case R.id.me_layout1:
                     intent=new Intent(getActivity(), MyResumeActivity.class);
+                    intent.putExtra("user_info",myInfo);
                     startActivity(intent);
                     break;
                 case R.id.me_layout2:
@@ -73,9 +102,9 @@ public class MeFragment extends Fragment {
                     break;
                 case R.id.me_layout5:
                     intent=new Intent(getActivity(), MyInfoActivity.class);
+                    intent.putExtra("user_info",myInfo);
                     startActivity(intent);
                     break;
-
             }
         }
 

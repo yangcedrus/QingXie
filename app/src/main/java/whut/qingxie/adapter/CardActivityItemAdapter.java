@@ -15,7 +15,7 @@ import java.util.List;
 
 import whut.qingxie.R;
 import whut.qingxie.activity.SignUpActivity;
-import whut.qingxie.bean.VolActivityInfo;
+import whut.qingxie.entity.activity.VolActivityInfo;
 
 public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityItemAdapter.ViewHolder> {
     private static final int TYPE_NORMAL=1;
@@ -58,11 +58,12 @@ public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityIt
         holder.cardView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                int pos = holder.getAdapterPosition();
+                int pos = getRealPosition(holder);
                 VolActivityInfo item = cardActivityItemList.get(pos);
                 if(mContext==null)
                     mContext=parent.getContext();
                 Intent intent=new Intent(mContext,SignUpActivity.class);
+                intent.putExtra("activity_details",item);
                 mContext.startActivity(intent);
             }
         });
@@ -111,6 +112,7 @@ public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityIt
         }
         String s=days+"天";
 
+        // TODO: 2018/3/12 收藏按钮变化 
             /*收藏按钮变化
         if(cardActivityItem.getFavourite()==true)
             holder.favourite.setCompoundDrawables(img1,null,null,null);

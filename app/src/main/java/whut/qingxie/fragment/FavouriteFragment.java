@@ -1,5 +1,6 @@
 package whut.qingxie.fragment;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,31 +12,55 @@ import java.util.ArrayList;
 import java.util.List;
 
 import whut.qingxie.R;
-import whut.qingxie.Item.FavouriteItem;
 import whut.qingxie.adapter.FavouriteItemAdapter;
+import whut.qingxie.entity.activity.VolActivityInfo;
 
 public class FavouriteFragment extends Fragment {
 
-    private List<FavouriteItem> favouriteItems=new ArrayList<>();
+    private List<VolActivityInfo> favouriteItems=new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_favourite, container, false);
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
         if(favouriteItems.size()==0)
             initItem();
         FavouriteItemAdapter adapter=new FavouriteItemAdapter(getActivity(),R.layout.favourite_item,favouriteItems);
-        View view = inflater.inflate(R.layout.fragment_favourite, container, false);
-        ListView listView=(ListView)view.findViewById(R.id.favourite_listview);
+        ListView listView=(ListView)getActivity().findViewById(R.id.favourite_listview);
         listView.setAdapter(adapter);
-
-        return view;
     }
 
     public void initItem(){
-        favouriteItems.add(new FavouriteItem("张三","详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情"));
-        favouriteItems.add(new FavouriteItem("张三","详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情"));
-        favouriteItems.add(new FavouriteItem("张三","详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情"));
-        favouriteItems.add(new FavouriteItem("张三","详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情"));
-        favouriteItems.add(new FavouriteItem("张三","详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情"));
-        favouriteItems.add(new FavouriteItem("张三","详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情"));
+        favouriteItems.add(new VolActivityInfo(1,"敬老院活动",1,
+                "2",0,4,2,10,
+                "东院敬老院","东院敬老院活动，打扫卫生",null,
+                "2018-3-30 11:11:11",null,null,null,
+                null,null));
+        favouriteItems.add(new VolActivityInfo(1,"敬老院活动",1,
+                "2",0,4,2,10,
+                "东院敬老院","东院敬老院活动，打扫卫生",null,
+                "2018-3-30 11:11:11",null,null,null,
+                null,null));
+        favouriteItems.add(new VolActivityInfo(1,"敬老院活动",1,
+                "2",0,4,2,10,
+                "东院敬老院","东院敬老院活动，打扫卫生",null,
+                "2018-3-30 11:11:11",null,null,null,
+                null,null));
+        favouriteItems.add(new VolActivityInfo(1,"敬老院活动",1,
+                "2",0,4,2,10,
+                "东院敬老院","东院敬老院活动，打扫卫生",null,
+                "2018-3-30 11:11:11",null,null,null,
+                null,null));
+        favouriteItems.add(new VolActivityInfo(1,"敬老院活动",1,
+                "2",0,4,2,10,
+                "东院敬老院","东院敬老院活动，打扫卫生",null,
+                "2018-3-30 11:11:11",null,null,null,
+                null,null));
     }
 }

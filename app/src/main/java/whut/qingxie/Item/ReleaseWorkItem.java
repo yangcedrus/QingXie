@@ -1,5 +1,8 @@
 package whut.qingxie.Item;
-//发布活动
+
+/**
+ * 发布活动
+ */
 
 public class ReleaseWorkItem {
     String s1,s2;   //s1前面，s2后面

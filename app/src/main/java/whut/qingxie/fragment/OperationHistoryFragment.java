@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 import whut.qingxie.R;
 import whut.qingxie.adapter.OperationHistoryItemAdapter;
@@ -21,15 +22,19 @@ public class OperationHistoryFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_operation_history,container,false);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
         if(operationHistoryItemList.size()==0)
             initItem();
         OperationHistoryItemAdapter operationHistoryItemAdapter=new OperationHistoryItemAdapter(getActivity(),
                 R.layout.operation_history_item,operationHistoryItemList);
-        View view = inflater.inflate(R.layout.fragment_operation_history, container, false);
-        ListView listView=(ListView)view.findViewById(R.id.operation_listview);
+        ListView listView=(ListView)getActivity().findViewById(R.id.operation_listview);
         listView.setAdapter(operationHistoryItemAdapter);
-
-        return view;
     }
 
     public void initItem(){
