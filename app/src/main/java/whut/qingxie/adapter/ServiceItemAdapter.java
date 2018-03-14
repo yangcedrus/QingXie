@@ -1,24 +1,15 @@
 package whut.qingxie.adapter;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import whut.qingxie.Item.ManageWorkerAccountItem;
 import whut.qingxie.R;
-import whut.qingxie.activity.SignUpActivity;
 import whut.qingxie.entity.activity.VolActivityInfo;
 
 public class ServiceItemAdapter extends RecyclerView.Adapter<ServiceItemAdapter.ViewHolder> {
@@ -57,7 +48,7 @@ public class ServiceItemAdapter extends RecyclerView.Adapter<ServiceItemAdapter.
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.vol_service,parent,false);
+        View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.item_my_vol_services,parent,false);
         ViewHolder holder;
         holder=new ViewHolder(view);
         holder.serviceView.setOnClickListener(new View.OnClickListener(){
@@ -74,7 +65,7 @@ public class ServiceItemAdapter extends RecyclerView.Adapter<ServiceItemAdapter.
         VolActivityInfo activityInfo=volActivityInfos.get(position);
         holder.name.setText(activityInfo.getName());
         holder.time.setText(activityInfo.getRegTime());
-        holder.num.setText(Integer.toString(position));
+        holder.num.setText(Integer.toString(position+1));
         holder.info.setText(activityInfo.getGeneral());
         switch(activityInfo.getStatus()){
             case 0:

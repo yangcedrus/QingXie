@@ -7,9 +7,15 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import whut.qingxie.Item.MyHoursItem;
 import whut.qingxie.R;
 import whut.qingxie.adapter.ManageWorkTimeItemAdapter;
 import whut.qingxie.Item.ManageWorkTimeItem;
@@ -17,18 +23,21 @@ import whut.qingxie.Item.ManageWorkTimeItem;
 public class ManageWorkTimeActivity extends AppCompatActivity {
     private List<ManageWorkTimeItem> manageWorkTimeItemList=new ArrayList<>();
 
+    private static ManageWorkTimeItemAdapter adapter;
+    private static SmartRefreshLayout smartRefreshLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_work_time);
 
         //初始化数据
-        initInfo();
+        if(manageWorkTimeItemList.size()==0)
+            init();
         RecyclerView recyclerView=(RecyclerView)findViewById(R.id.manage_work_time_recyclerView);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
-        ManageWorkTimeItemAdapter manageWorkTimeItemAdapter=new ManageWorkTimeItemAdapter(manageWorkTimeItemList);
-        recyclerView.setAdapter(manageWorkTimeItemAdapter);
+        adapter=new ManageWorkTimeItemAdapter(manageWorkTimeItemList);
+        recyclerView.setAdapter(adapter);
 
         //显示返回按钮
         Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar_manage_work_time);
@@ -37,16 +46,44 @@ public class ManageWorkTimeActivity extends AppCompatActivity {
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        //refresh监听
+        smartRefreshLayout=(SmartRefreshLayout)findViewById(R.id.manage_worker_time_refresh);
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                init();
+                //结束刷新
+                smartRefreshLayout.finishRefresh();
+            }
+        });
+        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                for(int i=0;i<5;i++){
+                    manageWorkTimeItemList.add(new ManageWorkTimeItem(R.mipmap.ic_launcher_round,"张三","任务标题","任务摘要/任务时间/认证工时数"));
+                }
+                //结束加载更多
+                if(manageWorkTimeItemList.size()<10)
+                    smartRefreshLayout.finishLoadmore();
+                else
+                    smartRefreshLayout.finishLoadmoreWithNoMoreData();
+                reFresh();
+            }
+        });
     }
 
-    private void initInfo(){
-        manageWorkTimeItemList.add(new ManageWorkTimeItem(R.mipmap.ic_launcher_round,"张三","任务标题","任务摘要/任务时间/认证工时数"));
-        manageWorkTimeItemList.add(new ManageWorkTimeItem(R.mipmap.ic_launcher_round,"张三","任务标题","任务摘要/任务时间/认证工时数"));
-        manageWorkTimeItemList.add(new ManageWorkTimeItem(R.mipmap.ic_launcher_round,"张三","任务标题","任务摘要/任务时间/认证工时数"));
-        manageWorkTimeItemList.add(new ManageWorkTimeItem(R.mipmap.ic_launcher_round,"张三","任务标题","任务摘要/任务时间/认证工时数"));
-        manageWorkTimeItemList.add(new ManageWorkTimeItem(R.mipmap.ic_launcher_round,"张三","任务标题","任务摘要/任务时间/认证工时数"));
-        manageWorkTimeItemList.add(new ManageWorkTimeItem(R.mipmap.ic_launcher_round,"张三","任务标题","任务摘要/任务时间/认证工时数"));
-        manageWorkTimeItemList.add(new ManageWorkTimeItem(R.mipmap.ic_launcher_round,"张三","任务标题","任务摘要/任务时间/认证工时数"));
+    private static void reFresh(){
+        adapter.notifyDataSetChanged();
+    }
+
+    private void init(){
+        int num=manageWorkTimeItemList.size()==0?5:manageWorkTimeItemList.size();
+
+        manageWorkTimeItemList.clear();
+        for(int i=0;i<num;i++){
+            manageWorkTimeItemList.add(new ManageWorkTimeItem(R.mipmap.ic_launcher_round,"张三","任务标题","任务摘要/任务时间/认证工时数"));
+        }
     }
 
     //返回按钮响应

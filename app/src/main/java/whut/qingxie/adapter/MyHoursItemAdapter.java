@@ -38,7 +38,7 @@ public class MyHoursItemAdapter extends RecyclerView.Adapter<MyHoursItemAdapter.
 
     @Override
     public MyHoursItemAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_hours_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_my_hours,parent,false);
         MyHoursItemAdapter.ViewHolder holder;
         holder = new MyHoursItemAdapter.ViewHolder(view);
         return holder;

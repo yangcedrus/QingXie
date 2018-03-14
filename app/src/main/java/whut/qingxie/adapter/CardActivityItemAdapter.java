@@ -53,7 +53,7 @@ public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityIt
         if(headerView!=null&&viewType==TYPE_HEADER) {
             return new ViewHolder(headerView);
         }
-        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_activity_details,parent,false);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card_activity_details,parent,false);
         final ViewHolder holder = new ViewHolder(view);
         holder.cardView.setOnClickListener(new View.OnClickListener(){
             @Override

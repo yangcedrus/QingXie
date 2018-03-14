@@ -25,7 +25,7 @@ public class MyMessageActivity extends AppCompatActivity {
         if(myMessageItemArrayList.size()==0)
             initItems();
         MyMessageItemAdapter adapter=new MyMessageItemAdapter(MyMessageActivity.this,
-                R.layout.message_item,myMessageItemArrayList);
+                R.layout.item_message,myMessageItemArrayList);
         ListView listView=(ListView)findViewById(R.id.message_listview);
         listView.setAdapter(adapter);
 

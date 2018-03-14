@@ -6,11 +6,25 @@
     tools:context="whut.qingxie.fragment.OperationHistoryFragment"
     android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/operation_listview"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/operation_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="#00000000"
-        android:dividerHeight="15dp"/>
+        android:layout_height="match_parent">
 
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/operation_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#00000000"
+            android:dividerHeight="15dp"/>
+
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

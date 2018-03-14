@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
                 case ADMIN:
                     bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_group_black_24dp);
                     bottomNavigationView.getMenu().getItem(2).setTitle("工作");
+                    bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.ic_detail_black_24dp);
+                    bottomNavigationView.getMenu().getItem(1).setTitle("操作历史");
                     break;
                 default:break;
             }

@@ -25,7 +25,7 @@ public class MyResumeActivity extends AppCompatActivity {
 
         if(list.size()==0)
             init();
-        MyExperienceItemAdapter adapter=new MyExperienceItemAdapter(MyResumeActivity.this,R.layout.experience_item,list);
+        MyExperienceItemAdapter adapter=new MyExperienceItemAdapter(MyResumeActivity.this,R.layout.item_experience,list);
         ListView listView=(ListView)findViewById(R.id.experience_resume);
         listView.setAdapter(adapter);
 

@@ -58,7 +58,6 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/service_info"
         android:layout_below="@+id/service_info"
-        android:drawableLeft="@drawable/ic_home_black_24dp"
         android:text="" />
 
 </RelativeLayout>

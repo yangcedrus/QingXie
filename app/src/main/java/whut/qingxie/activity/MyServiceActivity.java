@@ -82,8 +82,10 @@ public class MyServiceActivity extends AppCompatActivity {
     }
 
     private void initItems(){
+        int num=volServiceItemList.size()==0?5:volServiceItemList.size();
+
         volServiceItemList.clear();
-        for(int i=0;i<5;i++){
+        for(int i=0;i<num;i++){
             volServiceItemList.add(new VolActivityInfo(1,"敬老院活动",1,
                     "2",0,4,2,10,
                     "东院敬老院","东院敬老院活动，打扫卫生",null,

@@ -3,14 +3,22 @@ package whut.qingxie.fragment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import whut.qingxie.Item.MyHoursItem;
 import whut.qingxie.R;
 import whut.qingxie.adapter.FavouriteItemAdapter;
 import whut.qingxie.entity.activity.VolActivityInfo;
@@ -19,10 +27,12 @@ public class FavouriteFragment extends Fragment {
 
     private List<VolActivityInfo> favouriteItems=new ArrayList<>();
 
+    private static SmartRefreshLayout smartRefreshLayout;
+    private static FavouriteItemAdapter adapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_favourite, container, false);
-
     }
 
     @Override
@@ -30,37 +40,58 @@ public class FavouriteFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         if(favouriteItems.size()==0)
-            initItem();
-        FavouriteItemAdapter adapter=new FavouriteItemAdapter(getActivity(),R.layout.favourite_item,favouriteItems);
-        ListView listView=(ListView)getActivity().findViewById(R.id.favourite_listview);
-        listView.setAdapter(adapter);
+            init();
+
+        RecyclerView recyclerView=(RecyclerView)getActivity().findViewById(R.id.favourite_recyclerView);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        adapter=new FavouriteItemAdapter(favouriteItems);
+        recyclerView.setAdapter(adapter);
+
+        //refresh监听
+        smartRefreshLayout=(SmartRefreshLayout) getActivity().findViewById(R.id.favourite_refresh);
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                init();
+                //结束刷新
+                smartRefreshLayout.finishRefresh();
+            }
+        });
+        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                for(int i=0;i<5;i++){
+                    favouriteItems.add(new VolActivityInfo(1,"敬老院活动",1,
+                            "2",0,4,2,10,
+                            "东院敬老院","东院敬老院活动，打扫卫生",null,
+                            "2018-3-30 11:11:11",null,null,null,
+                            null,null));
+                }
+                //结束加载更多
+                if(favouriteItems.size()<10)
+                    smartRefreshLayout.finishLoadmore();
+                else
+                    smartRefreshLayout.finishLoadmoreWithNoMoreData();
+                reFresh();
+            }
+        });
     }
 
-    public void initItem(){
-        favouriteItems.add(new VolActivityInfo(1,"敬老院活动",1,
-                "2",0,4,2,10,
-                "东院敬老院","东院敬老院活动，打扫卫生",null,
-                "2018-3-30 11:11:11",null,null,null,
-                null,null));
-        favouriteItems.add(new VolActivityInfo(1,"敬老院活动",1,
-                "2",0,4,2,10,
-                "东院敬老院","东院敬老院活动，打扫卫生",null,
-                "2018-3-30 11:11:11",null,null,null,
-                null,null));
-        favouriteItems.add(new VolActivityInfo(1,"敬老院活动",1,
-                "2",0,4,2,10,
-                "东院敬老院","东院敬老院活动，打扫卫生",null,
-                "2018-3-30 11:11:11",null,null,null,
-                null,null));
-        favouriteItems.add(new VolActivityInfo(1,"敬老院活动",1,
-                "2",0,4,2,10,
-                "东院敬老院","东院敬老院活动，打扫卫生",null,
-                "2018-3-30 11:11:11",null,null,null,
-                null,null));
-        favouriteItems.add(new VolActivityInfo(1,"敬老院活动",1,
-                "2",0,4,2,10,
-                "东院敬老院","东院敬老院活动，打扫卫生",null,
-                "2018-3-30 11:11:11",null,null,null,
-                null,null));
+    private static void reFresh(){
+        adapter.notifyDataSetChanged();
+    }
+
+    public void init() {
+        int num = favouriteItems.size() == 0 ? 5 : favouriteItems.size();
+
+        favouriteItems.clear();
+        for (int i = 0; i < num; i++) {
+            favouriteItems.add(new VolActivityInfo(1, "敬老院活动", 1,
+                    "2", 0, 4, 2, 10,
+                    "东院敬老院", "东院敬老院活动，打扫卫生", null,
+                    "2018-3-30 11:11:11", null, null, null,
+                    null, null));
+        }
     }
 }

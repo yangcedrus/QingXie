@@ -38,7 +38,7 @@ public class ManageWorkTimeItemAdapter extends RecyclerView.Adapter<ManageWorkTi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.manage_worktime_item,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_manage_worker_time,parent,false);
         final ViewHolder viewHolder;
         viewHolder = new ViewHolder(view);
         viewHolder.IMAGE_OK.setOnClickListener(new View.OnClickListener(){

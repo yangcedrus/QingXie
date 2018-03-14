@@ -2,7 +2,6 @@ package whut.qingxie.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
@@ -10,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -130,7 +127,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         linearLayoutManager =new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         adapter=new CardActivityItemAdapter(cardActivityItems);
-        headerView=LayoutInflater.from(getActivity()).inflate(R.layout.home_header,recyclerView,false);
+        headerView=LayoutInflater.from(getActivity()).inflate(R.layout.item_home_header,recyclerView,false);
         adapter.setHeaderView(headerView);
         recyclerView.setAdapter(adapter);
 
@@ -149,8 +146,10 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
 
     //初始化列表数据
     private static void init(){
+        int num=cardActivityItems.size()==0?5:cardActivityItems.size();
+
         cardActivityItems.clear();
-        for(int i=0;i<5;i++){
+        for(int i=0;i<num;i++){
             cardActivityItems.add(new VolActivityInfo(1,"敬老院活动",1,
                     "2",0,4,2,10,
                     "东院敬老院","东院敬老院活动，打扫卫生","详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情",
