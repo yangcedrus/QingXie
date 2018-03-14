@@ -2,24 +2,29 @@ package whut.qingxie.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import whut.qingxie.R;
-import whut.qingxie.Item.CardActivityItem;
 import whut.qingxie.activity.SignUpActivity;
+import whut.qingxie.entity.activity.VolActivityInfo;
 
 public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityItemAdapter.ViewHolder> {
+    private static final int TYPE_NORMAL=1;
+    private static final int TYPE_HEADER=0;
+
+    private static View headerView;
     private Context mContext;
 
-    private List<CardActivityItem> cardActivityItemList;
+    private List<VolActivityInfo> cardActivityItemList;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         View cardView;
@@ -28,6 +33,7 @@ public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityIt
 
         ViewHolder(View view){
             super(view);
+            if(view==headerView)    return;
             cardView=view;
             title=(TextView)view.findViewById(R.id.card_title);
             info=(TextView)view.findViewById(R.id.card_info);
@@ -38,22 +44,26 @@ public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityIt
         }
     }
 
-    public CardActivityItemAdapter(List<CardActivityItem> cardActivityItems){
+    public CardActivityItemAdapter(List<VolActivityInfo> cardActivityItems){
         cardActivityItemList=cardActivityItems;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_activity_details,parent,false);
+        if(headerView!=null&&viewType==TYPE_HEADER) {
+            return new ViewHolder(headerView);
+        }
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_card_activity_details,parent,false);
         final ViewHolder holder = new ViewHolder(view);
         holder.cardView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                int pos = holder.getAdapterPosition();
-                CardActivityItem item = cardActivityItemList.get(pos);
+                int pos = getRealPosition(holder);
+                VolActivityInfo item = cardActivityItemList.get(pos);
                 if(mContext==null)
                     mContext=parent.getContext();
                 Intent intent=new Intent(mContext,SignUpActivity.class);
+                intent.putExtra("activity_details",item);
                 mContext.startActivity(intent);
             }
         });
@@ -61,23 +71,6 @@ public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityIt
             @Override
             public void onClick(View v) {
                 // TODO: 2018/2/10 点击收藏按钮
-                /*待实现
-                int pos = holder.getAdapterPosition();
-                CardActivityItem item = cardActivityItemList.get(pos);
-                if(mContext==null)
-                    mContext=parent.getContext();
-                Drawable img1 = mContext.getDrawable(R.drawable.ic_favorite_black_24dp);
-                Drawable img2 = mContext.getDrawable(R.drawable.ic_favorite_border_black_24dp);
-                //必须添加否则图片不显示
-                img1.setBounds(0, 0, img1.getMinimumWidth(), img1.getMinimumHeight());
-                img2.setBounds(0, 0, img2.getMinimumWidth(), img2.getMinimumHeight());
-                if(item.getFavourite()==true){
-                    // TODO: 2018/2/11 取消收藏 
-                    holder.favourite.setCompoundDrawables(img2,null,null,null);
-                }else if(item.getFavourite()==false){
-                    // TODO: 2018/2/11 添加收藏
-                    holder.favourite.setCompoundDrawables(img1,null,null,null);
-                }*/
             }
         });
         holder.details.setOnClickListener(new View.OnClickListener() {
@@ -97,11 +90,30 @@ public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityIt
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        CardActivityItem cardActivityItem = cardActivityItemList.get(position);
-        holder.title.setText(cardActivityItem.getTitle());
-        holder.info.setText(cardActivityItem.getInfo());
-        String s=cardActivityItem.getDays()+"天";
-        /*收藏按钮变化
+        if (getItemViewType(position)==TYPE_HEADER) return;
+
+        final int pos=getRealPosition(holder);
+        VolActivityInfo cardActivityItem = cardActivityItemList.get(pos);
+        holder.title.setText(cardActivityItem.getName());
+        holder.info.setText(cardActivityItem.getGeneral());
+
+        long days=0;  //天数
+
+        try{
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date1=new Date();
+            Date date2=sdf.parse(cardActivityItem.getRegTime());
+
+            long diff=date2.getTime()-date1.getTime();
+            days = diff / (1000 * 60 * 60 * 24);
+        }catch (ParseException e){
+            e.printStackTrace();
+            // TODO: 2018/3/7 解析异常捕获处理
+        }
+        String s=days+"天";
+
+        // TODO: 2018/3/12 收藏按钮变化 
+            /*收藏按钮变化
         if(cardActivityItem.getFavourite()==true)
             holder.favourite.setCompoundDrawables(img1,null,null,null);
         else
@@ -112,6 +124,27 @@ public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityIt
 
     @Override
     public int getItemCount() {
-        return cardActivityItemList.size();
+        return headerView == null ? cardActivityItemList.size() : cardActivityItemList.size() + 1;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if(headerView==null)    return TYPE_NORMAL;
+        if(position==0)  return TYPE_HEADER;
+        return TYPE_NORMAL;
+    }
+
+    private int getRealPosition(RecyclerView.ViewHolder holder){
+        int position=holder.getLayoutPosition();
+        return headerView==null? position:position-1;
+    }
+
+    public View getHeaderView(){
+        return headerView;
+    }
+
+    public void setHeaderView(View headerView){
+        this.headerView=headerView;
+        notifyItemInserted(0);
     }
 }

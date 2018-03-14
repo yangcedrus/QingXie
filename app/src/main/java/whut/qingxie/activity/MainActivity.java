@@ -30,21 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
     private int state=NOLOGIN;
 
-    //返回登录者身份信息
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch(requestCode){
-            case 1:
-                state=data.getIntExtra("login_state_return",0);
-        }
-        //无法重新填充布局
-        //bottomNavigationView = (BottomNavigationView)findViewById(R.id.navigation);
-        //if(state==2||state==3){
-        //    bottomNavigationView.inflateMenu(R.menu.navigation_worker);
-        //}
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
     private HomeFragment mHomeFragment;
     private MeFragment mMeFragment;
     private FavouriteFragment mFavouriteFragment;
@@ -52,6 +37,35 @@ public class MainActivity extends AppCompatActivity {
     private WorkerWorkFragment mWorkerWorkFragment;
     private OperationHistoryFragment mOperationHistoryFragment;
     private AdministratorFragment mAdministratorFragment;
+    private static BottomNavigationView bottomNavigationView;
+
+    //返回登录者身份信息
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        state=data.getIntExtra("login_state_return",0);
+        switch(resultCode){
+            case RESULT_OK:switch (state){
+                case STUDENT:
+                    bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_favorite_border_black_24dp);
+                    bottomNavigationView.getMenu().getItem(2).setTitle("收藏");
+                    break;
+                case WORKER:
+                    bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_group_black_24dp);
+                    bottomNavigationView.getMenu().getItem(2).setTitle("工作");
+                    break;
+                case ADMIN:
+                    bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_group_black_24dp);
+                    bottomNavigationView.getMenu().getItem(2).setTitle("工作");
+                    bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.ic_detail_black_24dp);
+                    bottomNavigationView.getMenu().getItem(1).setTitle("操作历史");
+                    break;
+                default:break;
+            }
+            default:break;
+            // TODO: 2018/3/9 出错处理
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         setDefaultFragment();
 
         //底部导航栏切换操作
-        BottomNavigationView bottomNavigationView;
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.navigation);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(
@@ -82,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
                         if(state==NOLOGIN&&item.getItemId()!=R.id.navigation_home){
                             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                             startActivityForResult(intent, 1);
+                            if(state!=NOLOGIN){
+                            }
                         }else{
                             switch(item.getItemId()){
                                 case R.id.navigation_home:

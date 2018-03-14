@@ -26,7 +26,7 @@ public class ReleaseWorkActivity extends AppCompatActivity {
         if(releaseWorkItemArrayList.size()==0)
             initItems();
         ReleaseWorkItemAdapter adapter=new ReleaseWorkItemAdapter(ReleaseWorkActivity.this,
-                R.layout.release_item,releaseWorkItemArrayList);
+                R.layout.item_release,releaseWorkItemArrayList);
         ListView listView=(ListView)findViewById(R.id.release_listview);
         listView.setAdapter(adapter);
 

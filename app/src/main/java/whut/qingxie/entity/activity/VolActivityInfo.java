@@ -1,39 +1,42 @@
-package whut.qingxie.bean;
+package whut.qingxie.entity.activity;
 
-public class VolActivityInfo {
-    private Integer id;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-    private String name;
+public class VolActivityInfo implements Parcelable {
+    private Integer id;     //活动ID
 
-    private Integer managerId;
+    private String name;       //活动名称
 
-    private String type;
+    private Integer managerId;  //活动管理人ID
 
-    private Integer status;
+    private String type;    //活动类型
 
-    private double hours;
+    private Integer status; //活动状态
 
-    private double hourPerTime;
+    private double hours;   //活动总工时
 
-    private Integer needVolunteers;
+    private double hourPerTime; //活动每次工时
 
-    private String place;
+    private Integer needVolunteers; //活动需要人数
 
-    private String general;
+    private String place;   //活动地点
 
-    private String descriptions;
+    private String general;     //活动概况
 
-    private String regTime;
+    private String descriptions;    //活动详情
 
-    private String regEndTime;
+    private String regTime;     //活动报名时间
 
-    private String interviewTime;
+    private String regEndTime;      //活动报名截止时间
 
-    private String startTime;
+    private String interviewTime;   //活动面试时间
 
-    private String endTime;
+    private String startTime;   //活动开始时间
 
-    private String createTime;
+    private String endTime; //活动截止时间
+
+    private String createTime;  //活动创建时间
 
     public VolActivityInfo(Integer id, String name, Integer managerId, String type, Integer status, double hours, double hourPerTime, Integer needVolunteers, String place, String general, String descriptions, String regTime, String regEndTime, String interviewTime, String startTime, String endTime, String createTime) {
         this.id = id;
@@ -193,4 +196,60 @@ public class VolActivityInfo {
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeInt(managerId);
+        dest.writeString(type);
+        dest.writeInt(status);
+        dest.writeDouble(hours);
+        dest.writeDouble(hourPerTime);
+        dest.writeInt(needVolunteers);
+        dest.writeString(place);
+        dest.writeString(general);
+        dest.writeString(descriptions);
+        dest.writeString(regTime);
+        dest.writeString(regEndTime);
+        dest.writeString(interviewTime);
+        dest.writeString(startTime);
+        dest.writeString(endTime);
+        dest.writeString(createTime);
+    }
+
+    public static final Parcelable.Creator<VolActivityInfo> CREATOR=new Parcelable.Creator<VolActivityInfo>(){
+        @Override
+        public VolActivityInfo createFromParcel(Parcel source) {
+            VolActivityInfo item=new VolActivityInfo();
+            item.id=source.readInt();
+            item.name=source.readString();
+            item.managerId=source.readInt();
+            item.type=source.readString();
+            item.status=source.readInt();
+            item.hours=source.readDouble();
+            item.hourPerTime=source.readDouble();
+            item.needVolunteers=source.readInt();
+            item.place=source.readString();
+            item.general=source.readString();
+            item.descriptions=source.readString();
+            item.regTime=source.readString();
+            item.regEndTime=source.readString();
+            item.interviewTime=source.readString();
+            item.startTime=source.readString();
+            item.endTime=source.readString();
+            item.createTime=source.readString();
+            return item;
+        }
+
+        @Override
+        public VolActivityInfo[] newArray(int size) {
+            return new VolActivityInfo[size];
+        }
+    };
 }

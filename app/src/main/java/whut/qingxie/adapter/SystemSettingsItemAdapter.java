@@ -1,5 +1,9 @@
 package whut.qingxie.adapter;
 
+/**
+ * 系统设置Adapter
+ */
+
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,9 +32,9 @@ public class SystemSettingsItemAdapter extends ArrayAdapter {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         SystemSettingsItem systemSettingsItem= (SystemSettingsItem) getItem(position);
         View view= LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
-        ImageView itemimage=(ImageView)view.findViewById(R.id.my_item_image);
-        TextView textView=(TextView)view.findViewById(R.id.my_item_text);
-        itemimage.setImageResource(systemSettingsItem.getImageId());
+        ImageView image=(ImageView)view.findViewById(R.id.system_setting_item_image);
+        TextView textView=(TextView)view.findViewById(R.id.system_setting_item_text);
+        image.setImageResource(systemSettingsItem.getImageId());
         textView.setText(systemSettingsItem.getName());
         return view;
     }

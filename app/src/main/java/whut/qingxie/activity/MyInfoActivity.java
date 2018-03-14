@@ -3,13 +3,8 @@ package whut.qingxie.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.PopupMenu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +25,7 @@ public class MyInfoActivity extends AppCompatActivity {
         if(myInfoItemArrayList.size()==0)
             initItems();
         MyInfoItemAdapter adapter=new MyInfoItemAdapter(MyInfoActivity.this,
-                R.layout.info_item,myInfoItemArrayList);
+                R.layout.item_info,myInfoItemArrayList);
         final ListView listView=(ListView)findViewById(R.id.info_listview);
         listView.setAdapter(adapter);
 

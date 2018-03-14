@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_signup"
+        android:id="@+id/toolbar_sign_up"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
@@ -19,28 +19,37 @@
     </android.support.v7.widget.Toolbar>
 
     <TextView
-        android:id="@+id/signup_info"
+        android:id="@+id/sign_up_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar_signup"
+        android:layout_below="@+id/toolbar_sign_up"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:text="武汉理工大学管理学院"
-        android:textSize="15dp"/>
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/sign_up_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/sign_up_info"
+        android:layout_below="@+id/sign_up_info"
+        android:layout_marginTop="32dp"
+        android:text="活动详情" />
 
     <Button
-        android:id="@+id/signip_confirm"
+        android:id="@+id/sign_up_confirm"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_above="@+id/signup_chat"
+        android:layout_above="@+id/sign_up_chat"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:background="@drawable/shape_blue"
         android:text="点此快速报名" />
 
     <Button
-        android:id="@+id/signup_chat"
+        android:id="@+id/sign_up_chat"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_alignParentBottom="true"
@@ -53,9 +62,9 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/signip_confirm"
+        android:layout_above="@+id/sign_up_confirm"
         android:layout_marginBottom="23dp"
-        android:layout_toStartOf="@+id/signup_chat"
+        android:layout_toStartOf="@+id/sign_up_chat"
         android:text="已报名：" />
 
     <TextView
@@ -72,11 +81,11 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textView_people_have"
         android:layout_alignBottom="@+id/textView_people_have"
-        android:layout_alignEnd="@+id/signup_chat"
+        android:layout_alignEnd="@+id/sign_up_chat"
         android:text="共需要：" />
 
     <TextView
-        android:id="@+id/textView_people_"
+        android:id="@+id/textView_people_needed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/textView3"

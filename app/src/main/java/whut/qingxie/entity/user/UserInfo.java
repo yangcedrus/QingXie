@@ -1,6 +1,9 @@
-package whut.qingxie.bean;
+package whut.qingxie.entity.user;
 
-public class UserInfo {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class UserInfo implements Parcelable {
     private Integer id;
 
     private String studentId;
@@ -193,4 +196,63 @@ public class UserInfo {
     public void setLastLoginTime(String lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(studentId);
+        dest.writeString(name);
+        dest.writeString(password);
+        dest.writeString(flag);
+        dest.writeInt(roleId);
+        dest.writeString(gender);
+        dest.writeInt(classId);
+        dest.writeDouble(hours);
+        dest.writeInt(iconId);
+        dest.writeString(telephone);
+        dest.writeString(qq);
+        dest.writeString(email);
+        dest.writeString(wechat);
+        dest.writeString(token);
+        dest.writeString(validation);
+        dest.writeString(lastLoginTime);
+
+    }
+
+    //Parcelable方法传递对象
+    public static final Parcelable.Creator<UserInfo> CREATOR=new Parcelable.Creator<UserInfo>(){
+        @Override
+        public UserInfo createFromParcel(Parcel source) {
+            UserInfo user=new UserInfo();
+            user.id=source.readInt();
+            user.studentId=source.readString();
+            user.name=source.readString();
+            user.password=source.readString();
+            user.flag=source.readString();
+            user.roleId=source.readInt();
+            user.gender=source.readString();
+            user.classId=source.readInt();
+            user.hours=source.readInt();
+            user.iconId=source.readInt();
+            user.telephone=source.readString();
+            user.qq=source.readString();
+            user.email=source.readString();
+            user.wechat=source.readString();
+            user.token=source.readString();
+            user.validation=source.readString();
+            user.lastLoginTime=source.readString();
+
+            return user;
+        }
+
+        @Override
+        public UserInfo[] newArray(int size) {
+            return new UserInfo[size];
+        }
+    };
 }

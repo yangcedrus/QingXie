@@ -1,5 +1,6 @@
 package whut.qingxie.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +13,7 @@ import java.util.List;
 import whut.qingxie.R;
 import whut.qingxie.adapter.MyExperienceItemAdapter;
 import whut.qingxie.Item.ExperienceItem;
+import whut.qingxie.entity.user.UserInfo;
 
 public class MyResumeActivity extends AppCompatActivity {
     private List<ExperienceItem> list=new ArrayList<>();
@@ -23,7 +25,7 @@ public class MyResumeActivity extends AppCompatActivity {
 
         if(list.size()==0)
             init();
-        MyExperienceItemAdapter adapter=new MyExperienceItemAdapter(MyResumeActivity.this,R.layout.experience_item,list);
+        MyExperienceItemAdapter adapter=new MyExperienceItemAdapter(MyResumeActivity.this,R.layout.item_experience,list);
         ListView listView=(ListView)findViewById(R.id.experience_resume);
         listView.setAdapter(adapter);
 
@@ -34,6 +36,11 @@ public class MyResumeActivity extends AppCompatActivity {
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        Intent intent=getIntent();
+        UserInfo myInfo=(UserInfo) intent.getParcelableExtra("user_info");
+
+        // TODO: 2018/3/9 无信息可写 
     }
 
     public void init(){

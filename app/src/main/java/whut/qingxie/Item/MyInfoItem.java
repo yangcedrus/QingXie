@@ -1,5 +1,9 @@
 package whut.qingxie.Item;
 
+/**
+ * 待修改，建议删除
+ */
+
 public class MyInfoItem {
     String s1,s2;    //两个字符串
 

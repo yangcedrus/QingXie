@@ -32,7 +32,7 @@ public class ManageWorkerAccountItemAdapter extends RecyclerView.Adapter<ManageW
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.manage_worker_account_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_manage_worker_account,parent,false);
         ViewHolder holder;
         holder = new ViewHolder(view);
         return holder;

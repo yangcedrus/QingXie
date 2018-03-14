@@ -1,35 +1,50 @@
 package whut.qingxie.adapter;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.List;
 
 import whut.qingxie.R;
-import whut.qingxie.Item.FavouriteItem;
+import whut.qingxie.entity.activity.VolActivityInfo;
 
-public class FavouriteItemAdapter extends ArrayAdapter {
-    private int resourceId;
+public class FavouriteItemAdapter extends RecyclerView.Adapter<FavouriteItemAdapter.ViewHolder> {
+    public List<VolActivityInfo> volActivityInfos;
 
-    public FavouriteItemAdapter(Context context, int textViewResourceId, List<FavouriteItem> objects){
-        super(context,textViewResourceId,objects);
-        resourceId=textViewResourceId;
+    static class ViewHolder extends RecyclerView.ViewHolder{
+        TextView title,text;
+
+        private ViewHolder(View view){
+            super(view);
+            title=(TextView)view.findViewById(R.id.favourite_item_title);
+            text=(TextView)view.findViewById(R.id.favourite_item_text);
+        }
     }
 
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
-        FavouriteItem favouriteItem= (FavouriteItem) getItem(position);
-        View view= LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
-        TextView title=(TextView)view.findViewById(R.id.favourite_item_title);
-        TextView text=(TextView)view.findViewById(R.id.favourite_item_text);
+    public FavouriteItemAdapter(List<VolActivityInfo> volActivityInfoList){
+        volActivityInfos=volActivityInfoList;
+    }
 
-        title.setText(favouriteItem.getTitle());
-        text.setText(favouriteItem.getText());
-        return view;
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.item_favourite,parent,false);
+        ViewHolder holder;
+        holder=new ViewHolder(view);
+        return holder;
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        VolActivityInfo activityInfo=volActivityInfos.get(position);
+        holder.title.setText(activityInfo.getName());
+        holder.text.setText(activityInfo.getGeneral());
+    }
+
+    @Override
+    public int getItemCount() {
+        return volActivityInfos.size();
     }
 }

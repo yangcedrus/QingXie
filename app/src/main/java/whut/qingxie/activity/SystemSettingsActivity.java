@@ -26,7 +26,7 @@ public class SystemSettingsActivity extends AppCompatActivity {
         if(systemSettingsItems.size()==0)
             initItems();
         SystemSettingsItemAdapter adapter=new SystemSettingsItemAdapter(SystemSettingsActivity.this,
-                R.layout.system_settings_item,systemSettingsItems);
+                R.layout.item_system_settings,systemSettingsItems);
         ListView listView=(ListView)findViewById(R.id.system_list_view);
         listView.setAdapter(adapter);
 

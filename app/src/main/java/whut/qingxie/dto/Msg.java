@@ -3,13 +3,7 @@ package whut.qingxie.dto;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * 公共类，用于返回json对象
- *
- * @author Administrator
- */
 public class Msg {
-
     //  状态码
     private String status;
 
@@ -17,6 +11,15 @@ public class Msg {
 
     //用于封装数据
     private Map<String, Object> data = new HashMap<String, Object>();
+
+    public Msg(String status, String message, Map<String, Object> data) {
+        this.status = status;
+        this.message = message;
+        this.data = data;
+    }
+
+    public Msg() {
+    }
 
     public String getStatus() {
         return status;
@@ -41,5 +44,4 @@ public class Msg {
     public void setData(Map<String, Object> data) {
         this.data = data;
     }
-
 }

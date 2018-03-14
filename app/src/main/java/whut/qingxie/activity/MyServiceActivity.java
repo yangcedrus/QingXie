@@ -2,37 +2,78 @@ package whut.qingxie.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import whut.qingxie.R;
-import whut.qingxie.Item.volServiceItem;
 import whut.qingxie.adapter.ServiceItemAdapter;
+import whut.qingxie.entity.activity.VolActivityInfo;
 
 public class MyServiceActivity extends AppCompatActivity {
 
-    private List<volServiceItem> volServiceItemList =new ArrayList<>();
-    private int num=1;   //自增长编号
+    private List<VolActivityInfo> volServiceItemList =new ArrayList<>();
+
+    private static SmartRefreshLayout smartRefreshLayout;
+    private static ServiceItemAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_service);
 
+        //refresh监听
+        smartRefreshLayout=(SmartRefreshLayout)findViewById(R.id.service_refresh);
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                initItems();
+                //结束刷新
+                smartRefreshLayout.finishRefresh();
+            }
+        });
+        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                for(int i=0;i<5;i++){
+                    volServiceItemList.add(new VolActivityInfo(1,"敬老院活动",1,
+                            "2",0,4,2,10,
+                            "东院敬老院","东院敬老院活动，打扫卫生","详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情",
+                            "2018-3-30 11:11:11",null,null,null,
+                            null,null));
+                }
+                //结束加载更多
+                if(volServiceItemList.size()<10)
+                    smartRefreshLayout.finishLoadmore();
+                else
+                    smartRefreshLayout.finishLoadmoreWithNoMoreData();
+                reFresh();
+            }
+        });
+
         //创建ListView
+        RecyclerView recyclerView=(RecyclerView)findViewById(R.id.service_recyclerView);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        adapter=new ServiceItemAdapter(volServiceItemList);
+        recyclerView.setAdapter(adapter);
+
         if(volServiceItemList.size()==0)
             initItems();
-        ServiceItemAdapter adapter=new ServiceItemAdapter(MyServiceActivity.this,
-                R.layout.vol_service, volServiceItemList);
-        ListView listView=(ListView)findViewById(R.id.service_listview);
-        listView.setAdapter(adapter);
 
         //显示返回按钮
-        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar_myservice);
+        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar_my_service);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         //noinspection ConstantConditions
@@ -41,14 +82,21 @@ public class MyServiceActivity extends AppCompatActivity {
     }
 
     private void initItems(){
-        volServiceItemList.add(new volServiceItem("XYZ活动","2017-11-11/武汉理工大学",
-                num++,"详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情",1));
-        volServiceItemList.add(new volServiceItem("ABC活动","2017-11-11/武汉理工大学",
-                num++,"详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情",2));
-        volServiceItemList.add(new volServiceItem("守卫南湖大草原活动","2017-11-11/武汉理工大学",
-                num++,"详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情",1));
-        volServiceItemList.add(new volServiceItem("不知道什么活动","2017-11-11/武汉理工大学",
-                num++,"详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情",2));
+        int num=volServiceItemList.size()==0?5:volServiceItemList.size();
+
+        volServiceItemList.clear();
+        for(int i=0;i<num;i++){
+            volServiceItemList.add(new VolActivityInfo(1,"敬老院活动",1,
+                    "2",0,4,2,10,
+                    "东院敬老院","东院敬老院活动，打扫卫生",null,
+                    "2018-3-30 11:11:11",null,null,null,
+                    null,null));
+        }
+        reFresh();
+    }
+
+    private static void reFresh(){
+        adapter.notifyDataSetChanged();
     }
 
     //返回按钮响应
