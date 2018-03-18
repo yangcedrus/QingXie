@@ -23,7 +23,7 @@ public class SignUpActivity extends AppCompatActivity {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
-        VolActivityInfo activityInfo=(VolActivityInfo)getIntent().getParcelableExtra("activity_details");
+        VolActivityInfo activityInfo=getIntent().getParcelableExtra("activity_details");
 
         //加载布局
         TextView title=(TextView)findViewById(R.id.sign_up_info);

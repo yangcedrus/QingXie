@@ -78,12 +78,12 @@ public class ManageWorkTimeActivity extends AppCompatActivity {
     }
 
     private void init(){
-        int num=manageWorkTimeItemList.size()==0?5:manageWorkTimeItemList.size();
-
         manageWorkTimeItemList.clear();
-        for(int i=0;i<num;i++){
+        for(int i=0;i<5;i++){
             manageWorkTimeItemList.add(new ManageWorkTimeItem(R.mipmap.ic_launcher_round,"张三","任务标题","任务摘要/任务时间/认证工时数"));
         }
+        reFresh();
+        smartRefreshLayout.setEnableAutoLoadmore(true);
     }
 
     //返回按钮响应

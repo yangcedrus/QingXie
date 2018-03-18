@@ -65,11 +65,11 @@ public class ManageWorkerAccountActivity extends AppCompatActivity {
     }
 
     private void init(){
-        int num=manageWorkerAccountItemList.size()==0?5:manageWorkerAccountItemList.size();
-
         manageWorkerAccountItemList.clear();
-        for(int i=0;i<num;i++) {
+        for(int i=0;i<5;i++) {
             manageWorkerAccountItemList.add(new ManageWorkerAccountItem("923","0121","是","2018/01/01"));
         }
+        reFresh();
+        smartRefreshLayout.setEnableAutoLoadmore(true);
     }
 }

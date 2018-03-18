@@ -18,78 +18,92 @@
             android:text="活动报名" />
     </android.support.v7.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/sign_up_info"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar_sign_up"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:text="武汉理工大学管理学院"
-        android:textSize="20dp"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_sign_up">
 
-    <TextView
-        android:id="@+id/sign_up_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/sign_up_info"
-        android:layout_below="@+id/sign_up_info"
-        android:layout_marginTop="32dp"
-        android:text="活动详情" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/sign_up_confirm"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_above="@+id/sign_up_chat"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/shape_blue"
-        android:text="点此快速报名" />
+            <TextView
+                android:id="@+id/sign_up_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:text="武汉理工大学管理学院"
+                android:textSize="20dp"/>
 
-    <Button
-        android:id="@+id/sign_up_chat"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
-        android:background="@drawable/shape_white"
-        android:text="报名后点此加入群聊" />
+            <TextView
+                android:id="@+id/sign_up_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/sign_up_info"
+                android:layout_below="@+id/sign_up_info"
+                android:layout_marginTop="30dp"
+                android:text="活动详情" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/sign_up_confirm"
-        android:layout_marginBottom="23dp"
-        android:layout_toStartOf="@+id/sign_up_chat"
-        android:text="已报名：" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/sign_up_info"
+                android:layout_below="@id/sign_up_description"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:text="已报名：" />
 
-    <TextView
-        android:id="@+id/textView_people_have"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView"
-        android:layout_toEndOf="@+id/textView"
-        android:text="TextView" />
+            <TextView
+                android:id="@+id/textView_people_have"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/textView"
+                android:layout_toEndOf="@+id/textView"
+                android:text="TextView" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView_people_have"
-        android:layout_alignBottom="@+id/textView_people_have"
-        android:layout_alignEnd="@+id/sign_up_chat"
-        android:text="共需要：" />
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@id/textView_people_needed"
+                android:layout_alignTop="@id/textView_people_needed"
+                android:text="共需要：" />
 
-    <TextView
-        android:id="@+id/textView_people_needed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView3"
-        android:layout_toEndOf="@+id/textView3"
-        android:text="TextView" />
+            <TextView
+                android:id="@+id/textView_people_needed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/sign_up_info"
+                android:layout_alignTop="@id/textView"
+                android:layout_marginEnd="20dp"
+                android:text="TextView" />
+
+            <Button
+                android:id="@+id/sign_up_confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@id/textView"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/shape_blue"
+                android:text="点此快速报名" />
+
+            <!--<Button
+                android:id="@+id/sign_up_chat"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/shape_white"
+                android:text="报名后点此加入群聊" />-->
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

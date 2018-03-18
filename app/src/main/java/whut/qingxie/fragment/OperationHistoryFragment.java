@@ -78,12 +78,12 @@ public class OperationHistoryFragment extends Fragment {
     }
 
     public void init() {
-        int num = operationHistoryItemList.size() == 0 ? 5 : operationHistoryItemList.size();
-
         operationHistoryItemList.clear();
-        for (int i = 0; i < num; i++) {
+        for (int i = 0; i < 5; i++) {
             operationHistoryItemList.add(new OperationHistoryItem("张三", "20180113/0258",
                     "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情"));
         }
+        reFresh();
+        smartRefreshLayout.setEnableAutoLoadmore(true);
     }
 }

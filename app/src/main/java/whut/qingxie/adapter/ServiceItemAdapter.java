@@ -1,5 +1,7 @@
 package whut.qingxie.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,11 +12,13 @@ import android.widget.TextView;
 import java.util.List;
 
 import whut.qingxie.R;
+import whut.qingxie.activity.SignUpActivity;
 import whut.qingxie.entity.activity.VolActivityInfo;
 
 public class ServiceItemAdapter extends RecyclerView.Adapter<ServiceItemAdapter.ViewHolder> {
 
     public List<VolActivityInfo> volActivityInfos;
+    private Context mContext;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView name,time,num,info,status;
@@ -47,14 +51,19 @@ public class ServiceItemAdapter extends RecyclerView.Adapter<ServiceItemAdapter.
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.item_my_vol_services,parent,false);
-        ViewHolder holder;
+        final ViewHolder holder;
         holder=new ViewHolder(view);
         holder.serviceView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                // TODO: 2018/3/13 我的志愿活动，item点击响应 
+                VolActivityInfo item=volActivityInfos.get(holder.getLayoutPosition());
+                if(mContext==null)
+                    mContext=parent.getContext();
+                Intent intent=new Intent(mContext,SignUpActivity.class);
+                intent.putExtra("activity_details",item);
+                mContext.startActivity(intent);
             }
         });
         return holder;
