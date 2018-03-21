@@ -1,4 +1,4 @@
-package whut.qingxie.adapter;
+package whut.qingxie.helper;
 
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;

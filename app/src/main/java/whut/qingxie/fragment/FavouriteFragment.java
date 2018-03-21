@@ -39,9 +39,6 @@ public class FavouriteFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if(favouriteItems.size()==0)
-            init();
-
         RecyclerView recyclerView=(RecyclerView)getActivity().findViewById(R.id.favourite_recyclerView);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -76,6 +73,8 @@ public class FavouriteFragment extends Fragment {
                 reFresh();
             }
         });
+        if(favouriteItems.size()==0)
+            init();
     }
 
     private static void reFresh(){
@@ -83,15 +82,15 @@ public class FavouriteFragment extends Fragment {
     }
 
     public void init() {
-        int num = favouriteItems.size() == 0 ? 5 : favouriteItems.size();
-
         favouriteItems.clear();
-        for (int i = 0; i < num; i++) {
+        for (int i = 0; i < 5; i++) {
             favouriteItems.add(new VolActivityInfo(1, "敬老院活动", 1,
                     "2", 0, 4, 2, 10,
                     "东院敬老院", "东院敬老院活动，打扫卫生", null,
                     "2018-3-30 11:11:11", null, null, null,
                     null, null));
         }
+        reFresh();
+        smartRefreshLayout.resetNoMoreData();
     }
 }

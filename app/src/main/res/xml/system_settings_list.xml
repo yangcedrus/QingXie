@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+    <header
+        android:title="新消息提醒"
+        android:fragment="whut.qingxie.activity.SystemSettingsActivity$NewMessagesSettings"/>
+    <header
+        android:title="通用设置"
+        android:fragment="whut.qingxie.activity.SystemSettingsActivity$UniversalSettings"/>
+    <header
+        android:title="密码设置"
+        android:fragment="whut.qingxie.activity.SystemSettingsActivity$PasswordSettings"/>
+    <header
+        android:title="版本更新"
+        android:fragment="whut.qingxie.activity.SystemSettingsActivity$UpdateSettings"/>
+    <header
+        android:title="版本说明"
+        android:fragment="whut.qingxie.activity.SystemSettingsActivity$VersionSettings"/>
+    <header
+        android:title="反馈"
+        android:fragment="whut.qingxie.activity.SystemSettingsActivity$FeedbackSettings"/>
+</preference-headers>

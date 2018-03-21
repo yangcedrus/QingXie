@@ -3,6 +3,8 @@
     package="whut.qingxie">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -23,7 +25,6 @@
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.SignUpActivity" />
         <activity android:name=".activity.HelpInfoActivity" />
-        <activity android:name=".activity.SystemSettingsActivity" />
         <activity android:name=".activity.MyHoursActivity" />
         <activity android:name=".activity.MyServiceActivity" />
         <activity android:name=".activity.MyResumeActivity" />
@@ -35,7 +36,18 @@
         <activity android:name=".activity.ManageWorkAvtivity" />
         <activity android:name=".activity.ReleaseNoticeActivity" />
         <activity android:name=".activity.ManageWorkerAccountActivity" />
-        <activity android:name=".activity.ManageVolunteerActivity"></activity>
+        <activity android:name=".activity.ManageVolunteerActivity" />
+        <activity android:name=".activity.RichTextEditorActivity" />
+        <activity
+            android:name=".activity.SystemSettingsActivity"
+            android:label="系统设置"
+            android:theme="@style/SettingsTheme" />
+        <activity
+            android:name="me.iwf.photopicker.PhotoPickerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="me.iwf.photopicker.PhotoPagerActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

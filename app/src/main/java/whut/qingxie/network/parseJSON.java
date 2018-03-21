@@ -25,6 +25,7 @@ public class parseJSON {
 
             //得到实例
             String jsonActivates=gson.toJson(msg.getData().get(ACTIVITY_KEY));
+
             return gson.fromJson(jsonActivates,new TypeToken<List<VolActivityInfo>>(){}.getType());
         }catch (Exception e){
             // TODO: 2018/3/5 捕获处理

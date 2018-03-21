@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="whut.qingxie.activity.RichTextEditorActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_rich_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <EditText
+        android:id="@+id/et_new_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@null"
+        android:hint="请输入标题"
+        android:textSize="18dp"
+        android:textColor="#757575"
+        android:padding="16dp"/>
+
+    <com.sendtion.xrichtext.RichTextEditor
+        android:id="@+id/et_new_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:textSize="16dp"
+        android:textColor="#757575"/>
+
+</LinearLayout>
