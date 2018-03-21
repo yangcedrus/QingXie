@@ -39,9 +39,6 @@ public class FavouriteFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if(favouriteItems.size()==0)
-            init();
-
         RecyclerView recyclerView=(RecyclerView)getActivity().findViewById(R.id.favourite_recyclerView);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -76,6 +73,8 @@ public class FavouriteFragment extends Fragment {
                 reFresh();
             }
         });
+        if(favouriteItems.size()==0)
+            init();
     }
 
     private static void reFresh(){
@@ -92,6 +91,6 @@ public class FavouriteFragment extends Fragment {
                     null, null));
         }
         reFresh();
-        smartRefreshLayout.setEnableAutoLoadmore(true);
+        smartRefreshLayout.resetNoMoreData();
     }
 }

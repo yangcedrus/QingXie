@@ -104,7 +104,8 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
                 for(int i=0;i<5;i++){
                     cardActivityItems.add(new VolActivityInfo(1,"敬老院活动",1,
                             "2",0,4,2,10,
-                            "东院敬老院","东院敬老院活动，打扫卫生","详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情",
+                            "东院敬老院","东院敬老院活动，打扫卫生",
+                            "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情",
                             "2018-3-30 11:11:11",null,null,null,
                             null,null));
                 }
@@ -183,7 +184,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
                     "2018-3-30 11:11:11",null,null,null,
                     null,null));
         }
-        smartRefreshLayout.setEnableAutoLoadmore(true);
+        smartRefreshLayout.resetNoMoreData();
         reFresh();
 
         //请求五个活动信息

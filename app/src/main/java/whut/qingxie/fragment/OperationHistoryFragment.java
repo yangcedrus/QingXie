@@ -38,9 +38,6 @@ public class OperationHistoryFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (operationHistoryItemList.size() == 0)
-            init();
-
         RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.operation_recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -71,6 +68,9 @@ public class OperationHistoryFragment extends Fragment {
                 reFresh();
             }
         });
+
+        if (operationHistoryItemList.size() == 0)
+            init();
     }
 
     private static void reFresh() {
@@ -84,6 +84,6 @@ public class OperationHistoryFragment extends Fragment {
                     "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情"));
         }
         reFresh();
-        smartRefreshLayout.setEnableAutoLoadmore(true);
+        smartRefreshLayout.resetNoMoreData();
     }
 }

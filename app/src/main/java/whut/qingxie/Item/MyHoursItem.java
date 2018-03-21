@@ -7,15 +7,13 @@ package whut.qingxie.Item;
 
 public class MyHoursItem {
     String serviceTime; //服务时间
-    String servicePlace;    //服务地点
-    String servicePeople;   //服务对象
+    String serviceName;    //服务名称
     double hours;   //工时
     boolean status;  //认证状况
 
-    public MyHoursItem(String serviceTime, String servicePlace, String servicePeople, double hours, boolean state) {
+    public MyHoursItem(String serviceTime, String serviceName, double hours, boolean state) {
         this.serviceTime = serviceTime;
-        this.servicePlace = servicePlace;
-        this.servicePeople = servicePeople;
+        this.serviceName = serviceName;
         this.hours = hours;
         this.status = state;
     }
@@ -28,20 +26,12 @@ public class MyHoursItem {
         this.serviceTime = serviceTime;
     }
 
-    public String getServicePlace() {
-        return servicePlace;
+    public String getServiceName() {
+        return serviceName;
     }
 
-    public void setServicePlace(String servicePlace) {
-        this.servicePlace = servicePlace;
-    }
-
-    public String getServicePeople() {
-        return servicePeople;
-    }
-
-    public void setServicePeople(String servicePeople) {
-        this.servicePeople = servicePeople;
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 
     public double getHours() {

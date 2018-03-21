@@ -20,13 +20,12 @@ public class MyHoursItemAdapter extends RecyclerView.Adapter<MyHoursItemAdapter.
     private List<MyHoursItem> myHoursItems;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView time,place,people,hour,status;
+        TextView time,name,hour,status;
 
         private ViewHolder(View view){
             super(view);
             time=(TextView)view.findViewById(R.id.my_hours_time);
-            place=(TextView)view.findViewById(R.id.my_hours_place);
-            people=(TextView)view.findViewById(R.id.my_hours_people);
+            name=(TextView)view.findViewById(R.id.my_hours_name);
             hour=(TextView)view.findViewById(R.id.my_hours_hours);
             status=(TextView)view.findViewById(R.id.my_hours_status);
         }
@@ -48,8 +47,7 @@ public class MyHoursItemAdapter extends RecyclerView.Adapter<MyHoursItemAdapter.
     public void onBindViewHolder(MyHoursItemAdapter.ViewHolder holder, int position) {
         MyHoursItem myHoursItem = myHoursItems.get(position);
         holder.time.setText(myHoursItem.getServiceTime());
-        holder.place.setText(myHoursItem.getServicePlace());
-        holder.people.setText(myHoursItem.getServicePeople());
+        holder.name.setText(myHoursItem.getServiceName());
         holder.hour.setText(Double.toString(myHoursItem.getHours()));
         holder.status.setText(myHoursItem.getStatus()?"已认证":"未认证");
     }

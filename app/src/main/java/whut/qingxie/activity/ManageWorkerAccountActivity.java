@@ -27,8 +27,7 @@ public class ManageWorkerAccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_worker_account);
-        if(manageWorkerAccountItemList.size()==0)
-            init();
+
         RecyclerView recyclerView=(RecyclerView)findViewById(R.id.manage_worker_account_recyclerView);
         LinearLayoutManager linearLayoutManager =new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -58,6 +57,9 @@ public class ManageWorkerAccountActivity extends AppCompatActivity {
                 reFresh();
             }
         });
+
+        if(manageWorkerAccountItemList.size()==0)
+            init();
     }
 
     private static void reFresh(){
@@ -70,6 +72,6 @@ public class ManageWorkerAccountActivity extends AppCompatActivity {
             manageWorkerAccountItemList.add(new ManageWorkerAccountItem("923","0121","是","2018/01/01"));
         }
         reFresh();
-        smartRefreshLayout.setEnableAutoLoadmore(true);
+        smartRefreshLayout.resetNoMoreData();
     }
 }

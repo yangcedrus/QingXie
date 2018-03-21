@@ -66,7 +66,7 @@ public class MyHoursActivity extends AppCompatActivity {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 for(int i=0;i<5;i++){
-                    myHoursItems.add(new MyHoursItem("2018/1/1","东院敬老院","老人",4,false));
+                    myHoursItems.add(new MyHoursItem("2018/1/1","敬老院活动",4,false));
                 }
                 //结束加载更多
                 if(myHoursItems.size()<10)
@@ -108,7 +108,9 @@ public class MyHoursActivity extends AppCompatActivity {
         int num=myHoursItems.size()==0?5:myHoursItems.size();
         myHoursItems.clear();
         for (int i = 0; i < num; i++) {
-            myHoursItems.add(new MyHoursItem("2018/1/1","东院敬老院","老人",4,true));
+            myHoursItems.add(new MyHoursItem("2018/1/1","敬老院活动",4,true));
         }
+        smartRefreshLayout.resetNoMoreData();
+        reFresh();
     }
 }

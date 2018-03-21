@@ -91,7 +91,7 @@ public class MyServiceActivity extends AppCompatActivity {
                     null,null));
         }
         reFresh();
-        smartRefreshLayout.setEnableAutoLoadmore(true);
+        smartRefreshLayout.resetNoMoreData();
     }
 
     private static void reFresh(){
