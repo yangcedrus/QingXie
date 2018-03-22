@@ -3,7 +3,10 @@ package whut.qingxie.entity.user;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class UserInfo implements Parcelable {
+import java.io.Serializable;
+import java.util.Date;
+
+public class User implements Parcelable,Serializable {
     private Integer id;
 
     private String studentId;
@@ -20,7 +23,7 @@ public class UserInfo implements Parcelable {
 
     private Integer classId;
 
-    private double hours;
+    private Double hours;
 
     private Integer iconId;
 
@@ -36,29 +39,17 @@ public class UserInfo implements Parcelable {
 
     private String validation;
 
-    private String lastLoginTime;
+    private Date birthDate;
 
-    public UserInfo(Integer id, String studentId, String name, String password, String flag, Integer roleId, String gender, Integer classId, double hours, Integer iconId, String telephone, String qq, String email, String wechat, String token, String validation, String lastLoginTime) {
-        this.id = id;
-        this.studentId = studentId;
-        this.name = name;
-        this.password = password;
-        this.flag = flag;
-        this.roleId = roleId;
-        this.gender = gender;
-        this.classId = classId;
-        this.hours = hours;
-        this.iconId = iconId;
-        this.telephone = telephone;
-        this.qq = qq;
-        this.email = email;
-        this.wechat = wechat;
-        this.token = token;
-        this.validation = validation;
-        this.lastLoginTime = lastLoginTime;
-    }
+    private String politicalStatus;
 
-    public UserInfo() {
+    private Integer age;
+
+    private String profile;
+
+    private Date lastLoginTime;
+
+    public User() {
     }
 
     public Integer getId() {
@@ -125,11 +116,11 @@ public class UserInfo implements Parcelable {
         this.classId = classId;
     }
 
-    public double getHours() {
+    public Double getHours() {
         return hours;
     }
 
-    public void setHours(double hours) {
+    public void setHours(Double hours) {
         this.hours = hours;
     }
 
@@ -189,11 +180,43 @@ public class UserInfo implements Parcelable {
         this.validation = validation;
     }
 
-    public String getLastLoginTime() {
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getPoliticalStatus() {
+        return politicalStatus;
+    }
+
+    public void setPoliticalStatus(String politicalStatus) {
+        this.politicalStatus = politicalStatus;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
+
+    public Date getLastLoginTime() {
         return lastLoginTime;
     }
 
-    public void setLastLoginTime(String lastLoginTime) {
+    public void setLastLoginTime(Date lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
     }
 
@@ -220,39 +243,51 @@ public class UserInfo implements Parcelable {
         dest.writeString(wechat);
         dest.writeString(token);
         dest.writeString(validation);
-        dest.writeString(lastLoginTime);
+        dest.writeLong(birthDate == null ? -1L : birthDate.getTime());
+        dest.writeString(politicalStatus);
+        dest.writeInt(age);
+        dest.writeLong(lastLoginTime == null ? -1L : lastLoginTime.getTime());
 
     }
 
     //Parcelable方法传递对象
-    public static final Parcelable.Creator<UserInfo> CREATOR=new Parcelable.Creator<UserInfo>(){
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
         @Override
-        public UserInfo createFromParcel(Parcel source) {
-            UserInfo user=new UserInfo();
-            user.id=source.readInt();
-            user.studentId=source.readString();
-            user.name=source.readString();
-            user.password=source.readString();
-            user.flag=source.readString();
-            user.roleId=source.readInt();
-            user.gender=source.readString();
-            user.classId=source.readInt();
-            user.hours=source.readInt();
-            user.iconId=source.readInt();
-            user.telephone=source.readString();
-            user.qq=source.readString();
-            user.email=source.readString();
-            user.wechat=source.readString();
-            user.token=source.readString();
-            user.validation=source.readString();
-            user.lastLoginTime=source.readString();
-
+        public User createFromParcel(Parcel source) {
+            User user = new User();
+            user.id = source.readInt();
+            user.studentId = source.readString();
+            user.name = source.readString();
+            user.password = source.readString();
+            user.flag = source.readString();
+            user.roleId = source.readInt();
+            user.gender = source.readString();
+            user.classId = source.readInt();
+            user.hours = source.readDouble();
+            user.iconId = source.readInt();
+            user.telephone = source.readString();
+            user.qq = source.readString();
+            user.email = source.readString();
+            user.wechat = source.readString();
+            user.token = source.readString();
+            user.validation = source.readString();
+            long date = source.readLong();
+            if (date > 0) {
+                user.birthDate = new Date(date);
+            }
+            user.politicalStatus = source.readString();
+            user.age = source.readInt();
+            user.profile = source.readString();
+            date = source.readLong();
+            if (date > 0) {
+                user.lastLoginTime = new Date(source.readLong());
+            }
             return user;
         }
 
         @Override
-        public UserInfo[] newArray(int size) {
-            return new UserInfo[size];
+        public User[] newArray(int size) {
+            return new User[size];
         }
     };
 }

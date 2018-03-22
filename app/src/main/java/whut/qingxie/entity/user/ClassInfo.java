@@ -1,17 +1,17 @@
 package whut.qingxie.entity.user;
 
 public class ClassInfo {
-    private Short id;
+    private Integer id;
 
     private String name;
 
     private Integer userId;
 
-    public Short getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Short id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
