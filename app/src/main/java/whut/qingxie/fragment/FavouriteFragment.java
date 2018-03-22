@@ -60,10 +60,8 @@ public class FavouriteFragment extends Fragment {
             public void onLoadmore(RefreshLayout refreshlayout) {
                 for(int i=0;i<5;i++){
                     favouriteItems.add(new VolActivityInfo(1,"敬老院活动",1,
-                            "2",0,4,2,10,
-                            "东院敬老院","东院敬老院活动，打扫卫生",null,
-                            "2018-3-30 11:11:11",null,null,null,
-                            null,null));
+                            "2",0,4.0,2.0,10,
+                            "东院敬老院","东院敬老院活动，打扫卫生",null));
                 }
                 //结束加载更多
                 if(favouriteItems.size()<10)
@@ -85,10 +83,8 @@ public class FavouriteFragment extends Fragment {
         favouriteItems.clear();
         for (int i = 0; i < 5; i++) {
             favouriteItems.add(new VolActivityInfo(1, "敬老院活动", 1,
-                    "2", 0, 4, 2, 10,
-                    "东院敬老院", "东院敬老院活动，打扫卫生", null,
-                    "2018-3-30 11:11:11", null, null, null,
-                    null, null));
+                    "2", 0, 4.0, 2.0, 10,
+                    "东院敬老院", "东院敬老院活动，打扫卫生", null));
         }
         reFresh();
         smartRefreshLayout.resetNoMoreData();

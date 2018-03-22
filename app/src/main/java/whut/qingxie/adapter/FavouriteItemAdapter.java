@@ -2,6 +2,7 @@ package whut.qingxie.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +48,7 @@ public class FavouriteItemAdapter extends RecyclerView.Adapter<FavouriteItemAdap
                 if(mContext==null)
                     mContext=parent.getContext();
                 Intent intent=new Intent(mContext,SignUpActivity.class);
-                intent.putExtra("activity_details",item);
+                intent.putExtra("activity_details",(Parcelable) item);
                 mContext.startActivity(intent);
             }
         });

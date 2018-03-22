@@ -2,6 +2,7 @@ package whut.qingxie.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,7 +64,7 @@ public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityIt
                 if(mContext==null)
                     mContext=parent.getContext();
                 Intent intent=new Intent(mContext,SignUpActivity.class);
-                intent.putExtra("activity_details",item);
+                intent.putExtra("activity_details",(Parcelable)item);
                 mContext.startActivity(intent);
             }
         });
@@ -102,7 +103,7 @@ public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityIt
         try{
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date1=new Date();
-            Date date2=sdf.parse(cardActivityItem.getRegTime());
+            Date date2=sdf.parse(cardActivityItem.getRegTime().toString());
 
             long diff=date2.getTime()-date1.getTime();
             days = diff / (1000 * 60 * 60 * 24);

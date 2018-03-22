@@ -48,10 +48,8 @@ public class MyServiceActivity extends AppCompatActivity {
             public void onLoadmore(RefreshLayout refreshlayout) {
                 for(int i=0;i<5;i++){
                     volServiceItemList.add(new VolActivityInfo(1,"敬老院活动",1,
-                            "2",0,4,2,10,
-                            "东院敬老院","东院敬老院活动，打扫卫生","详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情",
-                            "2018-3-30 11:11:11",null,null,null,
-                            null,null));
+                            "2",0,4.0,2.0,10,
+                            "东院敬老院","东院敬老院活动，打扫卫生","详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情"));
                 }
                 //结束加载更多
                 if(volServiceItemList.size()<10)
@@ -85,10 +83,8 @@ public class MyServiceActivity extends AppCompatActivity {
         volServiceItemList.clear();
         for(int i=0;i<5;i++){
             volServiceItemList.add(new VolActivityInfo(1,"敬老院活动",1,
-                    "2",0,4,2,10,
-                    "东院敬老院","东院敬老院活动，打扫卫生",null,
-                    "2018-3-30 11:11:11",null,null,null,
-                    null,null));
+                    "2",0,4.0,2.0,10,
+                    "东院敬老院","东院敬老院活动，打扫卫生",null));
         }
         reFresh();
         smartRefreshLayout.resetNoMoreData();

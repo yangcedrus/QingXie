@@ -3,6 +3,7 @@ package whut.qingxie.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,7 +63,7 @@ public class ServiceItemAdapter extends RecyclerView.Adapter<ServiceItemAdapter.
                 if(mContext==null)
                     mContext=parent.getContext();
                 Intent intent=new Intent(mContext,SignUpActivity.class);
-                intent.putExtra("activity_details",item);
+                intent.putExtra("activity_details",(Parcelable) item);
                 mContext.startActivity(intent);
             }
         });
@@ -73,7 +74,7 @@ public class ServiceItemAdapter extends RecyclerView.Adapter<ServiceItemAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         VolActivityInfo activityInfo=volActivityInfos.get(position);
         holder.name.setText(activityInfo.getName());
-        holder.time.setText(activityInfo.getRegTime());
+        holder.time.setText(activityInfo.getRegTime().toString());
         holder.num.setText(Integer.toString(position+1));
         holder.info.setText(activityInfo.getGeneral());
         switch(activityInfo.getStatus()){
