@@ -16,6 +16,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import whut.qingxie.Item.MyHoursItem;
@@ -59,9 +60,11 @@ public class FavouriteFragment extends Fragment {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 for(int i=0;i<5;i++){
-                    favouriteItems.add(new VolActivityInfo(1,"敬老院活动",1,
+                    VolActivityInfo ac=new VolActivityInfo(1,"敬老院活动",1,
                             "2",0,4.0,2.0,10,
-                            "东院敬老院","东院敬老院活动，打扫卫生",null));
+                            "东院敬老院","东院敬老院活动，打扫卫生",null);
+                    ac.setCreateTime(new Date());
+                    favouriteItems.add(ac);
                 }
                 //结束加载更多
                 if(favouriteItems.size()<10)
@@ -82,9 +85,11 @@ public class FavouriteFragment extends Fragment {
     public void init() {
         favouriteItems.clear();
         for (int i = 0; i < 5; i++) {
-            favouriteItems.add(new VolActivityInfo(1, "敬老院活动", 1,
-                    "2", 0, 4.0, 2.0, 10,
-                    "东院敬老院", "东院敬老院活动，打扫卫生", null));
+            VolActivityInfo ac=new VolActivityInfo(1,"敬老院活动",1,
+                    "2",0,4.0,2.0,10,
+                    "东院敬老院","东院敬老院活动，打扫卫生",null);
+            ac.setCreateTime(new Date());
+            favouriteItems.add(ac);
         }
         reFresh();
         smartRefreshLayout.resetNoMoreData();

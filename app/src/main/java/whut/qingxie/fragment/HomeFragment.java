@@ -25,6 +25,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import whut.qingxie.R;
@@ -92,10 +93,12 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 for(int i=0;i<5;i++){
-                    cardActivityItems.add(new VolActivityInfo(1,"敬老院活动",1,
+                    VolActivityInfo ac=new VolActivityInfo(1,"敬老院活动",1,
                             "2",0,4.0,2.0,10,
-                            "东院敬老院","东院敬老院活动，打扫卫生",
-                            "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情"));
+                            "东院敬老院","东院敬老院活动，打扫卫生",null);
+                    ac.setCreateTime(new Date());
+                    ac.setRegTime(new Date());
+                    cardActivityItems.add(ac);
                 }
 
                 //结束加载更多
@@ -137,7 +140,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     private static void init(){
         cardActivityItems.clear();
         for(int i=0;i<5;i++){
-            cardActivityItems.add(new VolActivityInfo(1,"敬老院活动",1,
+            VolActivityInfo ac=new VolActivityInfo(1,"敬老院活动",1,
                     "2",0,4.0,2.0,10,
                     "东院敬老院","东院敬老院活动，打扫卫生","详情详情详情详情详情详情详情详情详情详情详情详" +
                     "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
@@ -168,7 +171,10 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
                     "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
                     "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
                     "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
-                    "情详情详情详情详情详情详情详情详情"));
+                    "情详情详情详情详情详情详情详情详情");
+            ac.setCreateTime(new Date());
+            ac.setRegTime(new Date());
+            cardActivityItems.add(ac);
         }
         smartRefreshLayout.resetNoMoreData();
         reFresh();

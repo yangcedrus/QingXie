@@ -232,11 +232,11 @@ public class User implements Parcelable,Serializable {
         dest.writeString(name);
         dest.writeString(password);
         dest.writeString(flag);
-        dest.writeInt(roleId);
+        dest.writeInt(roleId==null?0:roleId);
         dest.writeString(gender);
-        dest.writeInt(classId);
-        dest.writeDouble(hours);
-        dest.writeInt(iconId);
+        dest.writeInt(classId==null?0:classId);
+        dest.writeDouble(hours==null?0.0:hours);
+        dest.writeInt(iconId==null?0:iconId);
         dest.writeString(telephone);
         dest.writeString(qq);
         dest.writeString(email);
@@ -245,7 +245,7 @@ public class User implements Parcelable,Serializable {
         dest.writeString(validation);
         dest.writeLong(birthDate == null ? -1L : birthDate.getTime());
         dest.writeString(politicalStatus);
-        dest.writeInt(age);
+        dest.writeInt(age==null?18:age);
         dest.writeLong(lastLoginTime == null ? -1L : lastLoginTime.getTime());
 
     }

@@ -225,10 +225,10 @@ public class VolActivityInfo implements Parcelable, Serializable {
         dest.writeString(name);
         dest.writeInt(managerId);
         dest.writeString(type);
-        dest.writeInt(status);
-        dest.writeDouble(hours);
-        dest.writeDouble(hourPerTime);
-        dest.writeInt(needVolunteers);
+        dest.writeInt(status==null?0:status);
+        dest.writeDouble(hours==null?0.0:hours);
+        dest.writeDouble(hourPerTime==null?0.0:hourPerTime);
+        dest.writeInt(needVolunteers==null?0:needVolunteers);
         dest.writeString(place);
         dest.writeString(general);
         dest.writeString(descriptions);
