@@ -1,7 +1,11 @@
 package whut.qingxie.dto;
 
+import com.alibaba.fastjson.JSON;
+
 import java.util.HashMap;
 import java.util.Map;
+
+import whut.qingxie.network.JsonUtil;
 
 public class Msg {
     //  状态码
@@ -43,5 +47,12 @@ public class Msg {
 
     public void setData(Map<String, Object> data) {
         this.data = data;
+    }
+
+    public static Msg parseMapFromJson(Object object, Map<String, String> clazzMap) throws ClassNotFoundException {
+        //解析Msg对象
+        Msg msgFromJson = JsonUtil.parseObject(object, Msg.class);
+        msgFromJson.setData(JsonUtil.parseMap(msgFromJson.getData(), clazzMap));
+        return msgFromJson;
     }
 }

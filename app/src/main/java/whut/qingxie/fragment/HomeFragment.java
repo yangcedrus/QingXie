@@ -24,18 +24,16 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 import whut.qingxie.R;
 import whut.qingxie.adapter.CardActivityItemAdapter;
+import whut.qingxie.common.Content;
+import whut.qingxie.dto.Msg;
 import whut.qingxie.entity.activity.VolActivityInfo;
-import whut.qingxie.network.HttpUtil;
-import whut.qingxie.network.parseJSON;
+
+import static android.content.ContentValues.TAG;
 
 //主页页面
 public class HomeFragment extends Fragment implements ViewPager.OnPageChangeListener{
@@ -64,22 +62,14 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     private boolean isRunning=false;// 是否自动轮询
 
     @SuppressLint("HandlerLeak")
-    private static Handler mHandler=new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what){
-                case 0:
-                    cardActivityItems.addAll(parseJSON.parseActivity(msg.obj.toString()));
-                    reFresh();
-                    break;
-                case 1:
-                    pictureURLS.addAll(parseJSON.parseURL(msg.obj.toString()));
-                    picNum=pictureURLS.size();
-                    break;
-                default:
-                    Log.d("HomeFragment","message error");
-                    break;
+    public static Handler eHandler=new Handler(){
+        public void handleMessage(Message message){
+            super.handleMessage(message);
+            try {
+                Msg msg=Msg.parseMapFromJson(message.obj, Content.CLAZZ_MAP);
+
+            } catch (ClassNotFoundException e) {
+                Log.e(TAG, "handleMessage: "+e.getMessage());
             }
         }
     };
@@ -103,11 +93,9 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
             public void onLoadmore(RefreshLayout refreshlayout) {
                 for(int i=0;i<5;i++){
                     cardActivityItems.add(new VolActivityInfo(1,"敬老院活动",1,
-                            "2",0,4,2,10,
+                            "2",0,4.0,2.0,10,
                             "东院敬老院","东院敬老院活动，打扫卫生",
-                            "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情",
-                            "2018-3-30 11:11:11",null,null,null,
-                            null,null));
+                            "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情"));
                 }
 
                 //结束加载更多
@@ -150,7 +138,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         cardActivityItems.clear();
         for(int i=0;i<5;i++){
             cardActivityItems.add(new VolActivityInfo(1,"敬老院活动",1,
-                    "2",0,4,2,10,
+                    "2",0,4.0,2.0,10,
                     "东院敬老院","东院敬老院活动，打扫卫生","详情详情详情详情详情详情详情详情详情详情详情详" +
                     "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
                     "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
@@ -180,9 +168,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
                     "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
                     "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
                     "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
-                    "情详情详情详情详情详情详情详情详情",
-                    "2018-3-30 11:11:11",null,null,null,
-                    null,null));
+                    "情详情详情详情详情详情详情详情详情"));
         }
         smartRefreshLayout.resetNoMoreData();
         reFresh();
@@ -194,55 +180,12 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
 
     //请求五个活动信息
     public static void requestForFiveActivity(){
-        HttpUtil.sendOkHttpRequest(SERVE_URL + GET_ALL_ACTIVITIES, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Message message=mHandler.obtainMessage();
-                message.what=404;
-                mHandler.sendMessage(message);
-            }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String responseData=response.body().string();
-
-                Message message=mHandler.obtainMessage();
-                if(response.code()==200){
-                    message.obj=responseData;
-                }else{
-                    message.what=response.code();
-                }
-                mHandler.sendMessage(message);
-
-            }
-        });
     }
 
     //请求首页图片信息
     public static void requestForPicturesURLS(){
-        HttpUtil.sendOkHttpRequest(SERVE_URL + GET_PICTURES_URLS, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Message message=mHandler.obtainMessage();
-                message.what=404;
-                mHandler.sendMessage(message);
-            }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String responseData=response.body().string();
-
-                Message message=mHandler.obtainMessage();
-                if(response.code()==200){
-                    message.what=1;
-                    message.obj=responseData;
-                }else{
-                    message.what=response.code();
-                }
-                mHandler.sendMessage(message);
-
-            }
-        });
     }
 
     //初始化视图

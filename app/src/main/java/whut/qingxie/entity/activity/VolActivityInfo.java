@@ -48,6 +48,20 @@ public class VolActivityInfo implements Parcelable, Serializable {
     public VolActivityInfo() {
     }
 
+    public VolActivityInfo(Integer id, String name, Integer managerId, String type, Integer status, Double hours, Double hourPerTime, Integer needVolunteers, String place, String general, String descriptions) {
+        this.id = id;
+        this.name = name;
+        this.managerId = managerId;
+        this.type = type;
+        this.status = status;
+        this.hours = hours;
+        this.hourPerTime = hourPerTime;
+        this.needVolunteers = needVolunteers;
+        this.place = place;
+        this.general = general;
+        this.descriptions = descriptions;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -1,6 +1,7 @@
 package whut.qingxie.fragment;
 
 import android.graphics.drawable.Drawable;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.Date;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import whut.qingxie.R;
 import whut.qingxie.activity.MyHoursActivity;
@@ -18,10 +21,10 @@ import whut.qingxie.activity.MyInfoActivity;
 import whut.qingxie.activity.MyMessageActivity;
 import whut.qingxie.activity.MyResumeActivity;
 import whut.qingxie.activity.MyServiceActivity;
-import whut.qingxie.entity.user.UserInfo;
+import whut.qingxie.entity.user.User;
 
 public class MeFragment extends Fragment {
-    private static UserInfo myInfo;
+    private static User myInfo;
 
     private RelativeLayout layout1;
     private RelativeLayout layout2;
@@ -52,9 +55,14 @@ public class MeFragment extends Fragment {
 
         //虚构个人信息
         // TODO: 2018/3/9 从本地读取
-        myInfo=new UserInfo(1,"01215xxxxxxxx","张三","123456","M",
-                1,"M",1,12,2,null,null,
-                null,null,null,null,"2018-2-1 00:00:00");
+        myInfo=new User();
+        myInfo.setId(1);
+        myInfo.setStudentId("01215xxxxxxxx");
+        myInfo.setName("张三");
+        myInfo.setGender("M");
+        myInfo.setFlag("M");
+        myInfo.setAge(12);
+        myInfo.setLastLoginTime(new Date());
         textView.setText(myInfo.getName());
         if(myInfo.getGender().equals("M")){
             Drawable drawable=getActivity().getResources().getDrawable(R.drawable.ic_favorite_black_24dp);
@@ -85,7 +93,7 @@ public class MeFragment extends Fragment {
             switch (v.getId()) {
                 case R.id.me_layout1:
                     intent=new Intent(getActivity(), MyResumeActivity.class);
-                    intent.putExtra("user_info",myInfo);
+                    intent.putExtra("user_info",(Parcelable) myInfo);
                     startActivity(intent);
                     break;
                 case R.id.me_layout2:
@@ -102,7 +110,7 @@ public class MeFragment extends Fragment {
                     break;
                 case R.id.me_layout5:
                     intent=new Intent(getActivity(), MyInfoActivity.class);
-                    intent.putExtra("user_info",myInfo);
+                    intent.putExtra("user_info",(Parcelable) myInfo);
                     startActivity(intent);
                     break;
             }

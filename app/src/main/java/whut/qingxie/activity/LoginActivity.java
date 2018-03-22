@@ -1,9 +1,13 @@
 package whut.qingxie.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import whut.qingxie.R;
+import whut.qingxie.common.Content;
+import whut.qingxie.dto.Msg;
 
 public class LoginActivity extends AppCompatActivity {
     //储存登录信息
@@ -65,6 +71,19 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    @SuppressLint("HandlerLeak")
+    public static Handler eHandler=new Handler(){
+        public void handleMessage(Message message){
+            super.handleMessage(message);
+            try {
+                Msg msg=Msg.parseMapFromJson(message.obj,Content.CLAZZ_MAP);
+
+            } catch (ClassNotFoundException e) {
+                Log.e(TAG, "handleMessage: "+e.getMessage());
+            }
+        }
+    };
 
     //显示“帮助”菜单按钮
     @Override

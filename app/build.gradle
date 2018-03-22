@@ -54,5 +54,9 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.1.0'
     testCompile 'junit:junit:4.12'
     compile 'junit:junit:4.12'
+    // https://mvnrepository.com/artifact/org.robolectric/robolectric
+    testCompile 'org.robolectric:robolectric:3.7.1'
+// https://mvnrepository.com/artifact/com.alibaba/fastjson
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.46'
     implementation project(':xrichtext')
 }
