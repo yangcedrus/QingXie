@@ -3,7 +3,10 @@ package whut.qingxie.entity.activity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class VolActivityInfo implements Parcelable {
+import java.io.Serializable;
+import java.util.Date;
+
+public class VolActivityInfo implements Parcelable, Serializable {
     private Integer id;     //活动ID
 
     private String name;       //活动名称
@@ -14,9 +17,9 @@ public class VolActivityInfo implements Parcelable {
 
     private Integer status; //活动状态
 
-    private double hours;   //活动总工时
+    private Double hours;   //活动总工时
 
-    private double hourPerTime; //活动每次工时
+    private Double hourPerTime; //活动每次工时
 
     private Integer needVolunteers; //活动需要人数
 
@@ -26,37 +29,21 @@ public class VolActivityInfo implements Parcelable {
 
     private String descriptions;    //活动详情
 
-    private String regTime;     //活动报名时间
+    private Date regTime;
 
-    private String regEndTime;      //活动报名截止时间
+    private Date regEndTime;
 
-    private String interviewTime;   //活动面试时间
+    private Date interviewTime;
 
-    private String startTime;   //活动开始时间
+    private Date startTime;
 
-    private String endTime; //活动截止时间
+    private Date endTime;
 
-    private String createTime;  //活动创建时间
+    private Date createTime;
 
-    public VolActivityInfo(Integer id, String name, Integer managerId, String type, Integer status, double hours, double hourPerTime, Integer needVolunteers, String place, String general, String descriptions, String regTime, String regEndTime, String interviewTime, String startTime, String endTime, String createTime) {
-        this.id = id;
-        this.name = name;
-        this.managerId = managerId;
-        this.type = type;
-        this.status = status;
-        this.hours = hours;
-        this.hourPerTime = hourPerTime;
-        this.needVolunteers = needVolunteers;
-        this.place = place;
-        this.general = general;
-        this.descriptions = descriptions;
-        this.regTime = regTime;
-        this.regEndTime = regEndTime;
-        this.interviewTime = interviewTime;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.createTime = createTime;
-    }
+    private String sponser;
+
+    private String homepagePic;
 
     public VolActivityInfo() {
     }
@@ -101,19 +88,19 @@ public class VolActivityInfo implements Parcelable {
         this.status = status;
     }
 
-    public double getHours() {
+    public Double getHours() {
         return hours;
     }
 
-    public void setHours(double hours) {
+    public void setHours(Double hours) {
         this.hours = hours;
     }
 
-    public double getHourPerTime() {
+    public Double getHourPerTime() {
         return hourPerTime;
     }
 
-    public void setHourPerTime(double hourPerTime) {
+    public void setHourPerTime(Double hourPerTime) {
         this.hourPerTime = hourPerTime;
     }
 
@@ -149,52 +136,68 @@ public class VolActivityInfo implements Parcelable {
         this.descriptions = descriptions;
     }
 
-    public String getRegTime() {
+    public Date getRegTime() {
         return regTime;
     }
 
-    public void setRegTime(String regTime) {
+    public void setRegTime(Date regTime) {
         this.regTime = regTime;
     }
 
-    public String getRegEndTime() {
+    public Date getRegEndTime() {
         return regEndTime;
     }
 
-    public void setRegEndTime(String regEndTime) {
+    public void setRegEndTime(Date regEndTime) {
         this.regEndTime = regEndTime;
     }
 
-    public String getInterviewTime() {
+    public Date getInterviewTime() {
         return interviewTime;
     }
 
-    public void setInterviewTime(String interviewTime) {
+    public void setInterviewTime(Date interviewTime) {
         this.interviewTime = interviewTime;
     }
 
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 
-    public String getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getSponser() {
+        return sponser;
+    }
+
+    public void setSponser(String sponser) {
+        this.sponser = sponser;
+    }
+
+    public String getHomepagePic() {
+        return homepagePic;
+    }
+
+    public void setHomepagePic(String homepagePic) {
+        this.homepagePic = homepagePic;
     }
 
     @Override
@@ -215,35 +218,58 @@ public class VolActivityInfo implements Parcelable {
         dest.writeString(place);
         dest.writeString(general);
         dest.writeString(descriptions);
-        dest.writeString(regTime);
-        dest.writeString(regEndTime);
-        dest.writeString(interviewTime);
-        dest.writeString(startTime);
-        dest.writeString(endTime);
-        dest.writeString(createTime);
+        dest.writeLong(regTime == null ? -1 : regTime.getTime());
+        dest.writeLong(regEndTime == null ? -1 : regEndTime.getTime());
+        dest.writeLong(interviewTime == null ? -1 : interviewTime.getTime());
+        dest.writeLong(startTime == null ? -1 : startTime.getTime());
+        dest.writeLong(endTime == null ? -1 : endTime.getTime());
+        dest.writeLong(createTime == null ? -1 : createTime.getTime());
+        dest.writeString(sponser);
+        dest.writeString(homepagePic);
     }
 
-    public static final Parcelable.Creator<VolActivityInfo> CREATOR=new Parcelable.Creator<VolActivityInfo>(){
+    public static final Parcelable.Creator<VolActivityInfo> CREATOR = new Parcelable.Creator<VolActivityInfo>() {
         @Override
         public VolActivityInfo createFromParcel(Parcel source) {
-            VolActivityInfo item=new VolActivityInfo();
-            item.id=source.readInt();
-            item.name=source.readString();
-            item.managerId=source.readInt();
-            item.type=source.readString();
-            item.status=source.readInt();
-            item.hours=source.readDouble();
-            item.hourPerTime=source.readDouble();
-            item.needVolunteers=source.readInt();
-            item.place=source.readString();
-            item.general=source.readString();
-            item.descriptions=source.readString();
-            item.regTime=source.readString();
-            item.regEndTime=source.readString();
-            item.interviewTime=source.readString();
-            item.startTime=source.readString();
-            item.endTime=source.readString();
-            item.createTime=source.readString();
+            VolActivityInfo item = new VolActivityInfo();
+            Long date = 0L;
+            item.id = source.readInt();
+            item.name = source.readString();
+            item.managerId = source.readInt();
+            item.type = source.readString();
+            item.status = source.readInt();
+            item.hours = source.readDouble();
+            item.hourPerTime = source.readDouble();
+            item.needVolunteers = source.readInt();
+            item.place = source.readString();
+            item.general = source.readString();
+            item.descriptions = source.readString();
+            date = source.readLong();
+            if (date > 0) {
+                item.regTime = new Date(date);
+            }
+            date = source.readLong();
+            if (date > 0) {
+                item.regEndTime = new Date(date);
+            }
+            date = source.readLong();
+            if (date > 0) {
+                item.interviewTime = new Date(date);
+            }
+            date = source.readLong();
+            if (date > 0) {
+                item.startTime = new Date(date);
+            }
+            date = source.readLong();
+            if (date > 0) {
+                item.endTime = new Date(date);
+            }
+            date = source.readLong();
+            if (date > 0) {
+                item.createTime = new Date(date);
+            }
+            item.sponser = source.readString();
+            item.homepagePic = source.readString();
             return item;
         }
 
