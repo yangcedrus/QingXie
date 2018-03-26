@@ -15,6 +15,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import whut.qingxie.R;
@@ -47,9 +48,11 @@ public class MyServiceActivity extends AppCompatActivity {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 for(int i=0;i<5;i++){
-                    volServiceItemList.add(new VolActivityInfo(1,"敬老院活动",1,
+                    VolActivityInfo ac=new VolActivityInfo(1,"敬老院活动",1,
                             "2",0,4.0,2.0,10,
-                            "东院敬老院","东院敬老院活动，打扫卫生","详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情"));
+                            "东院敬老院","东院敬老院活动，打扫卫生",null);
+                    ac.setCreateTime(new Date());
+                    volServiceItemList.add(ac);
                 }
                 //结束加载更多
                 if(volServiceItemList.size()<10)
@@ -82,9 +85,11 @@ public class MyServiceActivity extends AppCompatActivity {
     private void initItems(){
         volServiceItemList.clear();
         for(int i=0;i<5;i++){
-            volServiceItemList.add(new VolActivityInfo(1,"敬老院活动",1,
+            VolActivityInfo ac=new VolActivityInfo(1,"敬老院活动",1,
                     "2",0,4.0,2.0,10,
-                    "东院敬老院","东院敬老院活动，打扫卫生",null));
+                    "东院敬老院","东院敬老院活动，打扫卫生",null);
+            ac.setCreateTime(new Date());
+            volServiceItemList.add(ac);
         }
         reFresh();
         smartRefreshLayout.resetNoMoreData();

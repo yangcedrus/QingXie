@@ -1,6 +1,8 @@
 package whut.qingxie.network;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 import java.util.*;
 
@@ -19,6 +21,15 @@ public class JsonUtil {
         return JSON.parseObject(jsonObject.toString(), clazz);
     }
 
+    /**
+     * 解析单个对象
+     *
+     * @param jsonObject
+     * @return
+     */
+    public final static <T> T parseObject(JSONObject jsonObject, Class<T> clazz) {
+        return jsonObject.toJavaObject(clazz);
+    }
     /**
      * 解析一个List
      *
@@ -64,6 +75,10 @@ public class JsonUtil {
         return null;
     }
 
+    public static <E> List<E> parseList(JSONArray jsonArray, Class<E> clazz) {
+        return jsonArray.toJavaList(clazz);
+    }
+
     /**
      * 解析map的方法
      *
@@ -81,11 +96,11 @@ public class JsonUtil {
             if (obj.getKey().endsWith("List")) {
                 String className = obj.getKey().replace("List", "");
                 Class clazz = Class.forName(clazzMap.get(className));
-                result.put(obj.getKey(), parseList(obj.getValue(), clazz));
+                result.put(obj.getKey(), parseList((JSONArray) obj.getValue(), clazz));
             } else if (clazzMap.containsKey(obj.getKey())) {
                 //需统一规范
                 Class clazz = Class.forName(clazzMap.get(obj.getKey()));
-                result.put(obj.getKey(), parseObject(obj.getValue(), clazz));
+                result.put(obj.getKey(), parseObject((JSONObject) obj.getValue(), clazz));
             }else{
                 //如果不是List且clazzMap中不含对应的类，则当作字符串处理（不需作解析）,但这在解析Map对象的时候就完成解析了~~
                 result.put(obj.getKey(), obj.getValue());

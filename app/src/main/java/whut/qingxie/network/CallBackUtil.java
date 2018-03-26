@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.File;
@@ -13,6 +14,8 @@ import java.io.InputStream;
 
 import okhttp3.Call;
 import okhttp3.Response;
+import whut.qingxie.common.Content;
+import whut.qingxie.dto.Msg;
 
 /**
  * reference to https://github.com/guozhengXia/OkHttpUtils
@@ -84,6 +87,19 @@ public abstract class CallBackUtil<T> {
                 new RuntimeException("failure");
                 return "";
             }
+        }
+    }
+
+    public static abstract class CallBackMsg extends CallBackUtil<Msg>{
+        @Override
+        public Msg onParseResponse(Call call, Response response) {
+            try {
+                return Msg.parseMapFromJson(response.body().string(), Content.CLAZZ_MAP);
+            } catch (ClassNotFoundException | IOException e) {
+                e.printStackTrace();
+                Log.e("MyResumeActivity", "handleMessage: " + e.getMessage());
+            }
+            return null;
         }
     }
 

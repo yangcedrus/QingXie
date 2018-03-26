@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -26,13 +27,20 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import okhttp3.Call;
+import okhttp3.Response;
 import whut.qingxie.R;
 import whut.qingxie.adapter.CardActivityItemAdapter;
 import whut.qingxie.common.Content;
 import whut.qingxie.dto.Msg;
+import whut.qingxie.dto.PageInfo;
 import whut.qingxie.entity.activity.VolActivityInfo;
+import whut.qingxie.network.CallBackUtil;
+import whut.qingxie.network.OkhttpUtil;
 
 import static android.content.ContentValues.TAG;
 
@@ -84,7 +92,10 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                init();
+//                init();
+                //FIXME
+                //调用服务器数据
+                initActivity();
                 //结束刷新
                 smartRefreshLayout.finishRefresh();
             }
@@ -109,6 +120,24 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
             }
         });
         return view;
+    }
+
+    private void initActivity(){
+        OkhttpUtil.accessData("GET", "/activity/getAllActivities?page=1&size=2", null, null, new CallBackUtil.CallBackMsg() {
+
+            @Override
+            public void onFailure(Call call, Exception e) {
+                Log.e("MyResumeActivity", "onFailure: " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Msg response) {
+                PageInfo<VolActivityInfo> pageInfo=PageInfo.parseFromJson((JSONObject) response.getData().get("activities"),VolActivityInfo.class);
+                cardActivityItems.clear();
+                cardActivityItems.addAll(pageInfo.getList());
+                reFresh();
+            }
+        });
     }
 
     @Override

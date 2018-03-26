@@ -103,7 +103,7 @@ public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityIt
         try{
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date1=new Date();
-            Date date2=sdf.parse(cardActivityItem.getRegTime().toString());
+            Date date2=sdf.parse(cardActivityItem.getRegTime()==null?new Date().toString():cardActivityItem.getRegTime().toString());
 
             long diff=date2.getTime()-date1.getTime();
             days = diff / (1000 * 60 * 60 * 24);
