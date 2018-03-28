@@ -86,6 +86,8 @@ public class RichTextEditorActivity extends AppCompatActivity {
                 break;
             }
             case android.R.id.home:{
+                // TODO: 2018/3/24 富文本返回
+                Log.d("src:", getEditData());
                 finish();
                 break;
             }
@@ -148,7 +150,7 @@ public class RichTextEditorActivity extends AppCompatActivity {
                     @Override
                     public void onCompleted() {
                         insertDialog.dismiss();
-                        et_new_content.addEditTextAtIndex(et_new_content.getLastIndex(), " ");
+                        et_new_content.addEditTextAtIndex(et_new_content.getLastIndex(), "");
                     }
 
                     @Override
@@ -178,5 +180,12 @@ public class RichTextEditorActivity extends AppCompatActivity {
             }
         }
         return content.toString();
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

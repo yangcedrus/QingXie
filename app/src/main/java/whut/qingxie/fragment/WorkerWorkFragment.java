@@ -20,7 +20,6 @@ public class WorkerWorkFragment extends Fragment {
     private RelativeLayout layout2;
     private RelativeLayout layout3;
     private RelativeLayout layout4;
-    private RelativeLayout layout5;
 
     @Nullable
     @Override
@@ -37,13 +36,11 @@ public class WorkerWorkFragment extends Fragment {
         layout2=(RelativeLayout)getActivity().findViewById(R.id.worker_me_layout6);
         layout3=(RelativeLayout)getActivity().findViewById(R.id.worker_me_layout7);
         layout4=(RelativeLayout)getActivity().findViewById(R.id.worker_me_layout8);
-        layout5=(RelativeLayout)getActivity().findViewById(R.id.worker_me_layout9);
 
         layout1.setOnClickListener(new WorkerWorkFragment.MyListener());
         layout2.setOnClickListener(new WorkerWorkFragment.MyListener());
         layout3.setOnClickListener(new WorkerWorkFragment.MyListener());
         layout4.setOnClickListener(new WorkerWorkFragment.MyListener());
-        layout5.setOnClickListener(new WorkerWorkFragment.MyListener());
     }
 
     //新建监听类
@@ -66,10 +63,6 @@ public class WorkerWorkFragment extends Fragment {
                     startActivity(intent);
                     break;
                 case R.id.worker_me_layout8:
-                    break;
-                case R.id.worker_me_layout9:
-                    intent=new Intent(getActivity(), ReleaseWorkActivity.class);
-                    startActivity(intent);
                     break;
             }
         }
