@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import whut.qingxie.R;
+import whut.qingxie.activity.ManageWorkAvtivity;
 import whut.qingxie.activity.MyHoursActivity;
 import whut.qingxie.activity.MyInfoActivity;
 import whut.qingxie.activity.MyMessageActivity;
+import whut.qingxie.activity.MyResumeActivity;
 import whut.qingxie.activity.MyServiceActivity;
 
 public class WorkerMeFragment extends Fragment {
@@ -21,6 +23,7 @@ public class WorkerMeFragment extends Fragment {
     private RelativeLayout layout2;
     private RelativeLayout layout3;
     private RelativeLayout layout4;
+    private RelativeLayout layout5;
 
     @Nullable
     @Override
@@ -37,11 +40,13 @@ public class WorkerMeFragment extends Fragment {
         layout2=(RelativeLayout)getActivity().findViewById(R.id.worker_me_layout2);
         layout3=(RelativeLayout)getActivity().findViewById(R.id.worker_me_layout3);
         layout4=(RelativeLayout)getActivity().findViewById(R.id.worker_me_layout4);
+        layout5=(RelativeLayout)getActivity().findViewById(R.id.worker_me_layout5);
 
         layout1.setOnClickListener(new WorkerMeFragment.MyListener());
         layout2.setOnClickListener(new WorkerMeFragment.MyListener());
         layout3.setOnClickListener(new WorkerMeFragment.MyListener());
         layout4.setOnClickListener(new WorkerMeFragment.MyListener());
+        layout5.setOnClickListener(new WorkerMeFragment.MyListener());
     }
 
     //新建监听类
@@ -52,19 +57,23 @@ public class WorkerMeFragment extends Fragment {
             Intent intent;
             switch (v.getId()) {
                 case R.id.worker_me_layout1:
-                    intent=new Intent(getActivity(), MyMessageActivity.class);
+                    intent=new Intent(getActivity(), MyResumeActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.worker_me_layout2:
-                    intent=new Intent(getActivity(), MyServiceActivity.class);
+                    intent=new Intent(getActivity(), MyMessageActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.worker_me_layout3:
-                    intent=new Intent(getActivity(), MyHoursActivity.class);
+                    intent=new Intent(getActivity(), MyServiceActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.worker_me_layout4:
-                    intent=new Intent(getActivity(), MyInfoActivity.class);
+                    intent=new Intent(getActivity(), MyHoursActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.worker_me_layout5:
+                    intent=new Intent(getActivity(), ManageWorkAvtivity.class);
                     startActivity(intent);
                     break;
             }

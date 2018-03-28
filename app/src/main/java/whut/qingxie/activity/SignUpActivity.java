@@ -82,6 +82,10 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void showTextData(String content) {
         et_new_content.clearAllLayout();
+        if(content==null){
+            // TODO: 2018/3/24 详情为空的处理 
+            return;
+        }
         List<String> textList = StringUtils.cutStringByImgTag(content);
         for (int i = 0; i < textList.size(); i++) {
             String text = textList.get(i);

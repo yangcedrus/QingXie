@@ -2,15 +2,15 @@ package com.sendtion.xrichtext;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 /**
  * 这只是一个简单的ImageView，可以存放Bitmap和Path等信息
  *
  * @author xmuSistone
  */
-public class DataImageView extends ImageView {
+public class DataImageView extends AppCompatImageView {
 
     private String absolutePath;
     private Bitmap bitmap;

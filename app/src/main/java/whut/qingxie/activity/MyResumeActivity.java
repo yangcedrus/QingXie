@@ -104,6 +104,10 @@ public class MyResumeActivity extends AppCompatActivity {
             public void onResponse(Msg msg) {
                 if (msg != null) {
                     Resume resume = (Resume) msg.getData().get("Resume");
+                    if(resume==null){
+                        // TODO: 2018/3/24 未返回数据的处理 
+                        return;
+                    }
                     List<UserExperience> experiences = resume.getExperiences();
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                     for (UserExperience exp : experiences) {
