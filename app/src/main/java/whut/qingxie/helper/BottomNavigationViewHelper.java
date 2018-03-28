@@ -1,18 +1,23 @@
 package whut.qingxie.helper;
 
+import android.os.Build;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.util.Log;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 /**
- * 取消NavigationView中的位移动画,当menu数量超过三个，就会调用位移动画
- * 若有需要在MainActivity中调用
+ * 底部导航栏工具类
  */
 
 public class BottomNavigationViewHelper {
+    /**
+     * 取消NavigationView中的位移动画,当menu数量超过三个，就会调用位移动画
+     * 若有需要在MainActivity中调用
+     */
     public static void disableShiftMode(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
         try {
