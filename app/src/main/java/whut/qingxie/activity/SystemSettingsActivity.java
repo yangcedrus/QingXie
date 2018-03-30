@@ -34,9 +34,10 @@ public class SystemSettingsActivity extends AppCompatPreferenceActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent=new Intent();
-                    intent.putExtra("log_out",1);
-                    setResult(RESULT_OK,intent);
+                    Intent intent =new Intent(SystemSettingsActivity.this,MainActivity.class);
+                    intent.putExtra("user_state",0);
+                    MainActivity.activity.finish();
+                    startActivity(intent);
                     finish();
                 }
             });
@@ -118,10 +119,6 @@ public class SystemSettingsActivity extends AppCompatPreferenceActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==android.R.id.home){
-                //点击返回键返回信息给上个活动
-                Intent intent=new Intent();
-                intent.putExtra("log_out",0);
-                setResult(RESULT_OK,intent);
                 finish();
         }
         return true;
@@ -129,9 +126,6 @@ public class SystemSettingsActivity extends AppCompatPreferenceActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent=new Intent();
-        intent.putExtra("log_out",0);
-        setResult(RESULT_OK,intent);
         finish();
     }
 }

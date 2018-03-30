@@ -46,7 +46,6 @@ public class MeFragment extends Fragment {
     private CircleImageView circleImageView;
     private TextView textView;
 
-    private Subscription subsLoading;
     private Subscription subsInsert;
 
     //添加监听注册

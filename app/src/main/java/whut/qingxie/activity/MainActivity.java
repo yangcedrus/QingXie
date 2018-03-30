@@ -1,5 +1,6 @@
 package whut.qingxie.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,6 +25,7 @@ import whut.qingxie.fragment.WorkerMeFragment;
 import whut.qingxie.fragment.WorkerWorkFragment;
 
 public class MainActivity extends AppCompatActivity {
+    public static Activity activity;
 
     private static final int NO_LOGIN=0;     //未登录
     private static final int STUDENT=1;     //学生
@@ -43,56 +45,11 @@ public class MainActivity extends AppCompatActivity {
     private AdministratorFragment mAdministratorFragment;
     private static BottomNavigationView bottomNavigationView;
 
-    /**
-     * 返回登录信息
-     * @param requestCode 请求码
-     * @param resultCode 返回码
-     * @param data 传递的数据
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case LOG_IN:
-                state=data.getIntExtra("login_state_return",0);
-                if(resultCode==RESULT_OK){
-                    switch (state){
-                        case STUDENT:
-                            bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_favorite_border_black_24dp);
-                            bottomNavigationView.getMenu().getItem(2).setTitle("收藏");
-                            break;
-                        case WORKER:
-                            bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_group_black_24dp);
-                            bottomNavigationView.getMenu().getItem(2).setTitle("工作");
-                            break;
-                        case ADMIN:
-                            bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_group_black_24dp);
-                            bottomNavigationView.getMenu().getItem(2).setTitle("工作");
-                            bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.ic_detail_black_24dp);
-                            bottomNavigationView.getMenu().getItem(1).setTitle("操作历史");
-                            break;
-                        default:break;
-                    }
-                }
-                break;
-            case LOG_OUT:
-                int flag=data.getIntExtra("log_out",0);
-                if(flag==1) {
-                    state = 0;
-                }
-                break;
-            case PhotoPicker.REQUEST_CODE:
-                FragmentManager manager=getSupportFragmentManager();
-                Fragment fragment=manager.findFragmentByTag("me_fragment");
-                fragment.onActivityResult(requestCode,resultCode,data);
-                break;
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        activity=this;
 
         //标题栏
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
@@ -105,6 +62,29 @@ public class MainActivity extends AppCompatActivity {
         //底部导航栏切换操作
         bottomNavigationView = (BottomNavigationView)findViewById(R.id.navigation);
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+
+        //根据登录状态修改页面
+        Intent intent=getIntent();
+        state=intent.getIntExtra("user_state",0);
+        switch (state){
+            case STUDENT:
+                bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_favorite_border_black_24dp);
+                bottomNavigationView.getMenu().getItem(2).setTitle("收藏");
+                break;
+            case WORKER:
+                bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_group_black_24dp);
+                bottomNavigationView.getMenu().getItem(2).setTitle("工作");
+                break;
+            case ADMIN:
+                bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_group_black_24dp);
+                bottomNavigationView.getMenu().getItem(2).setTitle("工作");
+                bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.ic_detail_black_24dp);
+                bottomNavigationView.getMenu().getItem(1).setTitle("操作历史");
+                break;
+            default:break;
+        }
+
+        //底部导航栏监听
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -116,7 +96,8 @@ public class MainActivity extends AppCompatActivity {
                         //在切换之前判断是否已经登录
                         if(state==NO_LOGIN&&item.getItemId()!=R.id.navigation_home){
                             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                            startActivityForResult(intent, LOG_IN);
+                            startActivity(intent);
+                            finish();
                         }else{
                             switch(item.getItemId()){
                                 case R.id.navigation_home:
@@ -224,4 +205,26 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * PhotoPicker返回的图片路径处理
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==PhotoPicker.REQUEST_CODE){
+            FragmentManager manager=getSupportFragmentManager();
+            // TODO: 2018/3/30 fragment定位 
+            Fragment fragment=manager.findFragmentByTag("me_fragment");
+            if(fragment==null){
+                fragment=manager.findFragmentByTag("worker_me_fragment");
+            }
+            if(fragment==null){
+                fragment=manager.findFragmentByTag("admin_work_fragment");
+            }
+            fragment.onActivityResult(requestCode,resultCode,data);
+        }
+    }
 }
