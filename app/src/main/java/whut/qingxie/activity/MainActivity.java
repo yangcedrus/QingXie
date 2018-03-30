@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import me.iwf.photopicker.PhotoPicker;
 import whut.qingxie.R;
 import whut.qingxie.helper.BottomNavigationViewHelper;
 import whut.qingxie.fragment.AdministratorFragment;
@@ -49,34 +51,42 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode==LOG_IN){
-            state=data.getIntExtra("login_state_return",0);
-            if(resultCode==RESULT_OK){
-                switch (state){
-                    case STUDENT:
-                        bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_favorite_border_black_24dp);
-                        bottomNavigationView.getMenu().getItem(2).setTitle("收藏");
-                        break;
-                    case WORKER:
-                        bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_group_black_24dp);
-                        bottomNavigationView.getMenu().getItem(2).setTitle("工作");
-                        break;
-                    case ADMIN:
-                        bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_group_black_24dp);
-                        bottomNavigationView.getMenu().getItem(2).setTitle("工作");
-                        bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.ic_detail_black_24dp);
-                        bottomNavigationView.getMenu().getItem(1).setTitle("操作历史");
-                        break;
-                    default:break;
-                }
-            }
-        }else if(requestCode==LOG_OUT){
-            int flag=data.getIntExtra("log_out",0);
-            if(flag==1){
-                state=0;
-            }
-        }
         super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case LOG_IN:
+                state=data.getIntExtra("login_state_return",0);
+                if(resultCode==RESULT_OK){
+                    switch (state){
+                        case STUDENT:
+                            bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_favorite_border_black_24dp);
+                            bottomNavigationView.getMenu().getItem(2).setTitle("收藏");
+                            break;
+                        case WORKER:
+                            bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_group_black_24dp);
+                            bottomNavigationView.getMenu().getItem(2).setTitle("工作");
+                            break;
+                        case ADMIN:
+                            bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_group_black_24dp);
+                            bottomNavigationView.getMenu().getItem(2).setTitle("工作");
+                            bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.ic_detail_black_24dp);
+                            bottomNavigationView.getMenu().getItem(1).setTitle("操作历史");
+                            break;
+                        default:break;
+                    }
+                }
+                break;
+            case LOG_OUT:
+                int flag=data.getIntExtra("log_out",0);
+                if(flag==1) {
+                    state = 0;
+                }
+                break;
+            case PhotoPicker.REQUEST_CODE:
+                FragmentManager manager=getSupportFragmentManager();
+                Fragment fragment=manager.findFragmentByTag("me_fragment");
+                fragment.onActivityResult(requestCode,resultCode,data);
+                break;
+        }
     }
 
     @Override
@@ -114,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                                     if (mHomeFragment == null) {
                                         mHomeFragment = new HomeFragment();
                                     }
-                                    transaction.replace(R.id.content, mHomeFragment);
+                                    transaction.replace(R.id.content, mHomeFragment,"home_fragment");
                                     break;
                                 case R.id.navigation_me:
                                     //点击第二个Item
@@ -124,19 +134,19 @@ public class MainActivity extends AppCompatActivity {
                                             if (mMeFragment == null) {
                                                 mMeFragment = new MeFragment();
                                             }
-                                            transaction.replace(R.id.content, mMeFragment);
+                                            transaction.replace(R.id.content, mMeFragment,"me_fragment");
                                             break;
                                         case WORKER:
                                             if (mWorkerMeFragment == null) {
                                                 mWorkerMeFragment = new WorkerMeFragment();
                                             }
-                                            transaction.replace(R.id.content, mWorkerMeFragment);
+                                            transaction.replace(R.id.content, mWorkerMeFragment,"worker_me_fragment");
                                             break;
                                         case ADMIN:
                                             if (mOperationHistoryFragment == null) {
                                                 mOperationHistoryFragment = new OperationHistoryFragment();
                                             }
-                                            transaction.replace(R.id.content, mOperationHistoryFragment);
+                                            transaction.replace(R.id.content, mOperationHistoryFragment,"admin_history_fragment");
                                             break;
                                         case NO_LOGIN:
                                             break;
@@ -150,19 +160,19 @@ public class MainActivity extends AppCompatActivity {
                                             if (mFavouriteFragment == null) {
                                                 mFavouriteFragment = new FavouriteFragment();
                                             }
-                                            transaction.replace(R.id.content, mFavouriteFragment);
+                                            transaction.replace(R.id.content, mFavouriteFragment,"favourite_fragment");
                                             break;
                                         case WORKER:
                                             if (mWorkerWorkFragment == null) {
                                                 mWorkerWorkFragment = new WorkerWorkFragment();
                                             }
-                                            transaction.replace(R.id.content, mWorkerWorkFragment);
+                                            transaction.replace(R.id.content, mWorkerWorkFragment,"worker_work_fragment");
                                             break;
                                         case ADMIN:
                                             if (mAdministratorFragment == null) {
                                                 mAdministratorFragment = new AdministratorFragment();
                                             }
-                                            transaction.replace(R.id.content, mAdministratorFragment);
+                                            transaction.replace(R.id.content, mAdministratorFragment,"admin_work_fragment");
                                             break;
                                         case NO_LOGIN:
                                             break;

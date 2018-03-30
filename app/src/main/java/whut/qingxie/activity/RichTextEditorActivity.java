@@ -86,7 +86,7 @@ public class RichTextEditorActivity extends AppCompatActivity {
                 break;
             }
             case android.R.id.home:{
-                // TODO: 2018/3/24 富文本返回
+                // TODO: 2018/3/24 富文本返回，弹出对话框是否保存
                 Log.d("src:", getEditData());
                 finish();
                 break;

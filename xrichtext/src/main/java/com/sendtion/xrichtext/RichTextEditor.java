@@ -251,7 +251,7 @@ public class RichTextEditor extends ScrollView {
             lastFocusEdit.setText(editStr1);
             String editStr2 = lastEditStr.substring(cursorIndex).trim();
             if (editStr2.length() == 0) {
-                editStr2 = "";
+                editStr2 = " ";
             }
             if (allLayout.getChildCount() - 1 == lastEditIndex) {
                 addEditTextAtIndex(lastEditIndex + 1, editStr2);

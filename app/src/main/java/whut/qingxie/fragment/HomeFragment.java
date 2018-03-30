@@ -2,22 +2,24 @@ package whut.qingxie.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.support.annotation.Nullable;
-import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -27,12 +29,9 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.Call;
-import okhttp3.Response;
 import whut.qingxie.R;
 import whut.qingxie.adapter.CardActivityItemAdapter;
 import whut.qingxie.common.Content;
@@ -55,10 +54,6 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     private static CardActivityItemAdapter adapter;
     private static SmartRefreshLayout smartRefreshLayout;
     private static View headerView;
-
-    private static String SERVE_URL="http://123.207.87.34:8080/";
-    private static String GET_ALL_ACTIVITIES="activity/getAllActivities";
-    private static String GET_PICTURES_URLS="";
 
     //存放图片组,文字组
     private static int picNum=4;
@@ -93,20 +88,23 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
 //                init();
-                //FIXME
                 //调用服务器数据
                 initActivity();
-                //结束刷新
-                smartRefreshLayout.finishRefresh();
             }
         });
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
+                // TODO: 2018/3/28 加载更多数据 
                 for(int i=0;i<5;i++){
                     VolActivityInfo ac=new VolActivityInfo(1,"敬老院活动",1,
                             "2",0,4.0,2.0,10,
-                            "东院敬老院","东院敬老院活动，打扫卫生",null);
+                            "东院敬老院","东院敬老院活动，打扫卫生","<img src="+"\"http://123.207.87.34:8080/qingxie-img/0cee7de9fdbc7c00fa2ed998b2d206b2/351bc7a56f358647891333d056ecf334.jpg\""+
+                            "/><img src="+"\"/storage/emulated/0/Download/ChMkJ1ofdk2IY0K2AAK32bN9ct8AAimnAAwKcAAArfx872.jpg\"" + "/><img src="+
+                            "\"/storage/emulated/0/Pictures/JPEG_20180319_015026.jpg\""+"/>"+
+                            "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
+                            "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
+                            "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" );
                     ac.setCreateTime(new Date());
                     ac.setRegTime(new Date());
                     cardActivityItems.add(ac);
@@ -122,24 +120,6 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         return view;
     }
 
-    private void initActivity(){
-        OkhttpUtil.accessData("GET", "/activity/getAllActivities?page=1&size=2", null, null, new CallBackUtil.CallBackMsg() {
-
-            @Override
-            public void onFailure(Call call, Exception e) {
-                Log.e("MyResumeActivity", "onFailure: " + e.getMessage());
-            }
-
-            @Override
-            public void onResponse(Msg response) {
-                PageInfo<VolActivityInfo> pageInfo=PageInfo.parseFromJson((JSONObject) response.getData().get("activities"),VolActivityInfo.class);
-                cardActivityItems.clear();
-                cardActivityItems.addAll(pageInfo.getList());
-                reFresh();
-            }
-        });
-    }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -153,7 +133,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         recyclerView.setAdapter(adapter);
 
         if(cardActivityItems.size()==0)
-            init();
+            initActivity();
 
         initViews();
         initData();
@@ -163,6 +143,30 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     //刷新页面
     public static void reFresh(){
         adapter.notifyDataSetChanged();
+    }
+
+    //初始化数据
+    private void initActivity(){
+        OkhttpUtil.accessData("GET", "/activity/getAllActivities?page=1&size=2", null, null, new CallBackUtil.CallBackMsg() {
+
+            @Override
+            public void onFailure(Call call, Exception e) {
+                Toast.makeText(getContext(),"连接超时，请检查网络连接",Toast.LENGTH_LONG).show();
+                Log.e("HomeFragment", "onFailure: " + e.getMessage());
+                //结束刷新
+                smartRefreshLayout.finishRefresh();
+            }
+
+            @Override
+            public void onResponse(Msg response) {
+                PageInfo<VolActivityInfo> pageInfo=PageInfo.parseFromJson((JSONObject) response.getData().get("activities"),VolActivityInfo.class);
+                cardActivityItems.clear();
+                cardActivityItems.addAll(pageInfo.getList());
+                //结束刷新
+                smartRefreshLayout.finishRefresh();
+                reFresh();
+            }
+        });
     }
 
     //初始化列表数据
@@ -190,8 +194,8 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         //requestForFiveActivity();
     }
 
-    //请求五个活动信息
-    public static void requestForFiveActivity(){
+    //请求更多活动信息
+    public static void requestMoreActivity(){
 
     }
 
@@ -205,6 +209,17 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         point=(LinearLayout)headerView.findViewById(R.id.home_viewPager_point);
         vp=(ViewPager)headerView.findViewById(R.id.home_viewPager);
         textView=(TextView)headerView.findViewById(R.id.home_viewPager_textView);
+//        //触摸屏幕停止轮询，有bug
+//        vp.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                switch (event.getAction()){
+//                    case ACTION_DOWN:isRunning=false;break;
+//                    case ACTION_UP:isRunning=true;break;
+//                }
+//                return false;
+//            }
+//        });
         vp.setOnPageChangeListener(this);
     }
 
@@ -267,14 +282,17 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             int newPosition =position%picNum;//   共有3张图片
-            ImageView imageView=imageViews.get(newPosition);
-            container.addView(imageView);
-            return imageView;
+            if(imageViews.get(newPosition).getParent()!=null){
+                container.removeView(imageViews.get(newPosition));
+            }
+            container.addView(imageViews.get(newPosition));
+            return imageViews.get(newPosition);
         }
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View)object);
+            int newPosition =position%picNum;//   共有3张图片
+            container.removeView(imageViews.get(newPosition));
         }
     }
 

@@ -2,6 +2,7 @@ package whut.qingxie.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -9,8 +10,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.sendtion.xrichtext.RichTextView;
 
 import java.util.List;
@@ -90,15 +97,21 @@ public class SignUpActivity extends AppCompatActivity {
         for (int i = 0; i < textList.size(); i++) {
             String text = textList.get(i);
             if (text.contains("<img")) {
-                String imagePath = StringUtils.getImgSrc(text);
+                final String imagePath = StringUtils.getImgSrc(text);
                 int width = ScreenUtils.getScreenWidth(this);
                 int height = ScreenUtils.getScreenHeight(this);
                 et_new_content.measure(0,0);
-                Bitmap bitmap = ImageUtils.getSmallBitmap(imagePath, width, height);
-                if (bitmap != null){
+                if(text.contains("http")){
                     et_new_content.addImageViewAtIndex(et_new_content.getLastIndex(),imagePath);
-                } else {
-                    et_new_content.addTextViewAtIndex(et_new_content.getLastIndex(), text);
+                }else{
+                    //文件读取图片
+                    //待删除
+                    Bitmap bitmap = ImageUtils.getSmallBitmap(imagePath, width, height);
+                    if (bitmap != null){
+                        et_new_content.addImageViewAtIndex(et_new_content.getLastIndex(),imagePath);
+                    } else {
+                        et_new_content.addTextViewAtIndex(et_new_content.getLastIndex(), text);
+                    }
                 }
             }else{
                 et_new_content.addTextViewAtIndex(et_new_content.getLastIndex(), text);
