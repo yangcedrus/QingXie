@@ -10,7 +10,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_myresume"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/toolbar_height"
         android:background="@color/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 

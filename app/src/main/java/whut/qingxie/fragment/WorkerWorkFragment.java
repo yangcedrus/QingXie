@@ -14,6 +14,7 @@ import whut.qingxie.activity.ManageWorkAvtivity;
 import whut.qingxie.activity.ManageWorkTimeActivity;
 import whut.qingxie.activity.ReleaseTweetActivity;
 import whut.qingxie.activity.ReleaseWorkActivity;
+import whut.qingxie.activity.RichTextEditorActivity;
 
 public class WorkerWorkFragment extends Fragment {
     private RelativeLayout layout1;
@@ -51,7 +52,7 @@ public class WorkerWorkFragment extends Fragment {
             Intent intent;
             switch (v.getId()) {
                 case R.id.worker_me_layout5:
-                    intent=new Intent(getActivity(), ReleaseTweetActivity.class);
+                    intent=new Intent(getActivity(), RichTextEditorActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.worker_me_layout6:

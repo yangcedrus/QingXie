@@ -87,9 +87,9 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-//                init();
+                init();
                 //调用服务器数据
-                initActivity();
+//                initActivity();
             }
         });
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
@@ -133,7 +133,8 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         recyclerView.setAdapter(adapter);
 
         if(cardActivityItems.size()==0)
-            initActivity();
+            init();
+            //initActivity();
 
         initViews();
         initData();
