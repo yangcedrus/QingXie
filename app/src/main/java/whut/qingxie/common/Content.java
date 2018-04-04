@@ -26,5 +26,6 @@ public class Content {
         CLAZZ_MAP.put("User", "whut.qingxie.entity.user.User");
         CLAZZ_MAP.put("Resume", "whut.qingxie.entity.user.Resume");
         CLAZZ_MAP.put("Experience", "whut.qingxie.entity.user.UserExperience");
+        CLAZZ_MAP.put("UserActivity","whut.qingxie.entity.activity.Activity4User");
     }
 }
