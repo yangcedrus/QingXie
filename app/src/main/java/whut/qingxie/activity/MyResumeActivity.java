@@ -1,12 +1,8 @@
 package whut.qingxie.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.preference.Preference;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -17,7 +13,6 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,14 +20,14 @@ import java.util.Date;
 import java.util.List;
 
 import okhttp3.Call;
-import okhttp3.Response;
 import whut.qingxie.Item.ExperienceItem;
 import whut.qingxie.R;
 import whut.qingxie.adapter.MyExperienceItemAdapter;
-import whut.qingxie.common.Content;
 import whut.qingxie.dto.Msg;
 import whut.qingxie.entity.user.Resume;
 import whut.qingxie.entity.user.User;
+import whut.qingxie.entity.user.UserExperience;
+import whut.qingxie.Item.ExperienceItem;
 import whut.qingxie.entity.user.UserExperience;
 import whut.qingxie.network.CallBackUtil;
 import whut.qingxie.network.OkhttpUtil;
@@ -71,40 +66,13 @@ public class MyResumeActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
-    @SuppressLint("HandlerLeak")
-    private Handler eHandler = new Handler() {
-        public void handleMessage(Message message) {
-            super.handleMessage(message);
-            try {
-                Msg msg = Msg.parseMapFromJson(message.obj, Content.CLAZZ_MAP);
-                Resume resume = (Resume) msg.getData().get("Resume");
-                List<UserExperience> experiences = resume.getExperiences();
-                for (UserExperience exp : experiences) {
-                    list.add(new ExperienceItem(exp.getEnd().toString(), exp.getActivityName()));
-                }
-            } catch (ClassNotFoundException e) {
-                Log.e("MyResumeActivity", "handleMessage: " + e.getMessage());
-            }
-        }
-    };
-
     private void getExperience() {
-        // TODO: 2018/4/4 获取user_id
+        //FIXME:API更改
         Integer id = 3;
-        OkhttpUtil.accessData("GET", "/user/" + id + "/resume", null, null, new CallBackUtil<Msg>() {
-            @Override
-            public Msg onParseResponse(Call call, Response response) {
-                try {
-                    return Msg.parseMapFromJson(response.body().string(), Content.CLAZZ_MAP);
-                } catch (ClassNotFoundException | IOException e) {
-                    e.printStackTrace();
-                    Log.e("MyResumeActivity", "handleMessage: " + e.getMessage());
-                }
-                return null;
-            }
-
+        OkhttpUtil.accessData("GET", "/user/" + id + "/resume", null, null, new CallBackUtil.CallBackMsg() {
             @Override
             public void onFailure(Call call, Exception e) {
+                //FIXME:网络访问错误，超时等处理
                 Log.e("MyResumeActivity", "onFailure: " + e.getMessage());
             }
 

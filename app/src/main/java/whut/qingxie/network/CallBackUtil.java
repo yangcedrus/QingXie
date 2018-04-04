@@ -21,7 +21,7 @@ import whut.qingxie.dto.Msg;
  * reference to https://github.com/guozhengXia/OkHttpUtils
  * Created by evans on 2018/3/7.
  */
-
+//TODO:重构CallBackUtil
 public abstract class CallBackUtil<T> {
     public static Handler mMainHandler = new Handler(Looper.getMainLooper());
 

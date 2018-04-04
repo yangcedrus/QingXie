@@ -148,10 +148,11 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
 
     //初始化数据
     private void initActivity(){
-        OkhttpUtil.accessData("GET", "/activity/getAllActivities?page=1&size=2", null, null, new CallBackUtil.CallBackMsg() {
+        OkhttpUtil.accessData("GET", "/activity/home?page=1&size=8", null, null, new CallBackUtil.CallBackMsg() {
 
             @Override
             public void onFailure(Call call, Exception e) {
+                //FIXME:还有404等，不全是超时
                 Toast.makeText(getContext(),"连接超时，请检查网络连接",Toast.LENGTH_LONG).show();
                 Log.e("HomeFragment", "onFailure: " + e.getMessage());
                 //结束刷新
@@ -160,7 +161,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
 
             @Override
             public void onResponse(Msg response) {
-                PageInfo<VolActivityInfo> pageInfo=PageInfo.parseFromJson((JSONObject) response.getData().get("activities"),VolActivityInfo.class);
+                PageInfo<VolActivityInfo> pageInfo=PageInfo.parseFromJson((JSONObject) response.getData().get("PageInfo"),VolActivityInfo.class);
                 cardActivityItems.clear();
                 cardActivityItems.addAll(pageInfo.getList());
                 //结束刷新
@@ -172,6 +173,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
 
     //初始化列表数据
     private static void init(){
+        //FIXME:TO DELETE IT, OR LOAD FROM LOCAL
         cardActivityItems.clear();
         for(int i=0;i<5;i++){
             VolActivityInfo ac=new VolActivityInfo(1,"敬老院活动",1,
