@@ -53,7 +53,7 @@ public class MyInfoActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if(item.getItemId()==android.R.id.home){
-            // TODO: 2018/1/9 保存修改的信息
+            // TODO: 2018/1/9 活动待删除
 
             finish();
         }

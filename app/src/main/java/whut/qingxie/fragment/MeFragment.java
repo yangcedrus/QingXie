@@ -1,5 +1,7 @@
 package whut.qingxie.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -76,38 +78,53 @@ public class MeFragment extends Fragment {
             }
         });
 
-        //虚构个人信息
-        // TODO: 2018/3/9 从本地读取
-        myInfo=new User();
-        myInfo.setId(1);
-        myInfo.setStudentId("01215xxxxxxxx");
-        myInfo.setName("张三");
-        myInfo.setGender("M");
-        myInfo.setFlag("M");
-        myInfo.setAge(12);
-        myInfo.setLastLoginTime(new Date());
-        textView.setText(myInfo.getName());
-        if(myInfo.getGender().equals("M")){
-            Drawable drawable=getActivity().getResources().getDrawable(R.drawable.ic_favorite_black_24dp);
-            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-            textView.setCompoundDrawables(null,null,drawable,null);
+        // TODO: 2018/4/4 session判断是否要从本地获取信息
+        SharedPreferences preferences=getActivity().getSharedPreferences("user_info", Context.MODE_PRIVATE);
+        String name=preferences.getString("user_name",null);
+        if(name!=null){
+            myInfo=new User();
+            myInfo.setName(name);
+            myInfo.setId(preferences.getInt("user_id",-1));
+            myInfo.setStudentId(preferences.getString("user_student_id",null));
+            myInfo.setStudentId(preferences.getString("user_name",null));
+            myInfo.setGender(preferences.getString("user_gender","M"));
+            // TODO: 2018/4/4 FLAG什么意思
+            myInfo.setFlag("M");
+            myInfo.setAge(preferences.getInt("user_age",0));
+
+            // TODO: 2018/4/4 LastLoginTime处理，在哪读取、存储到本地
         }else{
-            Drawable drawable=getActivity().getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp);
-            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-            textView.setCompoundDrawables(null,null,drawable,null);
+            //虚构个人信息
+            myInfo=new User();
+            myInfo.setId(1);
+            myInfo.setStudentId("01215xxxxxxxx");
+            myInfo.setName("张三");
+            myInfo.setGender("M");
+            myInfo.setFlag("M");
+            myInfo.setAge(12);
+            myInfo.setLastLoginTime(new Date());
         }
-
-        //Glide.with(getContext()).load(myInfo.getIconId()).centerCrop().into(circleImageView);
-
+        textView.setText(myInfo.getName());
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//        if(myInfo.getGender().equals("M")){
+//            Drawable drawable=getActivity().getResources().getDrawable(R.drawable.ic_favorite_black_24dp);
+//            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+//            textView.setCompoundDrawables(null,null,drawable,null);
+//        }else{
+//            Drawable drawable=getActivity().getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp);
+//            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+//            textView.setCompoundDrawables(null,null,drawable,null);
+//        }
         return inflater.inflate(R.layout.fragment_me,container,false);
     }
 
-    //新建监听类
+    /**
+     * 监听类
+     */
     class MyListener implements View.OnClickListener {
 
         @Override

@@ -11,6 +11,7 @@ public class Resume {
     private int userId;
     private String studentId;
     private String name;
+    private String gender;
     private String className;
     private Date birthDate;
     private Integer age;
@@ -154,5 +155,13 @@ public class Resume {
 
     public void setExperiences(List<UserExperience> experiences) {
         this.experiences = experiences;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

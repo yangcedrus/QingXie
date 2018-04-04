@@ -214,17 +214,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==PhotoPicker.REQUEST_CODE){
-            FragmentManager manager=getSupportFragmentManager();
-            // TODO: 2018/3/30 fragment定位 
-            Fragment fragment=manager.findFragmentByTag("me_fragment");
-            if(fragment==null){
-                fragment=manager.findFragmentByTag("worker_me_fragment");
-            }
-            if(fragment==null){
-                fragment=manager.findFragmentByTag("admin_work_fragment");
-            }
-            fragment.onActivityResult(requestCode,resultCode,data);
+        switch (requestCode){
+            case PhotoPicker.REQUEST_CODE:
+                FragmentManager manager=getSupportFragmentManager();
+                // TODO: 2018/3/30 fragment定位
+                Fragment fragment=manager.findFragmentByTag("me_fragment");
+                if(fragment==null){
+                    fragment=manager.findFragmentByTag("worker_me_fragment");
+                }
+                if(fragment==null){
+                    fragment=manager.findFragmentByTag("admin_work_fragment");
+                }
+                fragment.onActivityResult(requestCode,resultCode,data);
+                break;
+
+                default:break;
         }
     }
 }

@@ -108,8 +108,7 @@ public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityIt
             long diff=date2.getTime()-date1.getTime();
             days = diff / (1000 * 60 * 60 * 24);
         }catch (ParseException e){
-            e.printStackTrace();
-            // TODO: 2018/3/7 解析异常捕获处理
+            days=-1;
         }
         String s=days+"天";
 

@@ -95,13 +95,13 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                // TODO: 2018/3/28 加载更多数据 
                 for(int i=0;i<5;i++){
                     VolActivityInfo ac=new VolActivityInfo(1,"敬老院活动",1,
                             "2",0,4.0,2.0,10,
-                            "东院敬老院","东院敬老院活动，打扫卫生","<img src="+"\"http://123.207.87.34:8080/qingxie-img/0cee7de9fdbc7c00fa2ed998b2d206b2/351bc7a56f358647891333d056ecf334.jpg\""+
-                            "/><img src="+"\"/storage/emulated/0/Download/ChMkJ1ofdk2IY0K2AAK32bN9ct8AAimnAAwKcAAArfx872.jpg\"" + "/><img src="+
-                            "\"/storage/emulated/0/Pictures/JPEG_20180319_015026.jpg\""+"/>"+
+                            "东院敬老院","东院敬老院活动，打扫卫生",
+                            "<img src=\"http://123.207.87.34:8080/qingxie-img/0cee7de9fdbc7c00fa2ed998b2d206b2/351bc7a56f358647891333d056ecf334.jpg\"/>" +
+                            "<img src=\"/storage/emulated/0/Download/ChMkJ1ofdk2IY0K2AAK32bN9ct8AAimnAAwKcAAArfx872.jpg\"/>" +
+                            "<img src=\"/storage/emulated/0/Pictures/JPEG_20180319_015026.jpg\"/>" +
                             "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
                             "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
                             "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" );
@@ -177,22 +177,19 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
             VolActivityInfo ac=new VolActivityInfo(1,"敬老院活动",1,
                     "2",0,4.0,2.0,10,
                     "东院敬老院","东院敬老院活动，打扫卫生",
-                    "<img src="+"\"/storage/emulated/0/Download/ChMkJ1ofdnyIRrPGAAKnw9Wk1O8AAimnQDyZ94AAqfb604.jpg\""+
-                    "/><img src="+"\"/storage/emulated/0/Download/ChMkJ1ofdk2IY0K2AAK32bN9ct8AAimnAAwKcAAArfx872.jpg\"" + "/><img src="+
-                            "\"/storage/emulated/0/Pictures/JPEG_20180319_015026.jpg\""+"/>"+
-                    "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
-                    "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
-                    "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情"  );
+                    "<img src=\"http://123.207.87.34:8080/qingxie-img/0cee7de9fdbc7c00fa2ed998b2d206b2/351bc7a56f358647891333d056ecf334.jpg\"/>" +
+                            "<img src=\"/storage/emulated/0/Download/ChMkJ1ofdk2IY0K2AAK32bN9ct8AAimnAAwKcAAArfx872.jpg\"/>" +
+                            "<img src=\"/storage/emulated/0/Pictures/JPEG_20180319_015026.jpg\"/>" +
+                            "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
+                            "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
+                            "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" );
             ac.setCreateTime(new Date());
             ac.setRegTime(new Date());
             cardActivityItems.add(ac);
         }
         smartRefreshLayout.resetNoMoreData();
+        smartRefreshLayout.finishRefresh();
         reFresh();
-
-        //请求五个活动信息
-        // TODO: 2018/3/7 从本地读取
-        //requestForFiveActivity();
     }
 
     //请求更多活动信息

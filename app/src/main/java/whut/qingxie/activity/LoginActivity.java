@@ -61,12 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                 }else{
                     // TODO: 2018/3/9 判断是否登陆成功 
                     state=Integer.parseInt(name);
-                    // TODO: 2018/3/9 拉取个人信息,在个人页面中获取 
                 }
-                
-//                Intent intent=new Intent();
-//                intent.putExtra("login_state_return",state);
-//                setResult(RESULT_OK,intent);
 
                 Intent intent =new Intent(LoginActivity.this,MainActivity.class);
                 intent.putExtra("user_state",state);

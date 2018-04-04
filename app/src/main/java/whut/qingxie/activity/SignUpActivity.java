@@ -90,7 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void showTextData(String content) {
         et_new_content.clearAllLayout();
         if(content==null){
-            // TODO: 2018/3/24 详情为空的处理 
+            et_new_content.addTextViewAtIndex(et_new_content.getLastIndex(), "详情为空，如有问题请反馈");
             return;
         }
         List<String> textList = StringUtils.cutStringByImgTag(content);
