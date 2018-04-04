@@ -19,6 +19,9 @@ import whut.qingxie.R;
 import whut.qingxie.common.Content;
 import whut.qingxie.dto.Msg;
 
+/**
+ * FIXME:首要！参考一下别人的本地账户管理的实现
+ */
 public class LoginActivity extends AppCompatActivity {
     //储存登录信息
     private int state=0;
@@ -74,6 +77,10 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public void login(){
+
     }
 
     @SuppressLint("HandlerLeak")

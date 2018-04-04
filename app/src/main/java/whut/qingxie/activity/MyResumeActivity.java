@@ -11,6 +11,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.alibaba.fastjson.JSONObject;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -24,6 +27,8 @@ import whut.qingxie.adapter.MyExperienceItemAdapter;
 import whut.qingxie.Item.ExperienceItem;
 import whut.qingxie.common.Content;
 import whut.qingxie.dto.Msg;
+import whut.qingxie.dto.PageInfo;
+import whut.qingxie.entity.activity.VolActivityInfo;
 import whut.qingxie.entity.user.Resume;
 import whut.qingxie.entity.user.UserExperience;
 import whut.qingxie.entity.user.User;
@@ -65,38 +70,12 @@ public class MyResumeActivity extends AppCompatActivity {
         // TODO: 2018/3/9 无信息可写 
     }
 
-    @SuppressLint("HandlerLeak")
-    private Handler eHandler = new Handler() {
-        public void handleMessage(Message message) {
-            super.handleMessage(message);
-            try {
-                Msg msg = Msg.parseMapFromJson(message.obj, Content.CLAZZ_MAP);
-                Resume resume = (Resume) msg.getData().get("Resume");
-                List<UserExperience> experiences = resume.getExperiences();
-                for (UserExperience exp : experiences) {
-                    list.add(new ExperienceItem(exp.getEnd().toString(), exp.getActivityName()));
-                }
-            } catch (ClassNotFoundException e) {
-                Log.e("MyResumeActivity", "handleMessage: " + e.getMessage());
-            }
-        }
-    };
-
     private void getExperience() {
-        OkhttpUtil.accessData("GET", "/user/3/resume", null, null, new CallBackUtil<Msg>() {
-            @Override
-            public Msg onParseResponse(Call call, Response response) {
-                try {
-                    return Msg.parseMapFromJson(response.body().string(), Content.CLAZZ_MAP);
-                } catch (ClassNotFoundException | IOException e) {
-                    e.printStackTrace();
-                    Log.e("MyResumeActivity", "handleMessage: " + e.getMessage());
-                }
-                return null;
-            }
-
+        //FIXME:API更改
+        OkhttpUtil.accessData("GET", "/user/3/resume", null, null, new CallBackUtil.CallBackMsg() {
             @Override
             public void onFailure(Call call, Exception e) {
+                //FIXME:网络访问错误，超时等处理
                 Log.e("MyResumeActivity", "onFailure: " + e.getMessage());
             }
 

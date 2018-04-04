@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +16,25 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import okhttp3.Call;
+import whut.qingxie.Item.ExperienceItem;
 import whut.qingxie.Item.MyHoursItem;
 import whut.qingxie.R;
+import whut.qingxie.activity.MyResumeActivity;
 import whut.qingxie.adapter.FavouriteItemAdapter;
+import whut.qingxie.adapter.MyExperienceItemAdapter;
+import whut.qingxie.dto.Msg;
+import whut.qingxie.entity.activity.Activity4User;
 import whut.qingxie.entity.activity.VolActivityInfo;
+import whut.qingxie.entity.user.Resume;
+import whut.qingxie.entity.user.UserExperience;
+import whut.qingxie.network.CallBackUtil;
+import whut.qingxie.network.OkhttpUtil;
 
 public class FavouriteFragment extends Fragment {
 
@@ -93,5 +105,23 @@ public class FavouriteFragment extends Fragment {
         }
         reFresh();
         smartRefreshLayout.resetNoMoreData();
+    }
+
+    private void getExperience() {
+        //FIXME:API更改，onFailure处理网络访问错误，onResponse处直接更新UI,favouriteList为收藏的活动列表
+        OkhttpUtil.accessData("GET", "/user/3/forks", null, null, new CallBackUtil.CallBackMsg() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                Log.e(this.getClass().toString(), "onFailure: " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Msg msg) {
+                if (msg != null) {
+                    List<Activity4User> favouriteList= (List<Activity4User>) msg.getData().get("UserActivity");
+                }
+
+            }
+        });
     }
 }
