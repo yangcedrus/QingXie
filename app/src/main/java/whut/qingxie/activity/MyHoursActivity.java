@@ -44,8 +44,6 @@ public class MyHoursActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        if(myHoursItems.size()==0)
-            init();
         RecyclerView recyclerView=(RecyclerView)findViewById(R.id.my_hours_recyclerView);
         LinearLayoutManager linearLayoutManager =new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -76,6 +74,9 @@ public class MyHoursActivity extends AppCompatActivity {
                 reFresh();
             }
         });
+
+        if(myHoursItems.size()==0)
+            init();
     }
 
     private static void reFresh(){

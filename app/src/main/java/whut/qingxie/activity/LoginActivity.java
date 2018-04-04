@@ -64,9 +64,13 @@ public class LoginActivity extends AppCompatActivity {
                     // TODO: 2018/3/9 拉取个人信息,在个人页面中获取 
                 }
                 
-                Intent intent=new Intent();
-                intent.putExtra("login_state_return",state);
-                setResult(RESULT_OK,intent);
+//                Intent intent=new Intent();
+//                intent.putExtra("login_state_return",state);
+//                setResult(RESULT_OK,intent);
+
+                Intent intent =new Intent(LoginActivity.this,MainActivity.class);
+                intent.putExtra("user_state",state);
+                startActivity(intent);
                 finish();
             }
         });
@@ -104,9 +108,9 @@ public class LoginActivity extends AppCompatActivity {
             case android.R.id.home:
             {
                 //点击返回键返回信息给上个活动
-                intent=new Intent();
-                intent.putExtra("login_state_return",state);
-                setResult(RESULT_OK,intent);
+                intent =new Intent(LoginActivity.this,MainActivity.class);
+                intent.putExtra("user_state",state);
+                startActivity(intent);
                 finish();
                 break;
             }
@@ -117,9 +121,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //点击虚拟返回按钮返回信息给上个活动
-        Intent intent=new Intent();
-        intent.putExtra("login_state_return",state);
-        setResult(RESULT_OK,intent);
+        Intent intent =new Intent(LoginActivity.this,MainActivity.class);
+        intent.putExtra("user_state",state);
+        startActivity(intent);
         finish();
         super.onBackPressed();
     }

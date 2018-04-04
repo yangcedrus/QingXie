@@ -7,22 +7,9 @@
     android:layout_height="match_parent"
     tools:context="whut.qingxie.fragment.MeFragment">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/worker_work_icon_me"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_gravity="center"
-        android:background="@mipmap/ic_launcher_round"
-        app:srcCompat="@drawable/ic_home_black_24dp" />
-
-    <TextView
-        android:id="@+id/worker_name_me2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:drawableEnd="@drawable/ic_home_black_24dp"
-        android:text=""
-        android:textSize="20sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"/>
 
     <LinearLayout
         android:layout_marginTop="40dp"

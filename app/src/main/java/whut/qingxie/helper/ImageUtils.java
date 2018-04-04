@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.util.Base64;
 import android.util.Log;
 
+import com.bumptech.glide.Glide;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -121,7 +123,7 @@ public class ImageUtils {
     }
 
     /**
-     * 根据路径获得突破并压缩返回bitmap用于显示
+     * 根据路径获得图片并压缩返回bitmap用于显示
      *
      * @return
      */

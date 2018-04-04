@@ -46,7 +46,6 @@ public class MeFragment extends Fragment {
     private CircleImageView circleImageView;
     private TextView textView;
 
-    private Subscription subsLoading;
     private Subscription subsInsert;
 
     //添加监听注册
@@ -149,8 +148,8 @@ public class MeFragment extends Fragment {
         if (resultCode == RESULT_OK) {
             if (data != null) {
                 if (requestCode == PhotoPicker.REQUEST_CODE){
-                    String photos = data.getStringExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
-                    insertImagesSync(photos);
+                    ArrayList<String> photos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
+                    insertImagesSync(photos.get(0));
                 }
             }
         }
