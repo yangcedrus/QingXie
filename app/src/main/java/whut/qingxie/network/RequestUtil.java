@@ -122,6 +122,8 @@ class RequestUtil {
         if (mHeaderMap != null) {
             setHeader();
         }
+        mRequestBuilder.addHeader("content-type","application/json;charset=UTF-8");
+        mRequestBuilder.addHeader("User-Agent","android");
         //mRequestBuilder.addHeader("Authorization","Bearer "+"token");可以把token添加到这儿
         mOkHttpRequest = mRequestBuilder.build();
     }
@@ -273,6 +275,9 @@ class RequestUtil {
             @Override
             public void onResponse(final Call call, final Response response) throws IOException {
                 //FIXME:404 时返回到这
+                if(response.code()==404){
+
+                }
                 if (mCallBack != null&&response.isSuccessful()) {
                     mCallBack.onSeccess(call, response);
                 }else{

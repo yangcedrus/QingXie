@@ -72,7 +72,9 @@ public class MyResumeActivity extends AppCompatActivity {
         OkhttpUtil.accessData("GET", "/user/" + id + "/resume", null, null, new CallBackUtil.CallBackMsg() {
             @Override
             public void onFailure(Call call, Exception e) {
-                //FIXME:网络访问错误，超时等处理
+                //网络访问错误，则从本地读取信息
+                // FIXME 网络不好，本地无信息，则显示默认页面
+                init();
                 Log.e("MyResumeActivity", "onFailure: " + e.getMessage());
             }
 

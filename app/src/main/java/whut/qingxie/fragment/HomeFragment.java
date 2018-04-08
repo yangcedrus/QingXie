@@ -13,7 +13,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -70,7 +69,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         public void handleMessage(Message message){
             super.handleMessage(message);
             try {
-                Msg msg=Msg.parseMapFromJson(message.obj, Content.CLAZZ_MAP);
+                Msg msg = Msg.parseMapFromJson(message.obj, Content.getClazzMap());
 
             } catch (ClassNotFoundException e) {
                 Log.e(TAG, "handleMessage: "+e.getMessage());

@@ -7,6 +7,10 @@ import android.view.MenuItem;
 
 import whut.qingxie.R;
 
+/**
+ * 帮助信息页面
+ * 按钮位于大部分页面右上角
+ */
 public class HelpInfoActivity extends AppCompatActivity {
 
     @Override

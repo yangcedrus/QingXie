@@ -15,23 +15,41 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import okhttp3.Call;
 import whut.qingxie.R;
 import whut.qingxie.common.Content;
 import whut.qingxie.dto.Msg;
+import whut.qingxie.network.CallBackUtil;
+import whut.qingxie.network.OkhttpUtil;
 
 /**
+ * 用户登录页面
  * FIXME:首要！参考一下别人的本地账户管理的实现
  */
 public class LoginActivity extends AppCompatActivity {
     //储存登录信息
-    private int state=0;
-    
+
+    private Content content;
+    private Integer userID;
+    private int Flag;
+    private int gender;
+
     private static String TAG="LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //获取全局变量
+        content = (Content) getApplicationContext();
+        userID = content.getUserId();
+        Flag=content.getFLAG();
+        gender=content.getGENDER();
 
         //标题栏
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_login);
@@ -58,24 +76,51 @@ public class LoginActivity extends AppCompatActivity {
                 if(name.length()==0){
                     Toast.makeText(LoginActivity.this,"请输入账号",Toast.LENGTH_SHORT).show();
                     return;
-             //   }else if(psw.length()==0){
-                    //Toast.makeText(LoginActivity.this,"请输入密码",Toast.LENGTH_SHORT).show();
-                    // TODO: 2018/3/9 密码为空 
+                }else if(psw.length()==0){
+                    Toast.makeText(LoginActivity.this,"请输入密码",Toast.LENGTH_SHORT).show();
+                    return;
                 }else{
-                    // TODO: 2018/3/9 判断是否登陆成功 
-                    state=Integer.parseInt(name);
+                    login(name,psw);
+//                    state=Integer.parseInt(name);
                 }
-
-                Intent intent =new Intent(LoginActivity.this,MainActivity.class);
-                intent.putExtra("user_state",state);
-                startActivity(intent);
-                finish();
             }
         });
     }
 
-    public void login(){
+    public void login(String name, String psw) {
+        //判断是否全部为数字
+        Pattern p = Pattern.compile("[0-9]*");
+        Matcher m = p.matcher(name);
 
+        HashMap<String, String> paramsMap = new HashMap<>();
+
+
+        if (m.matches()) {
+            //用户id登录
+            paramsMap.put("studentId",name);
+            paramsMap.put("password",psw);
+        } else {
+            //用户名登录
+            paramsMap.put("name",name);
+            paramsMap.put("password",psw);
+        }
+        OkhttpUtil.accessData("POST", "/user/login", paramsMap, null, new CallBackUtil.CallBackMsg() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                content.setUserId(0);
+                Toast.makeText(LoginActivity.this,"登录失败，请重新登录",Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "Login()onFailure: "+e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Msg msg) {
+                Object obj=msg.getData().get("User");
+
+                Intent intent =new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @SuppressLint("HandlerLeak")
@@ -83,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
         public void handleMessage(Message message){
             super.handleMessage(message);
             try {
-                Msg msg=Msg.parseMapFromJson(message.obj,Content.CLAZZ_MAP);
+                Msg msg = Msg.parseMapFromJson(message.obj, Content.getClazzMap());
 
             } catch (ClassNotFoundException e) {
                 Log.e(TAG, "handleMessage: "+e.getMessage());
@@ -111,7 +156,6 @@ public class LoginActivity extends AppCompatActivity {
             {
                 //点击返回键返回信息给上个活动
                 intent =new Intent(LoginActivity.this,MainActivity.class);
-                intent.putExtra("user_state",state);
                 startActivity(intent);
                 finish();
                 break;
@@ -124,7 +168,6 @@ public class LoginActivity extends AppCompatActivity {
     public void onBackPressed() {
         //点击虚拟返回按钮返回信息给上个活动
         Intent intent =new Intent(LoginActivity.this,MainActivity.class);
-        intent.putExtra("user_state",state);
         startActivity(intent);
         finish();
         super.onBackPressed();

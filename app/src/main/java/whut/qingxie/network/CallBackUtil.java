@@ -94,7 +94,7 @@ public abstract class CallBackUtil<T> {
         @Override
         public Msg onParseResponse(Call call, Response response) {
             try {
-                return Msg.parseMapFromJson(response.body().string(), Content.CLAZZ_MAP);
+                return Msg.parseMapFromJson(response.body().string(), Content.getClazzMap());
             } catch (ClassNotFoundException | IOException e) {
                 e.printStackTrace();
                 Log.e("MyResumeActivity", "handleMessage: " + e.getMessage());
