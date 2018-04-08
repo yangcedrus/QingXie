@@ -7,6 +7,11 @@ import android.view.MenuItem;
 
 import whut.qingxie.R;
 
+/**
+ * WorkerWorkFragment第一个按钮，转移到了Richeditor页面
+ * 发布推文页面
+ * todo 页面功能待整合
+ */
 public class ReleaseTweetActivity extends AppCompatActivity {
 
     @Override

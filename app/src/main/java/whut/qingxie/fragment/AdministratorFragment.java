@@ -28,6 +28,9 @@ import whut.qingxie.activity.ReleaseNoticeActivity;
 
 import static android.app.Activity.RESULT_OK;
 
+/**
+ * 管理员工作页面
+ */
 public class AdministratorFragment extends Fragment {
 
     private RelativeLayout layout1;

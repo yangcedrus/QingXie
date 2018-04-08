@@ -7,6 +7,10 @@ import android.view.MenuItem;
 
 import whut.qingxie.R;
 
+/**
+ * WorkerWorkFragment页面第三个item
+ * 志愿活动管理
+ */
 public class ManageWorkAvtivity extends AppCompatActivity {
 
     @Override

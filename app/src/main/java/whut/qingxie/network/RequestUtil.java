@@ -1,6 +1,7 @@
 package whut.qingxie.network;
 
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +22,8 @@ import okio.BufferedSink;
 import okio.ForwardingSink;
 import okio.Okio;
 import okio.Sink;
+import whut.qingxie.activity.LoginActivity;
+import whut.qingxie.common.Content;
 
 /**
  * reference to https://github.com/guozhengXia/OkHttpUtils
@@ -118,12 +121,10 @@ class RequestUtil {
                     break;
             }
         }
-        mRequestBuilder.url(mUrl);
+        mRequestBuilder.url(Content.getServerHost()+mUrl);
         if (mHeaderMap != null) {
             setHeader();
         }
-        mRequestBuilder.addHeader("content-type","application/json;charset=UTF-8");
-        mRequestBuilder.addHeader("User-Agent","android");
         //mRequestBuilder.addHeader("Authorization","Bearer "+"token");可以把token添加到这儿
         mOkHttpRequest = mRequestBuilder.build();
     }

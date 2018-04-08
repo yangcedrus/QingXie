@@ -17,6 +17,10 @@ import whut.qingxie.R;
 import whut.qingxie.adapter.ManageWorkerAccountItemAdapter;
 import whut.qingxie.Item.ManageWorkerAccountItem;
 
+/**
+ * Administrator第二个item
+ * 管理青协工作者账号页面
+ */
 public class ManageWorkerAccountActivity extends AppCompatActivity {
     private List<ManageWorkerAccountItem> manageWorkerAccountItemList =new ArrayList<>();
 

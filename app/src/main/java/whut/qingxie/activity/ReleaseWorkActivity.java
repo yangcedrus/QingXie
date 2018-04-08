@@ -14,6 +14,11 @@ import whut.qingxie.R;
 import whut.qingxie.adapter.ReleaseWorkItemAdapter;
 import whut.qingxie.Item.ReleaseWorkItem;
 
+/**
+ * WorkerWorkFragment第五个item
+ * 发布志愿活动
+ * todo 界面待修改
+ */
 public class ReleaseWorkActivity extends AppCompatActivity {
     private List<ReleaseWorkItem> releaseWorkItemArrayList=new ArrayList<>();;
 

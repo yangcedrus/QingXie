@@ -24,14 +24,17 @@ import whut.qingxie.fragment.OperationHistoryFragment;
 import whut.qingxie.fragment.WorkerMeFragment;
 import whut.qingxie.fragment.WorkerWorkFragment;
 
+/**
+ * LauncherActivity
+ */
 public class MainActivity extends AppCompatActivity {
     public static Activity activity;
 
-    private static final int NO_LOGIN=0;     //未登录
-    private static final int STUDENT=1;     //学生
-    private static final int WORKER=2;      //工作人员
-    private static final int ADMIN=3;       //管理员
-    private static final int LOG_IN=101;
+    private static final int NO_LOGIN=-1;     //未登录
+    private static final int STUDENT=0;     //学生
+    private static final int WORKER=1;      //工作人员
+    private static final int ADMIN=2;       //管理员
+
     private static final int LOG_OUT=102;
 
     public static int state=NO_LOGIN;
@@ -65,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
         //根据登录状态修改页面
         Intent intent=getIntent();
-        state=intent.getIntExtra("user_state",0);
+        state=intent.getIntExtra("user_state",NO_LOGIN);
         switch (state){
             case STUDENT:
                 bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_favorite_border_black_24dp);

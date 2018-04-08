@@ -22,6 +22,10 @@ import whut.qingxie.R;
 import whut.qingxie.adapter.ServiceItemAdapter;
 import whut.qingxie.entity.activity.VolActivityInfo;
 
+/**
+ * WorkerMeFragment,MeFragment第三个item
+ * 我的志愿服务页面
+ */
 public class MyServiceActivity extends AppCompatActivity {
 
     private List<VolActivityInfo> volServiceItemList =new ArrayList<>();

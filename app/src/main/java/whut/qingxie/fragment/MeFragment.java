@@ -38,6 +38,9 @@ import whut.qingxie.entity.user.User;
 
 import static android.app.Activity.RESULT_OK;
 
+/**
+ * 学生“我”页面
+ */
 public class MeFragment extends Fragment {
     private static User myInfo;
 

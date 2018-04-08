@@ -19,6 +19,7 @@ import java.io.InputStream;
 
 /**
  * Created by sendtion on 2016/5/25.
+ * 图片工具类
  */
 public class ImageUtils {
 

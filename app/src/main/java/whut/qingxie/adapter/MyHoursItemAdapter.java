@@ -12,7 +12,7 @@ import whut.qingxie.Item.MyHoursItem;
 import whut.qingxie.R;
 
 /**
- * Created by 22278 on 2018/3/12.
+ * MuHoursActivity
  * 我的志愿工时
  */
 

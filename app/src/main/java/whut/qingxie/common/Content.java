@@ -8,15 +8,17 @@ import java.util.Map;
 
 /**
  * 存放所有公共资源
- * Created by evans on 2018/3/22.
  */
-
 public class Content extends Application {
-    //主机名
+    /**
+     * 主机名
+     */
     private static final String SERVER_HOST = "http://123.207.87.34:8080/";
-    //映射类的全路径名
-    private static final Map<String, String> CLAZZ_MAP = new HashMap<>();
 
+    /**
+     * 映射类的全路径名
+     */
+    private static final Map<String, String> CLAZZ_MAP = new HashMap<>();
     static {
         CLAZZ_MAP.put("Activity", "whut.qingxie.entity.activity.VolActivityInfo");
         CLAZZ_MAP.put("User", "whut.qingxie.entity.user.User");
@@ -25,12 +27,25 @@ public class Content extends Application {
         CLAZZ_MAP.put("UserActivity", "whut.qingxie.entity.activity.Activity4User");
     }
 
+    /**
+     * -1为未登录
+     */
     public static Integer USER_ID = -1;
 
     public static String NAME = null;
 
+    /**
+     * -1为未登录,默认
+     * 0为学生
+     * 1为工作人员
+     * 2为管理员
+     */
     public static int FLAG = -1;
 
+    /**
+     * 0为男，默认
+     * 1为女
+     */
     public static int GENDER = -1;
 
     public static int getFLAG() {

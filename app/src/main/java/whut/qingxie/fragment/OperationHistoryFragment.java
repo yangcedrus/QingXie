@@ -22,6 +22,10 @@ import whut.qingxie.R;
 import whut.qingxie.adapter.OperationHistoryItemAdapter;
 import whut.qingxie.Item.OperationHistoryItem;
 
+/**
+ * 管理员操作历史页面
+ * todo 功能待完善
+ */
 public class OperationHistoryFragment extends Fragment {
     private List<OperationHistoryItem> operationHistoryItemList = new ArrayList<>();
 

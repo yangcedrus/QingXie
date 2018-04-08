@@ -31,6 +31,11 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import whut.qingxie.R;
 
+/**
+ * 富文本编写类
+ * getEditData可以获得字符串并做相应处理
+ * WorkerWorkFragment第一个item
+ */
 public class RichTextEditorActivity extends AppCompatActivity {
     private Boolean isSaved=false;
     private String rich_text;

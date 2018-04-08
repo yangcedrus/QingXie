@@ -15,6 +15,7 @@ import java.util.List;
 import whut.qingxie.R;
 import whut.qingxie.Item.ReleaseWorkItem;
 
+// TODO: 2018/4/8 待删除 
 public class ReleaseWorkItemAdapter extends ArrayAdapter {
     private int resourceId;
 

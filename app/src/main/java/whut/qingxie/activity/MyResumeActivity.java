@@ -32,6 +32,10 @@ import whut.qingxie.entity.user.UserExperience;
 import whut.qingxie.network.CallBackUtil;
 import whut.qingxie.network.OkhttpUtil;
 
+/**
+ * WorkerMeFragment,MeFragment第一个item
+ * 个人信息页面
+ */
 public class MyResumeActivity extends AppCompatActivity {
     private List<ExperienceItem> list = new ArrayList<>();
     private TextView tx_age;

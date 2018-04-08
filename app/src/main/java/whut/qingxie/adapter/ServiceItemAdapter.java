@@ -16,6 +16,10 @@ import whut.qingxie.R;
 import whut.qingxie.activity.SignUpActivity;
 import whut.qingxie.entity.activity.VolActivityInfo;
 
+/**
+ * MyServiceActivity
+ * 我的志愿服务
+ */
 public class ServiceItemAdapter extends RecyclerView.Adapter<ServiceItemAdapter.ViewHolder> {
 
     public List<VolActivityInfo> volActivityInfos;

@@ -15,6 +15,9 @@ import whut.qingxie.R;
 import whut.qingxie.activity.SignUpActivity;
 import whut.qingxie.entity.activity.VolActivityInfo;
 
+/**
+ * 学生收藏页面item适配器
+ */
 public class FavouriteItemAdapter extends RecyclerView.Adapter<FavouriteItemAdapter.ViewHolder> {
     public List<VolActivityInfo> volActivityInfos;
 

@@ -15,6 +15,7 @@ import java.util.List;
 import whut.qingxie.R;
 import whut.qingxie.Item.MyMessageItem;
 
+// TODO: 2018/4/8 待完成 
 public class MyMessageItemAdapter extends ArrayAdapter {
     private int resourceId;
 

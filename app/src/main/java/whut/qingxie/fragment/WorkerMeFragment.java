@@ -31,6 +31,9 @@ import whut.qingxie.activity.MyServiceActivity;
 
 import static android.app.Activity.RESULT_OK;
 
+/**
+ * 青协工作人员“我”页面
+ */
 public class WorkerMeFragment extends Fragment {
 
     private RelativeLayout layout1;

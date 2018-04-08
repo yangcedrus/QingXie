@@ -18,6 +18,9 @@ import whut.qingxie.R;
 import whut.qingxie.activity.SignUpActivity;
 import whut.qingxie.entity.activity.VolActivityInfo;
 
+/**
+ * 首页卡片式布局适配器
+ */
 public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityItemAdapter.ViewHolder> {
     private static final int TYPE_NORMAL=1;
     private static final int TYPE_HEADER=0;

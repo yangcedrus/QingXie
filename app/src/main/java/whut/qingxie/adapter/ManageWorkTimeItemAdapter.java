@@ -13,6 +13,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import whut.qingxie.R;
 import whut.qingxie.Item.ManageWorkTimeItem;
 
+/**
+ * ManageWorkTimeActivity
+ * 管理工时信息页面item适配器
+ */
 public class ManageWorkTimeItemAdapter extends RecyclerView.Adapter<ManageWorkTimeItemAdapter.ViewHolder>{
     private List<ManageWorkTimeItem> manageWorkTimeItemList;
 

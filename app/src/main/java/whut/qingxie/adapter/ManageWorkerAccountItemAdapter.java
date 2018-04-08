@@ -11,6 +11,9 @@ import java.util.List;
 import whut.qingxie.R;
 import whut.qingxie.Item.ManageWorkerAccountItem;
 
+/**
+ * 管理青协工作人员账号页面item适配器
+ */
 public class ManageWorkerAccountItemAdapter extends RecyclerView.Adapter<ManageWorkerAccountItemAdapter.ViewHolder> {
     private List<ManageWorkerAccountItem> manageWorkerAccountItemList;
 

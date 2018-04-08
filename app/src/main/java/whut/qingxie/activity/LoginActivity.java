@@ -15,6 +15,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,12 +35,7 @@ import whut.qingxie.network.OkhttpUtil;
  * FIXME:首要！参考一下别人的本地账户管理的实现
  */
 public class LoginActivity extends AppCompatActivity {
-    //储存登录信息
-
-    private Content content;
-    private Integer userID;
-    private int Flag;
-    private int gender;
+    private int state;
 
     private static String TAG="LoginActivity";
 
@@ -44,12 +43,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        //获取全局变量
-        content = (Content) getApplicationContext();
-        userID = content.getUserId();
-        Flag=content.getFLAG();
-        gender=content.getGENDER();
 
         //标题栏
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_login);
@@ -81,10 +74,29 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }else{
                     login(name,psw);
-//                    state=Integer.parseInt(name);
                 }
             }
         });
+    }
+
+    public class A {
+        String studentId;
+        String password;
+
+        public A(String studentId, String password) {
+            this.studentId = studentId;
+            this.password = password;
+        }
+    }
+
+    public class B {
+        String name;
+        String password;
+
+        public B(String name, String password) {
+            this.name = name;
+            this.password = password;
+        }
     }
 
     public void login(String name, String psw) {
@@ -92,35 +104,73 @@ public class LoginActivity extends AppCompatActivity {
         Pattern p = Pattern.compile("[0-9]*");
         Matcher m = p.matcher(name);
 
-        HashMap<String, String> paramsMap = new HashMap<>();
-
+        String json = null;
+        HashMap<String, String> headerMap = new HashMap<>();
+        headerMap.put("content-type", "application/json;charset=UTF-8");
+        headerMap.put("user-agent", "android");
 
         if (m.matches()) {
             //用户id登录
-            paramsMap.put("studentId",name);
-            paramsMap.put("password",psw);
+            json = new Gson().toJson(new A(name, psw));
         } else {
             //用户名登录
-            paramsMap.put("name",name);
-            paramsMap.put("password",psw);
+            json = new Gson().toJson(new B(name, psw));
         }
-        OkhttpUtil.accessData("POST", "/user/login", paramsMap, null, new CallBackUtil.CallBackMsg() {
+        OkhttpUtil.okHttpPostJson("/user/login", json, headerMap, new CallBackUtil.CallBackMsg() {
             @Override
             public void onFailure(Call call, Exception e) {
-                content.setUserId(0);
+                Content.setUserId(-1);
                 Toast.makeText(LoginActivity.this,"登录失败，请重新登录",Toast.LENGTH_SHORT).show();
                 Log.e(TAG, "Login()onFailure: "+e.getMessage());
             }
 
             @Override
             public void onResponse(Msg msg) {
-                Object obj=msg.getData().get("User");
-
-                Intent intent =new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(intent);
-                finish();
+                if(msg.getStatus().equals("success")){
+                    Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
+                    Object obj=msg.getData().get("User");
+                    String json=new Gson().toJson(obj);
+                }else {
+                    Toast.makeText(LoginActivity.this,"登录失败，账号密码错误",Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+
+    /**
+     * 将数据存到本地
+     * @param json
+     */
+    public void praseUserJson(String json){
+        try{
+            JSONObject jsonObject=new JSONObject(json);
+
+            Integer userId=jsonObject.getInt("id");
+            String name=jsonObject.getString("name");
+            String Flag=jsonObject.getString("flag");
+            String Gender=jsonObject.getString("gender");
+
+            int flag=-1;
+            switch (Flag){
+                // TODO: 2018/4/8 S既是学生也是游客，强制下线功能（如果有）无法判断 
+                case "S":flag=0;break;
+                case "Q":flag=1;break;
+                case "A":flag=2;break;
+                default:break;
+            }
+
+            int gender=0;
+            if(Gender.equals("F")){
+                gender=1;
+            }
+
+            Content.setUserId(userId);
+            Content.setNAME(name);
+            Content.setFLAG(flag);
+            Content.setGENDER(gender);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @SuppressLint("HandlerLeak")
@@ -156,6 +206,7 @@ public class LoginActivity extends AppCompatActivity {
             {
                 //点击返回键返回信息给上个活动
                 intent =new Intent(LoginActivity.this,MainActivity.class);
+                intent.putExtra("user_state", state);
                 startActivity(intent);
                 finish();
                 break;
@@ -168,6 +219,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onBackPressed() {
         //点击虚拟返回按钮返回信息给上个活动
         Intent intent =new Intent(LoginActivity.this,MainActivity.class);
+        intent.putExtra("user_state", state);
         startActivity(intent);
         finish();
         super.onBackPressed();

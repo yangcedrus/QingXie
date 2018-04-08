@@ -36,6 +36,9 @@ import whut.qingxie.entity.user.UserExperience;
 import whut.qingxie.network.CallBackUtil;
 import whut.qingxie.network.OkhttpUtil;
 
+/**
+ * 学生收藏页面
+ */
 public class FavouriteFragment extends Fragment {
 
     private List<VolActivityInfo> favouriteItems=new ArrayList<>();

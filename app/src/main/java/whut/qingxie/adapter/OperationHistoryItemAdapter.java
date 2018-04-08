@@ -16,6 +16,9 @@ import java.util.List;
 import whut.qingxie.R;
 import whut.qingxie.Item.OperationHistoryItem;
 
+/**
+ * 管理员操作历史页面item适配器
+ */
 public class OperationHistoryItemAdapter extends RecyclerView.Adapter<OperationHistoryItemAdapter.ViewHolder> {
     public List<OperationHistoryItem> operationHistoryItems;
 

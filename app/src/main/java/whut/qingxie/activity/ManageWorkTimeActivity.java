@@ -20,6 +20,10 @@ import whut.qingxie.R;
 import whut.qingxie.adapter.ManageWorkTimeItemAdapter;
 import whut.qingxie.Item.ManageWorkTimeItem;
 
+/**
+ * WorkerWorkFragment页面第二个item
+ * 管理工时信息页面
+ */
 public class ManageWorkTimeActivity extends AppCompatActivity {
     private List<ManageWorkTimeItem> manageWorkTimeItemList=new ArrayList<>();
 

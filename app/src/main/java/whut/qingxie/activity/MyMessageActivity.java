@@ -13,6 +13,10 @@ import whut.qingxie.R;
 import whut.qingxie.adapter.MyMessageItemAdapter;
 import whut.qingxie.Item.MyMessageItem;
 
+/**
+ * WorkerMeFragment,MeFragment第二个item
+ * 我的消息页面
+ */
 public class MyMessageActivity extends AppCompatActivity {
     private List<MyMessageItem> myMessageItemArrayList=new ArrayList<>();
 

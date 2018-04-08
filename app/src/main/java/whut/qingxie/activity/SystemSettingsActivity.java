@@ -15,7 +15,9 @@ import whut.qingxie.R;
 import whut.qingxie.helper.AppCompatPreferenceActivity;
 
 /**
- * Created by 22278 on 2018/3/21.
+ * 位于MainActivity右上角
+ * 系统设置页面
+ * todo Android7.0之后有bug
  */
 
 public class SystemSettingsActivity extends AppCompatPreferenceActivity {

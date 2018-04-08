@@ -22,6 +22,10 @@ import whut.qingxie.R;
 import whut.qingxie.adapter.MyHoursItemAdapter;
 import whut.qingxie.entity.activity.VolActivityInfo;
 
+/**
+ * WorkerMeFragment，MeFragment第四个item
+ * 我的志愿工时
+ */
 public class MyHoursActivity extends AppCompatActivity {
     private List<MyHoursItem> myHoursItems=new ArrayList<>();
 

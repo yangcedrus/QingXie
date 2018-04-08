@@ -15,6 +15,7 @@ import java.util.List;
 import whut.qingxie.R;
 import whut.qingxie.Item.MyInfoItem;
 
+// TODO: 2018/4/8 待删除 
 public class MyInfoItemAdapter extends ArrayAdapter {
     private int resourceId;
 

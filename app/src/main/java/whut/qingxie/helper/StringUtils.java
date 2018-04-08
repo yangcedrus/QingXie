@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 
 /**
  * Created by sendtion on 2016/6/24.
+ * 字符串裁剪工具类
  */
 public class StringUtils {
 

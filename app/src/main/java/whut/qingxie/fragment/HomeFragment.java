@@ -42,7 +42,9 @@ import whut.qingxie.network.OkhttpUtil;
 
 import static android.content.ContentValues.TAG;
 
-//主页页面
+/**
+ * 主页页面
+ */
 public class HomeFragment extends Fragment implements ViewPager.OnPageChangeListener{
     private static List<VolActivityInfo> cardActivityItems = new ArrayList<>();
     private static List<String> pictureURLS=new ArrayList<>();
@@ -99,8 +101,8 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
                             "2",0,4.0,2.0,10,
                             "东院敬老院","东院敬老院活动，打扫卫生",
                             "<img src=\"http://123.207.87.34:8080/qingxie-img/0cee7de9fdbc7c00fa2ed998b2d206b2/351bc7a56f358647891333d056ecf334.jpg\"/>" +
-                            "<img src=\"/storage/emulated/0/Download/ChMkJ1ofdk2IY0K2AAK32bN9ct8AAimnAAwKcAAArfx872.jpg\"/>" +
-                            "<img src=\"/storage/emulated/0/Pictures/JPEG_20180319_015026.jpg\"/>" +
+                                    "<img src=\"http://123.207.87.34:8080/qingxie-img/0cee7de9fdbc7c00fa2ed998b2d206b2/351bc7a56f358647891333d056ecf334.jpg\"/>" +
+                                    "<img src=\"http://123.207.87.34:8080/qingxie-img/0cee7de9fdbc7c00fa2ed998b2d206b2/351bc7a56f358647891333d056ecf334.jpg\"/>" +
                             "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
                             "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
                             "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" );
@@ -179,8 +181,8 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
                     "2",0,4.0,2.0,10,
                     "东院敬老院","东院敬老院活动，打扫卫生",
                     "<img src=\"http://123.207.87.34:8080/qingxie-img/0cee7de9fdbc7c00fa2ed998b2d206b2/351bc7a56f358647891333d056ecf334.jpg\"/>" +
-                            "<img src=\"/storage/emulated/0/Download/ChMkJ1ofdk2IY0K2AAK32bN9ct8AAimnAAwKcAAArfx872.jpg\"/>" +
-                            "<img src=\"/storage/emulated/0/Pictures/JPEG_20180319_015026.jpg\"/>" +
+                            "<img src=\"http://123.207.87.34:8080/qingxie-img/0cee7de9fdbc7c00fa2ed998b2d206b2/351bc7a56f358647891333d056ecf334.jpg\"/>" +
+                            "<img src=\"http://123.207.87.34:8080/qingxie-img/0cee7de9fdbc7c00fa2ed998b2d206b2/351bc7a56f358647891333d056ecf334.jpg\"/>" +
                             "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
                             "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
                             "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" );

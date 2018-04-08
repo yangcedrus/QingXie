@@ -8,6 +8,9 @@ import java.util.Map;
 
 import whut.qingxie.network.JsonUtil;
 
+/**
+ * JSON消息类
+ */
 public class Msg {
     //  状态码
     private String status;

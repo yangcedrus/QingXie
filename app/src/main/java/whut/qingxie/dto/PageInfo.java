@@ -8,7 +8,7 @@ import java.util.List;
 import whut.qingxie.network.JsonUtil;
 
 /**
- * Created by evans on 2018/3/24.
+ * 页信息
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class PageInfo<T> implements Serializable {

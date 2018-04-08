@@ -6,15 +6,14 @@ import android.os.Bundle;
 import whut.qingxie.R;
 
 /**
- * WorkerWorkFragment第四个item
- * 志愿者管理页面
- * todo 页面待创建
+ * WorkerMeFragment第五个item
+ * 我的志愿工作界面
  */
-public class ManageVolunteerActivity extends AppCompatActivity {
+public class MyWorkActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage_volunteer);
+        setContentView(R.layout.activity_my_work);
     }
 }

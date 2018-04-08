@@ -14,6 +14,11 @@ import java.util.List;
 import whut.qingxie.R;
 import whut.qingxie.Item.ExperienceItem;
 
+/**
+ *
+ * MyResume个人简历页面
+ * 我的志愿经历witem适配器
+ */
 public class MyExperienceItemAdapter extends ArrayAdapter {
     private int resourceId;
 
