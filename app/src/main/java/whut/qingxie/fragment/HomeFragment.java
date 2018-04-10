@@ -49,6 +49,10 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     private static List<VolActivityInfo> cardActivityItems = new ArrayList<>();
     private static List<String> pictureURLS=new ArrayList<>();
 
+    private static int totalPage = Integer.MAX_VALUE; //页总数
+    private static int page = 1;    //当前页
+    private static int SIZE = 2;  //每页数量
+
     private View view;
     private static RecyclerView recyclerView;
     private static LinearLayoutManager linearLayoutManager;
@@ -88,31 +92,19 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                init();
+                //init();
                 //调用服务器数据
-//                initActivity();
+                page = 0;
+                getSomeActivity();
             }
         });
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                for(int i=0;i<5;i++){
-                    VolActivityInfo ac=new VolActivityInfo(1,"敬老院活动",1,
-                            "2",0,4.0,2.0,10,
-                            "东院敬老院","东院敬老院活动，打扫卫生",
-                            "<img src=\"http://123.207.87.34:8080/qingxie-img/0cee7de9fdbc7c00fa2ed998b2d206b2/351bc7a56f358647891333d056ecf334.jpg\"/>" +
-                                    "<img src=\"http://123.207.87.34:8080/qingxie-img/0cee7de9fdbc7c00fa2ed998b2d206b2/351bc7a56f358647891333d056ecf334.jpg\"/>" +
-                                    "<img src=\"http://123.207.87.34:8080/qingxie-img/0cee7de9fdbc7c00fa2ed998b2d206b2/351bc7a56f358647891333d056ecf334.jpg\"/>" +
-                            "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
-                            "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
-                            "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" );
-                    ac.setCreateTime(new Date());
-                    ac.setRegTime(new Date());
-                    cardActivityItems.add(ac);
-                }
+                getSomeActivity();
 
                 //结束加载更多
-                if(cardActivityItems.size()<10)
+                if (page < totalPage)
                     smartRefreshLayout.finishLoadmore();
                 else
                     smartRefreshLayout.finishLoadmoreWithNoMoreData();
@@ -133,9 +125,11 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         adapter.setHeaderView(headerView);
         recyclerView.setAdapter(adapter);
 
-        if(cardActivityItems.size()==0)
-            init();
-            //initActivity();
+        if (cardActivityItems.size() == 0) {
+            page = 0;
+            getSomeActivity();
+        }
+
 
         initViews();
         initData();
@@ -147,9 +141,11 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         adapter.notifyDataSetChanged();
     }
 
-    //初始化数据
-    private void initActivity(){
-        OkhttpUtil.accessData("GET", "/activity/home?page=1&size=8", null, null, new CallBackUtil.CallBackMsg() {
+    //获取数据
+    private void getSomeActivity() {
+        if(page==0)
+            cardActivityItems.clear();
+        OkhttpUtil.accessData("GET", "/activity/home?page=" + page++ + "&size=" + SIZE, null, null, new CallBackUtil.CallBackMsg() {
 
             @Override
             public void onFailure(Call call, Exception e) {
@@ -163,41 +159,17 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
             @Override
             public void onResponse(Msg response) {
                 PageInfo<VolActivityInfo> pageInfo=PageInfo.parseFromJson((JSONObject) response.getData().get("PageInfo"),VolActivityInfo.class);
-                cardActivityItems.clear();
+
+                totalPage = pageInfo.getPages();
+                SIZE = pageInfo.getSize();
+
                 cardActivityItems.addAll(pageInfo.getList());
                 //结束刷新
+                smartRefreshLayout.resetNoMoreData();
                 smartRefreshLayout.finishRefresh();
                 reFresh();
             }
         });
-    }
-
-    //初始化列表数据
-    private static void init(){
-        //FIXME:TO DELETE IT, OR LOAD FROM LOCAL
-        cardActivityItems.clear();
-        for(int i=0;i<5;i++){
-            VolActivityInfo ac=new VolActivityInfo(1,"敬老院活动",1,
-                    "2",0,4.0,2.0,10,
-                    "东院敬老院","东院敬老院活动，打扫卫生",
-                    "<img src=\"http://123.207.87.34:8080/qingxie-img/0cee7de9fdbc7c00fa2ed998b2d206b2/351bc7a56f358647891333d056ecf334.jpg\"/>" +
-                            "<img src=\"http://123.207.87.34:8080/qingxie-img/0cee7de9fdbc7c00fa2ed998b2d206b2/351bc7a56f358647891333d056ecf334.jpg\"/>" +
-                            "<img src=\"http://123.207.87.34:8080/qingxie-img/0cee7de9fdbc7c00fa2ed998b2d206b2/351bc7a56f358647891333d056ecf334.jpg\"/>" +
-                            "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
-                            "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" +
-                            "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情" );
-            ac.setCreateTime(new Date());
-            ac.setRegTime(new Date());
-            cardActivityItems.add(ac);
-        }
-        smartRefreshLayout.resetNoMoreData();
-        smartRefreshLayout.finishRefresh();
-        reFresh();
-    }
-
-    //请求更多活动信息
-    public static void requestMoreActivity(){
-
     }
 
     //请求首页图片信息

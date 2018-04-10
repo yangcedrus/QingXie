@@ -37,7 +37,8 @@ public class SystemSettingsActivity extends AppCompatPreferenceActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent =new Intent(SystemSettingsActivity.this,MainActivity.class);
-                    intent.putExtra("user_state",0);
+                    //状态设置为未登录
+                    intent.putExtra("user_state",-1);
                     MainActivity.activity.finish();
                     startActivity(intent);
                     finish();

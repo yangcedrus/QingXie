@@ -1,32 +1,47 @@
 package whut.qingxie.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.google.gson.Gson;
 import com.sendtion.xrichtext.RichTextView;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
+import okhttp3.Call;
 import whut.qingxie.R;
+import whut.qingxie.common.Content;
+import whut.qingxie.dto.Msg;
 import whut.qingxie.entity.activity.VolActivityInfo;
 import whut.qingxie.helper.ImageUtils;
 import whut.qingxie.helper.ScreenUtils;
 import whut.qingxie.helper.StringUtils;
+import whut.qingxie.network.CallBackUtil;
+import whut.qingxie.network.OkhttpUtil;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * 在任何页面点击活动，进入该页面
@@ -47,33 +62,63 @@ public class SignUpActivity extends AppCompatActivity {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
-        final VolActivityInfo activityInfo=getIntent().getParcelableExtra("activity_details");
+        int thisActivityId=getIntent().getIntExtra("activity_details",0);
 
-        //加载布局
-        TextView title=(TextView)findViewById(R.id.sign_up_info);
-        et_new_content=(RichTextView) findViewById(R.id.sign_up_description);
-        TextView people_have=(TextView)findViewById(R.id.textView_people_have);
-        TextView people_needed=(TextView)findViewById(R.id.textView_people_needed);
+        setActivityInfo(thisActivityId);
+    }
 
-        title.setText(activityInfo.getName());
-        et_new_content.post(new Runnable() {
+    private void setActivityInfo(int ID){
+        OkhttpUtil.accessData("GET", "/activity/" + ID + "/details", null, null, new CallBackUtil.CallBackMsg() {
             @Override
-            public void run() {
-                showTextData(activityInfo.getDescriptions());
+            public void onFailure(Call call, Exception e) {
+                //FIXME:还有404等，不全是超时
+                Toast.makeText(SignUpActivity.this,"连接超时，请检查网络连接",Toast.LENGTH_LONG).show();
+                Log.e("SignUpActivity", "onFailure: " + e.getMessage());
             }
-        });
-        people_have.setText(Integer.toString(activityInfo.getNeedVolunteers()));
-        people_needed.setText(Integer.toString(activityInfo.getNeedVolunteers()));
 
-        Button button_sign_up=(Button)findViewById(R.id.sign_up_confirm);
-        button_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(SignUpActivity.this, RichTextEditorActivity.class);
-                startActivity(intent);
+            public void onResponse(Msg response) {
+                final VolActivityInfo activityInfo=(VolActivityInfo)response.getData().get("Activity");
+                //加载布局
+                TextView title=(TextView)findViewById(R.id.sign_up_info);
+                et_new_content=(RichTextView) findViewById(R.id.sign_up_description);
+                TextView people_have=(TextView)findViewById(R.id.textView_people_have);
+                TextView people_needed=(TextView)findViewById(R.id.textView_people_needed);
+
+                title.setText(activityInfo.getName());
+                et_new_content.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        showTextData(activityInfo.getDescriptions());
+                    }
+                });
+                people_have.setText(Integer.toString(activityInfo.getNeedVolunteers()));
+                people_needed.setText(Integer.toString(activityInfo.getNeedVolunteers()));
+
+                Button button_sign_up=(Button)findViewById(R.id.sign_up_confirm);
+                button_sign_up.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent=new Intent(SignUpActivity.this, RichTextEditorActivity.class);
+                        startActivity(intent);
+                    }
+                });
             }
         });
     }
+
+    @SuppressLint("HandlerLeak")
+    public static Handler eHandler=new Handler(){
+        public void handleMessage(Message message){
+            super.handleMessage(message);
+            try {
+                Msg msg = Msg.parseMapFromJson(message.obj, Content.getClazzMap());
+
+            } catch (ClassNotFoundException e) {
+                Log.e(TAG, "handleMessage: "+e.getMessage());
+            }
+        }
+    };
 
     //显示“反馈”菜单按钮
     @Override

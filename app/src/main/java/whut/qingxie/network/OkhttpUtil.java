@@ -25,14 +25,13 @@ public class OkhttpUtil {
     /**
      * 与服务器数据交互方法
      * @param requestMethod 请求方法
-     * @param api 接口
+     * @param url 接口
      * @param paramMap
      * @param headerMap
      * @param callback
      */
-    public static void accessData(String requestMethod,String api,Map<String,String> paramMap,Map<String,String> headerMap,CallBackUtil callback){
+    public static void accessData(String requestMethod,String url,Map<String,String> paramMap,Map<String,String> headerMap,CallBackUtil callback){
         System.out.println("accessData");
-        String url= SERVER_HOST+api;
         switch (requestMethod){
             case METHOD_GET:
                 okHttpGet(url,paramMap,headerMap,callback);
@@ -78,6 +77,7 @@ public class OkhttpUtil {
      * @param callBack：回调接口，onFailure方法在请求失败时调用，onResponse方法在请求成功后调用，这两个方法都执行在UI线程。
      */
     public static void okHttpGet(String url, Map<String, String> paramsMap, Map<String, String> headerMap, CallBackUtil callBack) {
+        url=SERVER_HOST+url;
         new RequestUtil(METHOD_GET, url, paramsMap, headerMap, callBack).execute();
     }
 
@@ -111,6 +111,7 @@ public class OkhttpUtil {
      * @param callBack：回调接口，onFailure方法在请求失败时调用，onResponse方法在请求成功后调用，这两个方法都执行在UI线程。
      */
     public static void okHttpPost(String url, Map<String, String> paramsMap, Map<String, String> headerMap, CallBackUtil callBack) {
+        url=SERVER_HOST+url;
         new RequestUtil(METHOD_POST, url, paramsMap, headerMap, callBack).execute();
     }
 
@@ -144,6 +145,7 @@ public class OkhttpUtil {
      * @param callBack：回调接口，onFailure方法在请求失败时调用，onResponse方法在请求成功后调用，这两个方法都执行在UI线程。
      */
     public static void okHttpPut(String url, Map<String, String> paramsMap, Map<String, String> headerMap, CallBackUtil callBack) {
+        url=SERVER_HOST+url;
         new RequestUtil(METHOD_PUT, url, paramsMap, headerMap, callBack).execute();
     }
 
@@ -177,6 +179,7 @@ public class OkhttpUtil {
      * @param callBack：回调接口，onFailure方法在请求失败时调用，onResponse方法在请求成功后调用，这两个方法都执行在UI线程。
      */
     public static void okHttpDelete(String url, Map<String, String> paramsMap, Map<String, String> headerMap, CallBackUtil callBack) {
+        url=SERVER_HOST+url;
         new RequestUtil(METHOD_DELETE, url, paramsMap, headerMap, callBack).execute();
     }
 
@@ -200,6 +203,7 @@ public class OkhttpUtil {
      * @param callBack：回调接口，onFailure方法在请求失败时调用，onResponse方法在请求成功后调用，这两个方法都执行在UI线程。
      */
     public static void okHttpPostJson(String url, String jsonStr, Map<String, String> headerMap, CallBackUtil callBack) {
+        url=SERVER_HOST+url;
         new RequestUtil(METHOD_POST, url, jsonStr, headerMap, callBack).execute();
     }
 
@@ -242,6 +246,7 @@ public class OkhttpUtil {
      * @param callBack：回调接口，onFailure方法在请求失败时调用，onResponse方法在请求成功后调用，这两个方法都执行在UI线程。还可以重写onProgress方法，得到上传进度
      */
     public static void okHttpUploadFile(String url, File file, String fileKey, String fileType, Map<String, String> paramsMap, Map<String, String> headerMap, CallBackUtil callBack) {
+        url=SERVER_HOST+url;
         new RequestUtil(METHOD_POST, url, paramsMap, file, fileKey, fileType, headerMap, callBack).execute();
     }
 
@@ -284,6 +289,7 @@ public class OkhttpUtil {
      * @param callBack：回调接口，onFailure方法在请求失败时调用，onResponse方法在请求成功后调用，这两个方法都执行在UI线程。
      */
     public static void okHttpUploadListFile(String url, Map<String, String> paramsMap, List<File> fileList, String fileKey, String fileType, Map<String, String> headerMap, CallBackUtil callBack) {
+        url=SERVER_HOST+url;
         new RequestUtil(METHOD_POST, url, paramsMap, fileList, fileKey, fileType, headerMap, callBack).execute();
     }
 
@@ -323,6 +329,7 @@ public class OkhttpUtil {
      * @param callBack：回调接口，onFailure方法在请求失败时调用，onResponse方法在请求成功后调用，这两个方法都执行在UI线程。
      */
     public static void okHttpUploadMapFile(String url, Map<String, File> fileMap, String fileType, Map<String, String> paramsMap, Map<String, String> headerMap, CallBackUtil callBack) {
+        url=SERVER_HOST+url;
         new RequestUtil(METHOD_POST, url, paramsMap, fileMap, fileType, headerMap, callBack).execute();
     }
 

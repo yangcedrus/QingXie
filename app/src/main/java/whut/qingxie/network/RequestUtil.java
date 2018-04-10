@@ -121,7 +121,7 @@ class RequestUtil {
                     break;
             }
         }
-        mRequestBuilder.url(Content.getServerHost()+mUrl);
+        mRequestBuilder.url(mUrl);
         if (mHeaderMap != null) {
             setHeader();
         }

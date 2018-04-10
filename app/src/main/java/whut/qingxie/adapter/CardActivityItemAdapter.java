@@ -67,7 +67,7 @@ public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityIt
                 if(mContext==null)
                     mContext=parent.getContext();
                 Intent intent=new Intent(mContext,SignUpActivity.class);
-                intent.putExtra("activity_details",(Parcelable)item);
+                intent.putExtra("activity_details",item.getId());
                 mContext.startActivity(intent);
             }
         });
