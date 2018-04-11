@@ -43,10 +43,15 @@ public class Content extends Application {
     public static int FLAG = -1;
 
     /**
-     * 0为男，默认
-     * 1为女
+     * M为男，默认
+     * F为女
      */
-    public static int GENDER = -1;
+    public static String GENDER = "M";
+
+    /**
+     * 头像地址
+     */
+    public static String iconAccessPath=null;
 
     public static int getFLAG() {
         return FLAG;
@@ -56,11 +61,11 @@ public class Content extends Application {
         Content.FLAG = FLAG;
     }
 
-    public static int getGENDER() {
+    public static String getGENDER() {
         return GENDER;
     }
 
-    public static void setGENDER(int GENDER) {
+    public static void setGENDER(String GENDER) {
         Content.GENDER = GENDER;
     }
 
@@ -86,6 +91,14 @@ public class Content extends Application {
 
     public static void setUserId(Integer userId) {
         USER_ID = userId;
+    }
+
+    public static String getIconAccessPath() {
+        return iconAccessPath;
+    }
+
+    public static void setIconAccessPath(String iconAccessPath) {
+        Content.iconAccessPath = iconAccessPath;
     }
 }
 

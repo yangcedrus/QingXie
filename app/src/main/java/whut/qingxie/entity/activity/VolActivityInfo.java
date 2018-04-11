@@ -43,7 +43,7 @@ public class VolActivityInfo implements Parcelable, Serializable {
 
     private String sponser;
 
-    private String homepagePic;
+    private String homePagePath;
 
     public VolActivityInfo() {
     }
@@ -206,12 +206,12 @@ public class VolActivityInfo implements Parcelable, Serializable {
         this.sponser = sponser;
     }
 
-    public String getHomepagePic() {
-        return homepagePic;
+    public String getHomePagePath() {
+        return homePagePath;
     }
 
-    public void setHomepagePic(String homepagePic) {
-        this.homepagePic = homepagePic;
+    public void setHomePagePath(String homepagePath) {
+        this.homePagePath = homepagePath;
     }
 
     @Override
@@ -239,7 +239,7 @@ public class VolActivityInfo implements Parcelable, Serializable {
         dest.writeLong(endTime == null ? -1 : endTime.getTime());
         dest.writeLong(createTime == null ? -1 : createTime.getTime());
         dest.writeString(sponser);
-        dest.writeString(homepagePic);
+        dest.writeString(homePagePath);
     }
 
     public static final Parcelable.Creator<VolActivityInfo> CREATOR = new Parcelable.Creator<VolActivityInfo>() {
@@ -283,7 +283,7 @@ public class VolActivityInfo implements Parcelable, Serializable {
                 item.createTime = new Date(date);
             }
             item.sponser = source.readString();
-            item.homepagePic = source.readString();
+            item.homePagePath = source.readString();
             return item;
         }
 

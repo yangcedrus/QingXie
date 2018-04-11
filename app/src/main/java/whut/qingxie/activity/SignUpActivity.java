@@ -19,8 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.google.gson.Gson;
@@ -47,7 +45,6 @@ import static android.content.ContentValues.TAG;
  * 在任何页面点击活动，进入该页面
  * 登录页面
  * todo 报名截止之后报名按钮消失
- * todo 报名按钮链接的richeditor界面待完成后转移
  */
 public class SignUpActivity extends AppCompatActivity {
     private static RichTextView et_new_content;

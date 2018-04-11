@@ -34,6 +34,7 @@ import whut.qingxie.activity.MyInfoActivity;
 import whut.qingxie.activity.MyMessageActivity;
 import whut.qingxie.activity.MyResumeActivity;
 import whut.qingxie.activity.MyServiceActivity;
+import whut.qingxie.common.Content;
 import whut.qingxie.entity.user.User;
 
 import static android.app.Activity.RESULT_OK;
@@ -81,47 +82,24 @@ public class MeFragment extends Fragment {
             }
         });
 
-        // TODO: 2018/4/4 session判断是否要从本地获取信息
-        SharedPreferences preferences=getActivity().getSharedPreferences("user_info", Context.MODE_PRIVATE);
-        String name=preferences.getString("user_name",null);
-        if(name!=null){
-            myInfo=new User();
-            myInfo.setName(name);
-            myInfo.setId(preferences.getInt("user_id",-1));
-            myInfo.setStudentId(preferences.getString("user_student_id",null));
-            myInfo.setStudentId(preferences.getString("user_name",null));
-            myInfo.setGender(preferences.getString("user_gender","M"));
-            // TODO: 2018/4/4 FLAG什么意思
-            myInfo.setFlag("M");
-            myInfo.setAge(preferences.getInt("user_age",0));
+        //设置头像
+        insertImagesSync(Content.getServerHost()+Content.getIconAccessPath());
 
-            // TODO: 2018/4/4 LastLoginTime处理，在哪读取、存储到本地
+        textView.setText(Content.getNAME());
+        if(Content.getGENDER().equals("M")){
+            Drawable drawable=getActivity().getResources().getDrawable(R.drawable.ic_favorite_black_24dp);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            textView.setCompoundDrawables(null,null,drawable,null);
         }else{
-            //虚构个人信息
-            myInfo=new User();
-            myInfo.setId(1);
-            myInfo.setStudentId("01215xxxxxxxx");
-            myInfo.setName("张三");
-            myInfo.setGender("M");
-            myInfo.setFlag("M");
-            myInfo.setAge(12);
-            myInfo.setLastLoginTime(new Date());
+            Drawable drawable=getActivity().getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            textView.setCompoundDrawables(null,null,drawable,null);
         }
-        textView.setText(myInfo.getName());
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        if(myInfo.getGender().equals("M")){
-//            Drawable drawable=getActivity().getResources().getDrawable(R.drawable.ic_favorite_black_24dp);
-//            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-//            textView.setCompoundDrawables(null,null,drawable,null);
-//        }else{
-//            Drawable drawable=getActivity().getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp);
-//            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-//            textView.setCompoundDrawables(null,null,drawable,null);
-//        }
         return inflater.inflate(R.layout.fragment_me,container,false);
     }
 

@@ -15,6 +15,7 @@ import android.view.MenuItem;
 
 import me.iwf.photopicker.PhotoPicker;
 import whut.qingxie.R;
+import whut.qingxie.common.Content;
 import whut.qingxie.helper.BottomNavigationViewHelper;
 import whut.qingxie.fragment.AdministratorFragment;
 import whut.qingxie.fragment.FavouriteFragment;
@@ -67,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
 
         //根据登录状态修改页面
-        Intent intent=getIntent();
-        state=intent.getIntExtra("user_state",NO_LOGIN);
+        state= Content.getFLAG();
+
         switch (state){
             case STUDENT:
                 bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_favorite_border_black_24dp);

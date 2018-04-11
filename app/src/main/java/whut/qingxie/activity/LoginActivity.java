@@ -27,6 +27,7 @@ import okhttp3.Call;
 import whut.qingxie.R;
 import whut.qingxie.common.Content;
 import whut.qingxie.dto.Msg;
+import whut.qingxie.entity.user.User;
 import whut.qingxie.network.CallBackUtil;
 import whut.qingxie.network.OkhttpUtil;
 
@@ -128,8 +129,12 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Msg msg) {
                 if(msg.getStatus().equals("success")){
                     Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
-                    Object obj=msg.getData().get("User");
-                    String json=new Gson().toJson(obj);
+
+                    praseMSG(msg);
+
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }else {
                     Toast.makeText(LoginActivity.this,"登录失败，账号密码错误",Toast.LENGTH_SHORT).show();
                 }
@@ -139,19 +144,15 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * 将数据存到本地
-     * @param json
+     * @param msg
      */
-    public void praseUserJson(String json){
+    public void praseMSG(Msg msg){
         try{
-            JSONObject jsonObject=new JSONObject(json);
-
-            Integer userId=jsonObject.getInt("id");
-            String name=jsonObject.getString("name");
-            String Flag=jsonObject.getString("flag");
-            String Gender=jsonObject.getString("gender");
+            User user=(User)msg.getData().get("User");
+            String iconAccessPath=(String)msg.getData().get("iconAccessPath");
 
             int flag=-1;
-            switch (Flag){
+            switch (user.getFlag()){
                 // TODO: 2018/4/8 S既是学生也是游客，强制下线功能（如果有）无法判断 
                 case "S":flag=0;break;
                 case "Q":flag=1;break;
@@ -159,15 +160,11 @@ public class LoginActivity extends AppCompatActivity {
                 default:break;
             }
 
-            int gender=0;
-            if(Gender.equals("F")){
-                gender=1;
-            }
-
-            Content.setUserId(userId);
-            Content.setNAME(name);
+            Content.setIconAccessPath(iconAccessPath);
+            Content.setUserId(user.getId());
+            Content.setNAME(user.getName());
             Content.setFLAG(flag);
-            Content.setGENDER(gender);
+            Content.setGENDER(user.getGender());
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -204,9 +201,8 @@ public class LoginActivity extends AppCompatActivity {
                 break;
             case android.R.id.home:
             {
-                //点击返回键返回信息给上个活动
+                //点击返回键
                 intent =new Intent(LoginActivity.this,MainActivity.class);
-                intent.putExtra("user_state", state);
                 startActivity(intent);
                 finish();
                 break;
@@ -217,9 +213,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //点击虚拟返回按钮返回信息给上个活动
+        //点击虚拟返回按钮
         Intent intent =new Intent(LoginActivity.this,MainActivity.class);
-        intent.putExtra("user_state", state);
         startActivity(intent);
         finish();
         super.onBackPressed();

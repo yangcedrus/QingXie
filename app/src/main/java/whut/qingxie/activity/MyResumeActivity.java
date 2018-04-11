@@ -2,6 +2,7 @@ package whut.qingxie.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -19,10 +21,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
 import whut.qingxie.Item.ExperienceItem;
 import whut.qingxie.R;
 import whut.qingxie.adapter.MyExperienceItemAdapter;
+import whut.qingxie.common.Content;
 import whut.qingxie.dto.Msg;
 import whut.qingxie.entity.user.Resume;
 import whut.qingxie.entity.user.User;
@@ -38,10 +42,13 @@ import whut.qingxie.network.OkhttpUtil;
  */
 public class MyResumeActivity extends AppCompatActivity {
     private List<ExperienceItem> list = new ArrayList<>();
+    private TextView tx_birthdate;
     private TextView tx_age;
     private TextView tx_profile;
     private TextView tx_politics;
     private TextView tx_class;
+    private CircleImageView circleImageView;
+    private TextView tx_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +58,19 @@ public class MyResumeActivity extends AppCompatActivity {
         tx_politics = (TextView) findViewById(R.id.pilitics_resume);
         tx_profile = (TextView) findViewById(R.id.profile_resume);
         tx_class = (TextView) findViewById(R.id.class_resume);
+        tx_birthdate=(TextView)findViewById(R.id.birth_resume) ;
+        circleImageView=(CircleImageView)findViewById(R.id.icon_resume);
+        tx_name=(TextView)findViewById(R.id.name_resume);
+
+        if(Content.getGENDER().equals("M")){
+            Drawable drawable=getResources().getDrawable(R.drawable.ic_favorite_black_24dp);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            tx_name.setCompoundDrawables(null,null,drawable,null);
+        }else{
+            Drawable drawable=getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            tx_name.setCompoundDrawables(null,null,drawable,null);
+        }
 
         //显示返回按钮
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_myresume);
@@ -60,11 +80,11 @@ public class MyResumeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        Intent intent = getIntent();
-        User myInfo = (User) intent.getParcelableExtra("user_info");
+        if (list.size() == 0) {
+//            init();
+            getExperience();
+        }
 
-        if (list.size() == 0)
-            init();
         MyExperienceItemAdapter adapter = new MyExperienceItemAdapter(MyResumeActivity.this, R.layout.item_experience, list);
         ListView listView = (ListView) findViewById(R.id.experience_resume);
         listView.setAdapter(adapter);
@@ -78,7 +98,7 @@ public class MyResumeActivity extends AppCompatActivity {
             public void onFailure(Call call, Exception e) {
                 //网络访问错误，则从本地读取信息
                 // FIXME 网络不好，本地无信息，则显示默认页面
-                init();
+//                init();
                 Log.e("MyResumeActivity", "onFailure: " + e.getMessage());
             }
 
@@ -160,28 +180,35 @@ public class MyResumeActivity extends AppCompatActivity {
         tx_class.setText(resume.getClassName());
         tx_politics.setText(resume.getPoliticalStatus());
         tx_profile.setText(resume.getProfile());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        tx_birthdate.setText(sdf.format(resume.getBirthDate()));
+        tx_name.setText(Content.getNAME());
+        Glide.with(MyResumeActivity.this).load(Content.getServerHost()+Content.getIconAccessPath()).fitCenter().into(circleImageView);
 
-        //保存到本地
-        SharedPreferences.Editor editor=getSharedPreferences("user_info",MODE_PRIVATE).edit();
-        editor.putInt("user_id",resume.getUserId());
-        editor.putString("user_student_id",resume.getStudentId());
-        editor.putInt("user_age",resume.getAge());
-        editor.putString("user_political_status",resume.getPoliticalStatus());
-        editor.putString("user_email",resume.getEmail());
-        editor.putString("user_name",resume.getName());
-        editor.putString("user_profile",resume.getProfile());
-        editor.putString("user_qq",resume.getQq());
-        editor.putString("user_telephone",resume.getTelephone());
-        editor.putString("user_wechat",resume.getWechat());
-        editor.putString("user_gender",resume.getGender());
+        int i=0;
+        int a=i;
 
-        String date=format.format(resume.getBirthDate());
-        editor.putString("user_birthday",date);
-
-        Gson gson=new Gson();
-        String json=gson.toJson(resume.getExperiences());
-        editor.putString("user_experiences",json);
-
-        editor.apply();
+//        //保存到本地
+//        SharedPreferences.Editor editor=getSharedPreferences("user_info",MODE_PRIVATE).edit();
+//        editor.putInt("user_id",resume.getUserId());
+//        editor.putString("user_student_id",resume.getStudentId());
+//        editor.putInt("user_age",resume.getAge());
+//        editor.putString("user_political_status",resume.getPoliticalStatus());
+//        editor.putString("user_email",resume.getEmail());
+//        editor.putString("user_name",resume.getName());
+//        editor.putString("user_profile",resume.getProfile());
+//        editor.putString("user_qq",resume.getQq());
+//        editor.putString("user_telephone",resume.getTelephone());
+//        editor.putString("user_wechat",resume.getWechat());
+//        editor.putString("user_gender",resume.getGender());
+//
+//        String date=format.format(resume.getBirthDate());
+//        editor.putString("user_birthday",date);
+//
+//        Gson gson=new Gson();
+//        String json=gson.toJson(resume.getExperiences());
+//        editor.putString("user_experiences",json);
+//
+//        editor.apply();
     }
 }

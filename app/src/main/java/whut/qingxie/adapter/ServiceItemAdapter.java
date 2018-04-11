@@ -10,10 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import whut.qingxie.R;
 import whut.qingxie.activity.SignUpActivity;
+import whut.qingxie.entity.activity.Activity4User;
 import whut.qingxie.entity.activity.VolActivityInfo;
 
 /**
@@ -22,7 +24,7 @@ import whut.qingxie.entity.activity.VolActivityInfo;
  */
 public class ServiceItemAdapter extends RecyclerView.Adapter<ServiceItemAdapter.ViewHolder> {
 
-    public List<VolActivityInfo> volActivityInfos;
+    public List<Activity4User> activity4Users;
     private Context mContext;
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -51,8 +53,8 @@ public class ServiceItemAdapter extends RecyclerView.Adapter<ServiceItemAdapter.
         }
     }
 
-    public ServiceItemAdapter(List<VolActivityInfo> volActivityInfoList){
-        volActivityInfos=volActivityInfoList;
+    public ServiceItemAdapter(List<Activity4User> activity4UserList){
+        activity4Users=activity4UserList;
     }
 
     @Override
@@ -63,7 +65,7 @@ public class ServiceItemAdapter extends RecyclerView.Adapter<ServiceItemAdapter.
         holder.serviceView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                VolActivityInfo item=volActivityInfos.get(holder.getLayoutPosition());
+                Activity4User item=activity4Users.get(holder.getLayoutPosition());
                 if(mContext==null)
                     mContext=parent.getContext();
                 Intent intent=new Intent(mContext,SignUpActivity.class);
@@ -76,26 +78,25 @@ public class ServiceItemAdapter extends RecyclerView.Adapter<ServiceItemAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        VolActivityInfo activityInfo=volActivityInfos.get(position);
+        Activity4User activityInfo=activity4Users.get(position);
         holder.name.setText(activityInfo.getName());
-        holder.time.setText(activityInfo.getRegTime().toString());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        holder.time.setText(sdf.format(activityInfo.getCreateTime()));
         holder.num.setText(Integer.toString(position+1));
-        holder.info.setText(activityInfo.getGeneral());
+        holder.info.setText(activityInfo.getProfile());
+        holder.status.setText(activityInfo.getStatus());
         switch(activityInfo.getStatus()){
-            case 0:
-                holder.status.setText("未开始");
+            case "未开始":
                 holder.status.setCompoundDrawables(holder.drawable0,null,null,null);
                 break;
-            case 1:
-                holder.status.setText("面试中");
+            case "面试中":
                 holder.status.setCompoundDrawables(holder.drawable1,null,null,null);
                 break;
-            case 2:
-                holder.status.setText("进行中");
+            case "进行中":
                 holder.status.setCompoundDrawables(holder.drawable2,null,null,null);
                 break;
-            case 3:
-                holder.status.setText("已结束");
+            case "已结束":
                 holder.status.setCompoundDrawables(holder.drawable3,null,null,null);
                 break;
                 default:
@@ -104,6 +105,6 @@ public class ServiceItemAdapter extends RecyclerView.Adapter<ServiceItemAdapter.
 
     @Override
     public int getItemCount() {
-        return volActivityInfos.size();
+        return activity4Users.size();
     }
 }

@@ -101,13 +101,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                getSomeActivity();
-
-                //结束加载更多
-                if (page < totalPage)
-                    smartRefreshLayout.finishLoadmore();
-                else
-                    smartRefreshLayout.finishLoadmoreWithNoMoreData();
+                getMoreActivity();
             }
         });
         return view;
@@ -143,8 +137,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
 
     //获取数据
     private void getSomeActivity() {
-        if(page==0)
-            cardActivityItems.clear();
+        cardActivityItems.clear();
         OkhttpUtil.accessData("GET", "/activity/home?page=" + page++ + "&size=" + SIZE, null, null, new CallBackUtil.CallBackMsg() {
 
             @Override
@@ -167,6 +160,36 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
                 //结束刷新
                 smartRefreshLayout.resetNoMoreData();
                 smartRefreshLayout.finishRefresh();
+                reFresh();
+            }
+        });
+    }
+
+    private void getMoreActivity(){
+        OkhttpUtil.accessData("GET", "/activity/home?page=" + page++ + "&size=" + SIZE, null, null, new CallBackUtil.CallBackMsg() {
+
+            @Override
+            public void onFailure(Call call, Exception e) {
+                //FIXME:还有404等，不全是超时
+                Toast.makeText(getContext(),"连接超时，请检查网络连接",Toast.LENGTH_LONG).show();
+                Log.e("HomeFragment", "onFailure: " + e.getMessage());
+                //结束刷新
+                smartRefreshLayout.finishLoadmore();
+            }
+
+            @Override
+            public void onResponse(Msg response) {
+                PageInfo<VolActivityInfo> pageInfo=PageInfo.parseFromJson((JSONObject) response.getData().get("PageInfo"),VolActivityInfo.class);
+
+                totalPage = pageInfo.getPages();
+                SIZE = pageInfo.getSize();
+
+                cardActivityItems.addAll(pageInfo.getList());
+                //结束加载更多
+                if (page < totalPage)
+                    smartRefreshLayout.finishLoadmore();
+                else
+                    smartRefreshLayout.finishLoadmoreWithNoMoreData();
                 reFresh();
             }
         });
