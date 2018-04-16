@@ -11,29 +11,28 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import whut.qingxie.R;
 import whut.qingxie.Item.ExperienceItem;
+import whut.qingxie.R;
 
 /**
- *
  * MyResume个人简历页面
  * 我的志愿经历witem适配器
  */
 public class MyExperienceItemAdapter extends ArrayAdapter {
     private int resourceId;
 
-    public MyExperienceItemAdapter(Context context, int textViewResourceId, List<ExperienceItem> objects){
-        super(context,textViewResourceId,objects);
-        resourceId=textViewResourceId;
+    public MyExperienceItemAdapter(Context context, int textViewResourceId, List<ExperienceItem> objects) {
+        super(context, textViewResourceId, objects);
+        resourceId = textViewResourceId;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        ExperienceItem experienceItem=(ExperienceItem)getItem(position);
+        ExperienceItem experienceItem = (ExperienceItem) getItem(position);
         View view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
-        TextView textView=(TextView)view.findViewById(R.id.experience_time);
-        TextView textView2=(TextView)view.findViewById(R.id.experience_name);
+        TextView textView = (TextView) view.findViewById(R.id.experience_time);
+        TextView textView2 = (TextView) view.findViewById(R.id.experience_name);
         textView.setText(experienceItem.getTime());
         textView2.setText(experienceItem.getName());
         return view;

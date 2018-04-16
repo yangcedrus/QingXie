@@ -12,7 +12,6 @@ import android.widget.RelativeLayout;
 import whut.qingxie.R;
 import whut.qingxie.activity.ManageWorkAvtivity;
 import whut.qingxie.activity.ManageWorkTimeActivity;
-import whut.qingxie.activity.ReleaseTweetActivity;
 import whut.qingxie.activity.ReleaseWorkActivity;
 import whut.qingxie.activity.RichTextEditorActivity;
 
@@ -29,7 +28,7 @@ public class WorkerWorkFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_worker_work,container,false);
+        return inflater.inflate(R.layout.fragment_worker_work, container, false);
     }
 
     //添加监听注册
@@ -37,11 +36,11 @@ public class WorkerWorkFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        layout1=(RelativeLayout)getActivity().findViewById(R.id.worker_me_layout5);
-        layout2=(RelativeLayout)getActivity().findViewById(R.id.worker_me_layout6);
-        layout3=(RelativeLayout)getActivity().findViewById(R.id.worker_me_layout7);
-        layout4=(RelativeLayout)getActivity().findViewById(R.id.worker_me_layout8);
-        layout5=(RelativeLayout)getActivity().findViewById(R.id.worker_me_layout9);
+        layout1 = (RelativeLayout) getActivity().findViewById(R.id.worker_me_layout5);
+        layout2 = (RelativeLayout) getActivity().findViewById(R.id.worker_me_layout6);
+        layout3 = (RelativeLayout) getActivity().findViewById(R.id.worker_me_layout7);
+        layout4 = (RelativeLayout) getActivity().findViewById(R.id.worker_me_layout8);
+        layout5 = (RelativeLayout) getActivity().findViewById(R.id.worker_me_layout9);
 
         layout1.setOnClickListener(new WorkerWorkFragment.MyListener());
         layout2.setOnClickListener(new WorkerWorkFragment.MyListener());
@@ -58,20 +57,22 @@ public class WorkerWorkFragment extends Fragment {
             Intent intent;
             switch (v.getId()) {
                 case R.id.worker_me_layout5:
-                    intent=new Intent(getActivity(), RichTextEditorActivity.class);
+                    intent = new Intent(getActivity(), RichTextEditorActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.worker_me_layout6:
-                    intent=new Intent(getActivity(), ManageWorkTimeActivity.class);
+                    intent = new Intent(getActivity(), ManageWorkTimeActivity.class);
                     startActivity(intent);
                     break;
                 case R.id.worker_me_layout7:
-                    intent=new Intent(getActivity(), ManageWorkAvtivity.class);
+                    intent = new Intent(getActivity(), ManageWorkAvtivity.class);
                     startActivity(intent);
                     break;
                 case R.id.worker_me_layout8:
                     break;
                 case R.id.worker_me_layout9:
+                    intent = new Intent(getActivity(), ReleaseWorkActivity.class);
+                    startActivity(intent);
                     break;
             }
         }

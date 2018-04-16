@@ -64,13 +64,6 @@ public class FavouriteFragment extends Fragment {
                 smartRefreshLayout.finishRefresh();
             }
         });
-        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-                smartRefreshLayout.finishLoadmoreWithNoMoreData();
-                reFresh();
-            }
-        });
         if(favouriteItems.size()==0)
             init();
     }

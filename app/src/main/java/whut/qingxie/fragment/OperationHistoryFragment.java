@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -18,19 +17,22 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import whut.qingxie.Item.OperationHistoryItem;
 import whut.qingxie.R;
 import whut.qingxie.adapter.OperationHistoryItemAdapter;
-import whut.qingxie.Item.OperationHistoryItem;
 
 /**
  * 管理员操作历史页面
  * todo 功能待完善
  */
 public class OperationHistoryFragment extends Fragment {
-    private List<OperationHistoryItem> operationHistoryItemList = new ArrayList<>();
-
     private static OperationHistoryItemAdapter adapter;
     private static SmartRefreshLayout smartRefreshLayout;
+    private List<OperationHistoryItem> operationHistoryItemList = new ArrayList<>();
+
+    private static void reFresh() {
+        adapter.notifyDataSetChanged();
+    }
 
     @Nullable
     @Override
@@ -65,7 +67,7 @@ public class OperationHistoryFragment extends Fragment {
                             "详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情详情"));
                 }
                 //结束加载更多
-                if(operationHistoryItemList.size()<10)
+                if (operationHistoryItemList.size() < 10)
                     smartRefreshLayout.finishLoadmore();
                 else
                     smartRefreshLayout.finishLoadmoreWithNoMoreData();
@@ -75,10 +77,6 @@ public class OperationHistoryFragment extends Fragment {
 
         if (operationHistoryItemList.size() == 0)
             init();
-    }
-
-    private static void reFresh() {
-        adapter.notifyDataSetChanged();
     }
 
     public void init() {

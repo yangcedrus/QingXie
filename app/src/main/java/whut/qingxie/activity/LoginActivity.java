@@ -162,6 +162,7 @@ public class LoginActivity extends AppCompatActivity {
 
             Content.setIconAccessPath(iconAccessPath);
             Content.setUserId(user.getId());
+            Content.setStudentId(user.getStudentId());
             Content.setNAME(user.getName());
             Content.setFLAG(flag);
             Content.setGENDER(user.getGender());

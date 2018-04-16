@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
 
     private static int totalPage = Integer.MAX_VALUE; //页总数
     private static int page = 1;    //当前页
-    private static int SIZE = 2;  //每页数量
+    private static int SIZE = 5;  //每页
 
     private View view;
     private static RecyclerView recyclerView;
@@ -94,7 +94,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
             public void onRefresh(RefreshLayout refreshlayout) {
                 //init();
                 //调用服务器数据
-                page = 0;
+                page = 1;
                 getSomeActivity();
             }
         });
@@ -120,7 +120,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         recyclerView.setAdapter(adapter);
 
         if (cardActivityItems.size() == 0) {
-            page = 0;
+            page = 1;
             getSomeActivity();
         }
 
@@ -154,7 +154,6 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
                 PageInfo<VolActivityInfo> pageInfo=PageInfo.parseFromJson((JSONObject) response.getData().get("PageInfo"),VolActivityInfo.class);
 
                 totalPage = pageInfo.getPages();
-                SIZE = pageInfo.getSize();
 
                 cardActivityItems.addAll(pageInfo.getList());
                 //结束刷新
@@ -182,7 +181,6 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
                 PageInfo<VolActivityInfo> pageInfo=PageInfo.parseFromJson((JSONObject) response.getData().get("PageInfo"),VolActivityInfo.class);
 
                 totalPage = pageInfo.getPages();
-                SIZE = pageInfo.getSize();
 
                 cardActivityItems.addAll(pageInfo.getList());
                 //结束加载更多

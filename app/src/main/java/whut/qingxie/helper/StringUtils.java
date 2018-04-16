@@ -42,10 +42,11 @@ public class StringUtils {
 
     /**
      * 获取img标签中的src值
+     *
      * @param content
      * @return
      */
-    public static String getImgSrc(String content){
+    public static String getImgSrc(String content) {
         String str_src = null;
         //目前img标签标示有3种表达式
         //<img alt="" src="1.jpg"/>   <img alt="" src="1.jpg"></img>     <img alt="" src="1.jpg">
@@ -75,8 +76,9 @@ public class StringUtils {
 
     /**
      * 关键字高亮显示
-     * @param target  需要高亮的关键字
-     * @param text	     需要显示的文字
+     *
+     * @param target 需要高亮的关键字
+     * @param text   需要显示的文字
      * @return spannable 处理完后的结果，记得不要toString()，否则没有效果
      * SpannableStringBuilder textString = TextUtilTools.highlight(item.getItemName(), KnowledgeActivity.searchKey);
      * vHolder.tv_itemName_search.setText(textString);

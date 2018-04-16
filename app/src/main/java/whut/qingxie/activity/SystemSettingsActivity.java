@@ -12,6 +12,7 @@ import android.widget.Button;
 import java.util.List;
 
 import whut.qingxie.R;
+import whut.qingxie.common.Content;
 import whut.qingxie.helper.AppCompatPreferenceActivity;
 
 /**
@@ -38,7 +39,7 @@ public class SystemSettingsActivity extends AppCompatPreferenceActivity {
                 public void onClick(View v) {
                     Intent intent =new Intent(SystemSettingsActivity.this,MainActivity.class);
                     //状态设置为未登录
-                    intent.putExtra("user_state",-1);
+                    Content.setFLAG(-1);
                     MainActivity.activity.finish();
                     startActivity(intent);
                     finish();

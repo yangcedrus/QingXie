@@ -1,27 +1,32 @@
 package whut.qingxie.fragment;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
-import android.os.Parcelable;
-import android.support.v4.app.Fragment;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
+import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.iwf.photopicker.PhotoPicker;
+import okhttp3.Call;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -30,14 +35,15 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import whut.qingxie.R;
 import whut.qingxie.activity.MyHoursActivity;
-import whut.qingxie.activity.MyInfoActivity;
 import whut.qingxie.activity.MyMessageActivity;
 import whut.qingxie.activity.MyResumeActivity;
 import whut.qingxie.activity.MyServiceActivity;
 import whut.qingxie.common.Content;
+import whut.qingxie.dto.Msg;
 import whut.qingxie.entity.user.User;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.ContentValues.TAG;
 
 /**
  * 学生“我”页面
@@ -59,12 +65,12 @@ public class MeFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        layout1=(RelativeLayout)getActivity().findViewById(R.id.me_layout1);
-        layout2=(RelativeLayout)getActivity().findViewById(R.id.me_layout2);
-        layout3=(RelativeLayout)getActivity().findViewById(R.id.me_layout3);
-        layout4=(RelativeLayout)getActivity().findViewById(R.id.me_layout4);
-        circleImageView=(CircleImageView)getActivity().findViewById(R.id.icon_me);
-        textView=(TextView)getActivity().findViewById(R.id.name_me);
+        layout1 = (RelativeLayout) getActivity().findViewById(R.id.me_layout1);
+        layout2 = (RelativeLayout) getActivity().findViewById(R.id.me_layout2);
+        layout3 = (RelativeLayout) getActivity().findViewById(R.id.me_layout3);
+        layout4 = (RelativeLayout) getActivity().findViewById(R.id.me_layout4);
+        circleImageView = (CircleImageView) getActivity().findViewById(R.id.icon_me);
+        textView = (TextView) getActivity().findViewById(R.id.name_me);
 
         layout1.setOnClickListener(new MyListener());
         layout2.setOnClickListener(new MyListener());
@@ -83,59 +89,32 @@ public class MeFragment extends Fragment {
         });
 
         //设置头像
-        insertImagesSync(Content.getServerHost()+Content.getIconAccessPath());
+        String img = Content.getIconAccessPath();
+        if (!img.contains("emu"))
+            img = Content.getServerHost() + img;
+        Glide.with(getContext()).load(img).fitCenter().into(circleImageView);
 
         textView.setText(Content.getNAME());
-        if(Content.getGENDER().equals("M")){
-            Drawable drawable=getActivity().getResources().getDrawable(R.drawable.ic_favorite_black_24dp);
+        if (Content.getGENDER().equals("M")) {
+            Drawable drawable = getActivity().getResources().getDrawable(R.drawable.ic_favorite_black_24dp);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-            textView.setCompoundDrawables(null,null,drawable,null);
-        }else{
-            Drawable drawable=getActivity().getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp);
+            textView.setCompoundDrawables(null, null, drawable, null);
+        } else {
+            Drawable drawable = getActivity().getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-            textView.setCompoundDrawables(null,null,drawable,null);
+            textView.setCompoundDrawables(null, null, drawable, null);
         }
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_me,container,false);
-    }
-
-    /**
-     * 监听类
-     */
-    class MyListener implements View.OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-            Intent intent;
-            switch (v.getId()) {
-                case R.id.me_layout1:
-                    intent=new Intent(getActivity(), MyResumeActivity.class);
-                    intent.putExtra("user_info",(Parcelable) myInfo);
-                    startActivity(intent);
-                    break;
-                case R.id.me_layout2:
-                    intent=new Intent(getActivity(), MyMessageActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.me_layout3:
-                    intent=new Intent(getActivity(), MyServiceActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.me_layout4:
-                    intent=new Intent(getActivity(), MyHoursActivity.class);
-                    startActivity(intent);
-                    break;
-            }
-        }
-
+        return inflater.inflate(R.layout.fragment_me, container, false);
     }
 
     /**
      * 获得返回的路径
+     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -145,8 +124,12 @@ public class MeFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (data != null) {
-                if (requestCode == PhotoPicker.REQUEST_CODE){
+                if (requestCode == PhotoPicker.REQUEST_CODE) {
                     ArrayList<String> photos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
+
+                    //上传图片
+                    upload_icon(photos.get(0));
+
                     insertImagesSync(photos.get(0));
                 }
             }
@@ -154,19 +137,80 @@ public class MeFragment extends Fragment {
     }
 
     /**
+     * 上传图片
+     *
+     * @param imagePath
+     */
+    private void upload_icon(String imagePath) {
+        File file = new File(imagePath);
+
+        if (!file.exists())
+            return;
+        HashMap<String, String> headerMap = new HashMap<>();
+        headerMap.put("content-type", "multipart/form-data; boundary=" + UUID.randomUUID().toString());
+        headerMap.put("connection", "keep-alive");
+        headerMap.put("user-agent", "android");
+
+        //FIXME 原本Okhttputil无法完成
+        OkHttpUtils.post()//
+                .addFile("icon", file.getName(), file)//
+                .url(Content.getServerHost() + "/user/" + Content.getUserId() + "/icon/update")
+                .headers(headerMap)
+                .build()//
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Toast.makeText(getActivity(), "连接超时，请检查网络连接", Toast.LENGTH_LONG).show();
+                        Log.d(TAG, "onFailure: " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        Gson gson = new Gson();
+                        Msg msg = gson.fromJson(response, Msg.class);
+                        if (msg.getStatus().equals("error")) {
+                            Toast.makeText(getActivity(), "头像上传失败", Toast.LENGTH_LONG).show();
+                        } else {
+                            String image = (String) msg.getData().get("iconAccessPath");
+                            Content.setIconAccessPath(image);
+                        }
+                    }
+                });
+
+//        OkhttpUtil.okHttpUploadFile("/user/" + Content.getUserId() + "/icon/update", file, "icon", OkhttpUtil.FILE_TYPE_IMAGE, null, headerMap, new CallBackUtil.CallBackMsg() {
+//            @Override
+//            public void onFailure(Call call, Exception e) {
+//                //FIXME:还有404等，不全是超时
+//                Toast.makeText(getActivity(), "连接超时，请检查网络连接", Toast.LENGTH_LONG).show();
+//                Log.d(TAG, "onFailure: " + e.getMessage());
+//            }
+//
+//            @Override
+//            public void onResponse(Msg response) {
+//                if (response.getStatus().equals("error")) {
+//                    Toast.makeText(getActivity(), "头像上传失败", Toast.LENGTH_LONG).show();
+//                } else {
+//                    String image = (String) response.getData().get("iconAccessPath");
+//                    Content.setIconAccessPath(image);
+//                }
+//            }
+//        });
+    }
+
+    /**
      * 异步方式插入图片
+     *
      * @param data
      */
-    private void insertImagesSync(final String data){
+    private void insertImagesSync(final String data) {
 
         subsInsert = Observable.create(new Observable.OnSubscribe<String>() {
             @Override
             public void call(Subscriber<? super String> subscriber) {
-                try{
-                    //压缩图片
+                try {
                     subscriber.onNext(data);
                     subscriber.onCompleted();
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                     subscriber.onError(e);
                 }
@@ -191,6 +235,37 @@ public class MeFragment extends Fragment {
                         Glide.with(getContext()).load(imagePath).fitCenter().into(circleImageView);
                     }
                 });
+    }
+
+    /**
+     * 监听类
+     */
+    class MyListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Intent intent;
+            switch (v.getId()) {
+                case R.id.me_layout1:
+                    intent = new Intent(getActivity(), MyResumeActivity.class);
+                    intent.putExtra("user_info", (Parcelable) myInfo);
+                    startActivity(intent);
+                    break;
+                case R.id.me_layout2:
+                    intent = new Intent(getActivity(), MyMessageActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.me_layout3:
+                    intent = new Intent(getActivity(), MyServiceActivity.class);
+                    startActivity(intent);
+                    break;
+                case R.id.me_layout4:
+                    intent = new Intent(getActivity(), MyHoursActivity.class);
+                    startActivity(intent);
+                    break;
+            }
+        }
+
     }
 }
 

@@ -12,25 +12,25 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import whut.qingxie.R;
 import whut.qingxie.Item.MyMessageItem;
+import whut.qingxie.R;
 
 // TODO: 2018/4/8 待完成 
 public class MyMessageItemAdapter extends ArrayAdapter {
     private int resourceId;
 
-    public MyMessageItemAdapter(Context context, int textViewResourceId, List<MyMessageItem> objects){
-        super(context,textViewResourceId,objects);
-        resourceId=textViewResourceId;
+    public MyMessageItemAdapter(Context context, int textViewResourceId, List<MyMessageItem> objects) {
+        super(context, textViewResourceId, objects);
+        resourceId = textViewResourceId;
     }
 
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
-        MyMessageItem myMessageItem= (MyMessageItem) getItem(position);
-        View view= LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
-        TextView title=(TextView)view.findViewById(R.id.message_item_title);
-        TextView text=(TextView)view.findViewById(R.id.message_item_text);
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        MyMessageItem myMessageItem = (MyMessageItem) getItem(position);
+        View view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
+        TextView title = (TextView) view.findViewById(R.id.message_item_title);
+        TextView text = (TextView) view.findViewById(R.id.message_item_text);
         // TODO: 2017/11/18 从服务器下载对方头像
-        ImageView image=(ImageView)view.findViewById(R.id.message_item_image);
+        ImageView image = (ImageView) view.findViewById(R.id.message_item_image);
 
         title.setText(myMessageItem.getTitle());
         text.setText(myMessageItem.getText());

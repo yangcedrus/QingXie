@@ -49,6 +49,19 @@ import static android.content.ContentValues.TAG;
 public class SignUpActivity extends AppCompatActivity {
     private static RichTextView et_new_content;
 
+    @SuppressLint("HandlerLeak")
+    public static Handler eHandler=new Handler(){
+        public void handleMessage(Message message){
+            super.handleMessage(message);
+            try {
+                Msg msg = Msg.parseMapFromJson(message.obj, Content.getClazzMap());
+
+            } catch (ClassNotFoundException e) {
+                Log.e(TAG, "handleMessage: "+e.getMessage());
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +75,20 @@ public class SignUpActivity extends AppCompatActivity {
         int thisActivityId=getIntent().getIntExtra("activity_details",0);
 
         setActivityInfo(thisActivityId);
+
+        Button button_sign_up=(Button)findViewById(R.id.sign_up_confirm);
+        button_sign_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
+    /**
+     * 加载活动信息
+     * @param ID
+     */
     private void setActivityInfo(int ID){
         OkhttpUtil.accessData("GET", "/activity/" + ID + "/details", null, null, new CallBackUtil.CallBackMsg() {
             @Override
@@ -91,50 +116,14 @@ public class SignUpActivity extends AppCompatActivity {
                 });
                 people_have.setText(Integer.toString(activityInfo.getNeedVolunteers()));
                 people_needed.setText(Integer.toString(activityInfo.getNeedVolunteers()));
-
-                Button button_sign_up=(Button)findViewById(R.id.sign_up_confirm);
-                button_sign_up.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent=new Intent(SignUpActivity.this, RichTextEditorActivity.class);
-                        startActivity(intent);
-                    }
-                });
             }
         });
     }
 
-    @SuppressLint("HandlerLeak")
-    public static Handler eHandler=new Handler(){
-        public void handleMessage(Message message){
-            super.handleMessage(message);
-            try {
-                Msg msg = Msg.parseMapFromJson(message.obj, Content.getClazzMap());
-
-            } catch (ClassNotFoundException e) {
-                Log.e(TAG, "handleMessage: "+e.getMessage());
-            }
-        }
-    };
-
-    //显示“反馈”菜单按钮
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar,menu);
-        return true;
-    }
-
-    //设置“反馈”菜单按钮响应
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.settings:
-                Intent intent = new Intent(SignUpActivity.this, HelpInfoActivity.class);
-                startActivity(intent);
-        }
-        return true;
-    }
-
+    /**
+     * 显示详情内容
+     * @param content
+     */
     private void showTextData(String content) {
         et_new_content.clearAllLayout();
         if(content==null){
@@ -166,4 +155,53 @@ public class SignUpActivity extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * 活动报名
+     * @param activityID
+     */
+    private void sign_up(Integer activityID){
+        Integer userID=Content.getUserId();
+
+        OkhttpUtil.accessData("GET", "/" + activityID + "/" + userID + "/join", null, null, new CallBackUtil.CallBackMsg() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                //FIXME:还有404等，不全是超时
+                Toast.makeText(SignUpActivity.this,"连接超时，报名失败，请检查网络连接",Toast.LENGTH_LONG).show();
+                Log.e("SignUpActivity", "onFailure: " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Msg response) {
+
+            }
+        });
+    }
+
+    /**
+     * 显示帮助按钮
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar,menu);
+        return true;
+    }
+
+    /**
+     * 设置帮助按钮响应
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.settings:
+                Intent intent = new Intent(SignUpActivity.this, HelpInfoActivity.class);
+                startActivity(intent);
+        }
+        return true;
+    }
+
 }

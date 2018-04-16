@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "whut.qingxie"
         minSdkVersion 21
@@ -55,6 +55,7 @@ dependencies {
     implementation 'junit:junit:4.12'
     implementation 'com.zhy:okhttputils:2.6.2'
     implementation 'com.squareup.okhttp3:okhttp:3.3.1'
+    implementation 'com.zhy:okhttputils:2.6.2'
     // https://mvnrepository.com/artifact/org.robolectric/robolectric
     testImplementation 'org.robolectric:robolectric:3.7.1'
 // https://mvnrepository.com/artifact/com.alibaba/fastjson

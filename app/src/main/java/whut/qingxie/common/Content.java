@@ -13,7 +13,7 @@ public class Content extends Application {
     /**
      * 主机名
      */
-    private static final String SERVER_HOST = "http://123.207.87.34:8080/";
+    private static final String SERVER_HOST = "http://123.207.87.34:8080";
 
     /**
      * 映射类的全路径名
@@ -30,9 +30,14 @@ public class Content extends Application {
     /**
      * -1为未登录
      */
-    public static Integer USER_ID = -1;
+    private static Integer USER_ID = -1;
 
-    public static String NAME = null;
+    /**
+     * 学号
+     */
+    private static String STUDENT_ID = null;
+
+    private static String NAME = null;
 
     /**
      * -1为未登录,默认
@@ -40,18 +45,18 @@ public class Content extends Application {
      * 1为工作人员
      * 2为管理员
      */
-    public static int FLAG = -1;
+    private static int FLAG = -1;
 
     /**
      * M为男，默认
      * F为女
      */
-    public static String GENDER = "M";
+    private static String GENDER = "M";
 
     /**
      * 头像地址
      */
-    public static String iconAccessPath=null;
+    private static String iconAccessPath=null;
 
     public static int getFLAG() {
         return FLAG;
@@ -99,6 +104,14 @@ public class Content extends Application {
 
     public static void setIconAccessPath(String iconAccessPath) {
         Content.iconAccessPath = iconAccessPath;
+    }
+
+    public static String getStudentId() {
+        return STUDENT_ID;
+    }
+
+    public static void setStudentId(String studentId) {
+        STUDENT_ID = studentId;
     }
 }
 

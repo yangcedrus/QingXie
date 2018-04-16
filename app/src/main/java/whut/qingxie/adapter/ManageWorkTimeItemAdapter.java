@@ -10,42 +10,26 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import whut.qingxie.R;
 import whut.qingxie.Item.ManageWorkTimeItem;
+import whut.qingxie.R;
 
 /**
  * ManageWorkTimeActivity
  * 管理工时信息页面item适配器
  */
-public class ManageWorkTimeItemAdapter extends RecyclerView.Adapter<ManageWorkTimeItemAdapter.ViewHolder>{
+public class ManageWorkTimeItemAdapter extends RecyclerView.Adapter<ManageWorkTimeItemAdapter.ViewHolder> {
     private List<ManageWorkTimeItem> manageWorkTimeItemList;
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
-        CircleImageView image;
-        TextView name,title,detail;
-        ImageView IMAGE_OK,IMAGE_CANCEL;
-
-        public ViewHolder(View view) {
-            super(view);
-            image=(CircleImageView)view.findViewById(R.id.worktime_icon);
-            name=(TextView)view.findViewById(R.id.worktime_name);
-            title=(TextView)view.findViewById(R.id.worktime_title);
-            detail=(TextView)view.findViewById(R.id.worktime_detail);
-            IMAGE_OK=(ImageView)view.findViewById(R.id.worktime_ok);
-            IMAGE_CANCEL=(ImageView)view.findViewById(R.id.worktime_cancel);
-        }
-    }
-
-    public ManageWorkTimeItemAdapter(List<ManageWorkTimeItem> manageWorkTimeItemList){
-        this.manageWorkTimeItemList=manageWorkTimeItemList;
+    public ManageWorkTimeItemAdapter(List<ManageWorkTimeItem> manageWorkTimeItemList) {
+        this.manageWorkTimeItemList = manageWorkTimeItemList;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_manage_worker_time,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_manage_worker_time, parent, false);
         final ViewHolder viewHolder;
         viewHolder = new ViewHolder(view);
-        viewHolder.IMAGE_OK.setOnClickListener(new View.OnClickListener(){
+        viewHolder.IMAGE_OK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO: 2018/3/3 弹出确认对话框
@@ -62,7 +46,7 @@ public class ManageWorkTimeItemAdapter extends RecyclerView.Adapter<ManageWorkTi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ManageWorkTimeItem manageWorkTimeItem=manageWorkTimeItemList.get(position);
+        ManageWorkTimeItem manageWorkTimeItem = manageWorkTimeItemList.get(position);
         holder.image.setImageResource(manageWorkTimeItem.getImage());
         holder.name.setText(manageWorkTimeItem.getName());
         holder.title.setText(manageWorkTimeItem.getTitle());
@@ -72,5 +56,21 @@ public class ManageWorkTimeItemAdapter extends RecyclerView.Adapter<ManageWorkTi
     @Override
     public int getItemCount() {
         return manageWorkTimeItemList.size();
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        CircleImageView image;
+        TextView name, title, detail;
+        ImageView IMAGE_OK, IMAGE_CANCEL;
+
+        public ViewHolder(View view) {
+            super(view);
+            image = (CircleImageView) view.findViewById(R.id.worktime_icon);
+            name = (TextView) view.findViewById(R.id.worktime_name);
+            title = (TextView) view.findViewById(R.id.worktime_title);
+            detail = (TextView) view.findViewById(R.id.worktime_detail);
+            IMAGE_OK = (ImageView) view.findViewById(R.id.worktime_ok);
+            IMAGE_CANCEL = (ImageView) view.findViewById(R.id.worktime_cancel);
+        }
     }
 }

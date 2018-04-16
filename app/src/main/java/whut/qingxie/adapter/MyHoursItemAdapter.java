@@ -19,25 +19,13 @@ import whut.qingxie.R;
 public class MyHoursItemAdapter extends RecyclerView.Adapter<MyHoursItemAdapter.ViewHolder> {
     private List<MyHoursItem> myHoursItems;
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView time,name,hour,status;
-
-        private ViewHolder(View view){
-            super(view);
-            time=(TextView)view.findViewById(R.id.my_hours_time);
-            name=(TextView)view.findViewById(R.id.my_hours_name);
-            hour=(TextView)view.findViewById(R.id.my_hours_hours);
-            status=(TextView)view.findViewById(R.id.my_hours_status);
-        }
-    }
-
-    public MyHoursItemAdapter(List<MyHoursItem> hoursItemList){
-        myHoursItems =hoursItemList;
+    public MyHoursItemAdapter(List<MyHoursItem> hoursItemList) {
+        myHoursItems = hoursItemList;
     }
 
     @Override
     public MyHoursItemAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_my_hours,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_my_hours, parent, false);
         MyHoursItemAdapter.ViewHolder holder;
         holder = new MyHoursItemAdapter.ViewHolder(view);
         return holder;
@@ -49,11 +37,23 @@ public class MyHoursItemAdapter extends RecyclerView.Adapter<MyHoursItemAdapter.
         holder.time.setText(myHoursItem.getServiceTime());
         holder.name.setText(myHoursItem.getServiceName());
         holder.hour.setText(Double.toString(myHoursItem.getHours()));
-        holder.status.setText(myHoursItem.getStatus()?"已认证":"未认证");
+        holder.status.setText(myHoursItem.getStatus() ? "已认证" : "未认证");
     }
 
     @Override
     public int getItemCount() {
         return myHoursItems.size();
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView time, name, hour, status;
+
+        private ViewHolder(View view) {
+            super(view);
+            time = (TextView) view.findViewById(R.id.my_hours_time);
+            name = (TextView) view.findViewById(R.id.my_hours_name);
+            hour = (TextView) view.findViewById(R.id.my_hours_hours);
+            status = (TextView) view.findViewById(R.id.my_hours_status);
+        }
     }
 }

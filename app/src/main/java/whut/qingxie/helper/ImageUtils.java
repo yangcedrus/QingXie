@@ -10,8 +10,6 @@ import android.net.Uri;
 import android.util.Base64;
 import android.util.Log;
 
-import com.bumptech.glide.Glide;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -141,7 +139,7 @@ public class ImageUtils {
 
         Bitmap bitmap = BitmapFactory.decodeFile(filePath, options);
         Bitmap newBitmap = compressImage(bitmap, 500);
-        if (bitmap != null){
+        if (bitmap != null) {
             bitmap.recycle();
         }
         return newBitmap;
@@ -205,14 +203,13 @@ public class ImageUtils {
     }
 
     //使用Bitmap加Matrix来缩放
-    public static Bitmap resizeImage(Bitmap bitmapOrg, int newWidth, int newHeight)
-    {
+    public static Bitmap resizeImage(Bitmap bitmapOrg, int newWidth, int newHeight) {
 //        Bitmap bitmapOrg = BitmapFactory.decodeFile(imagePath);
         // 获取这个图片的宽和高
         int width = bitmapOrg.getWidth();
         int height = bitmapOrg.getHeight();
         //如果宽度为0 保持原图
-        if(newWidth == 0){
+        if (newWidth == 0) {
             newWidth = width;
             newHeight = height;
         }
@@ -232,20 +229,18 @@ public class ImageUtils {
     }
 
     //使用BitmapFactory.Options的inSampleSize参数来缩放
-    public static Bitmap resizeImage2(String path, int width,int height)
-    {
+    public static Bitmap resizeImage2(String path, int width, int height) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;//不加载bitmap到内存中
-        BitmapFactory.decodeFile(path,options);
+        BitmapFactory.decodeFile(path, options);
         int outWidth = options.outWidth;
         int outHeight = options.outHeight;
         options.inDither = false;
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         options.inSampleSize = 1;
 
-        if (outWidth != 0 && outHeight != 0 && width != 0 && height != 0)
-        {
-            int sampleSize=(outWidth/width+outHeight/height)/2;
+        if (outWidth != 0 && outHeight != 0 && width != 0 && height != 0) {
+            int sampleSize = (outWidth / width + outHeight / height) / 2;
             Log.d("###", "sampleSize = " + sampleSize);
             options.inSampleSize = sampleSize;
         }
@@ -256,6 +251,7 @@ public class ImageUtils {
 
     /**
      * 通过像素压缩图片，将修改图片宽高，适合获得缩略图，Used to get thumbnail
+     *
      * @param srcPath
      * @return
      */
@@ -264,7 +260,7 @@ public class ImageUtils {
         //开始读入图片，此时把options.inJustDecodeBounds 设回true了
         newOpts.inJustDecodeBounds = true;
         newOpts.inPreferredConfig = Bitmap.Config.RGB_565;
-        Bitmap bitmap = BitmapFactory.decodeFile(srcPath,newOpts);//此时返回bm为空
+        Bitmap bitmap = BitmapFactory.decodeFile(srcPath, newOpts);//此时返回bm为空
 
         newOpts.inJustDecodeBounds = false;
         int w = newOpts.outWidth;
@@ -290,6 +286,7 @@ public class ImageUtils {
 
     /**
      * 通过大小压缩，将修改图片宽高，适合获得缩略图，Used to get thumbnail
+     *
      * @param image
      * @param pixelW
      * @param pixelH
@@ -298,7 +295,7 @@ public class ImageUtils {
     public static Bitmap compressBitmapByBmp(Bitmap image, float pixelW, float pixelH) {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 100, os);
-        if( os.toByteArray().length / 1024>1024) {//判断如果图片大于1M,进行压缩避免在生成图片（BitmapFactory.decodeStream）时溢出
+        if (os.toByteArray().length / 1024 > 1024) {//判断如果图片大于1M,进行压缩避免在生成图片（BitmapFactory.decodeStream）时溢出
             os.reset();//重置baos即清空baos
             image.compress(Bitmap.CompressFormat.JPEG, 50, os);//这里压缩50%，把压缩后的数据存放到baos中
         }
@@ -335,17 +332,18 @@ public class ImageUtils {
 
     /**
      * 质量压缩
+     *
      * @param image
      * @param maxSize
      */
-    public static Bitmap compressImage(Bitmap image, int maxSize){
+    public static Bitmap compressImage(Bitmap image, int maxSize) {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         // scale
         int options = 80;
         // Store the bitmap into output stream(no compress)
         image.compress(Bitmap.CompressFormat.JPEG, options, os);
         // Compress by loop
-        while ( os.toByteArray().length / 1024 > maxSize) {
+        while (os.toByteArray().length / 1024 > maxSize) {
             // Clean up os
             os.reset();
             // interval 10
@@ -364,6 +362,7 @@ public class ImageUtils {
 
     /**
      * 对图片进行缩放
+     *
      * @param bgimage
      * @param newWidth
      * @param newHeight
@@ -383,7 +382,7 @@ public class ImageUtils {
         float width = bgimage.getWidth();
         float height = bgimage.getHeight();
         //如果宽度为0 保持原图
-        if(newWidth == 0){
+        if (newWidth == 0) {
             newWidth = width;
             newHeight = height;
         }
