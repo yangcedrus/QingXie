@@ -1,6 +1,7 @@
 package whut.qingxie.fragment;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -36,6 +38,7 @@ import whut.qingxie.activity.MyHoursActivity;
 import whut.qingxie.activity.MyMessageActivity;
 import whut.qingxie.activity.MyResumeActivity;
 import whut.qingxie.activity.MyServiceActivity;
+import whut.qingxie.activity.MyWorkActivity;
 import whut.qingxie.common.Content;
 import whut.qingxie.dto.Msg;
 
@@ -53,6 +56,7 @@ public class WorkerMeFragment extends Fragment {
     private RelativeLayout layout4;
     private RelativeLayout layout5;
     private CircleImageView circleImageView;
+    private TextView textView;
 
     private Subscription subsInsert;
 
@@ -73,6 +77,7 @@ public class WorkerMeFragment extends Fragment {
         layout4 = (RelativeLayout) getActivity().findViewById(R.id.worker_me_layout4);
         layout5 = (RelativeLayout) getActivity().findViewById(R.id.worker_me_layout5);
         circleImageView = (CircleImageView) getActivity().findViewById(R.id.worker_me_icon_me);
+        textView=(TextView)getActivity().findViewById(R.id.worker_name_me);
 
         layout1.setOnClickListener(new WorkerMeFragment.MyListener());
         layout2.setOnClickListener(new WorkerMeFragment.MyListener());
@@ -91,11 +96,26 @@ public class WorkerMeFragment extends Fragment {
             }
         });
 
+        //设置头像
+        String img = Content.getIconAccessPath();
+        img = Content.getServerHost() + img;
+        Glide.with(getContext()).load(img).fitCenter().into(circleImageView);
+
+        textView.setText(Content.getNAME());
+        if (Content.getGENDER().equals("M")) {
+            Drawable drawable = getActivity().getResources().getDrawable(R.drawable.ic_man_blue_24dp);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            textView.setCompoundDrawables(null, null, drawable, null);
+        } else {
+            Drawable drawable = getActivity().getResources().getDrawable(R.drawable.ic_woman_pink_24dp);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            textView.setCompoundDrawables(null, null, drawable, null);
+        }
+
     }
 
     /**
      * 获得返回的路径
-     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -119,7 +139,6 @@ public class WorkerMeFragment extends Fragment {
 
     /**
      * 异步方式插入图片
-     *
      * @param data
      */
     private void insertImagesSync(final String data) {
@@ -224,7 +243,7 @@ public class WorkerMeFragment extends Fragment {
                     startActivity(intent);
                     break;
                 case R.id.worker_me_layout5:
-                    intent = new Intent(getActivity(), ManageWorkAvtivity.class);
+                    intent = new Intent(getActivity(), MyWorkActivity.class);
                     startActivity(intent);
                     break;
             }

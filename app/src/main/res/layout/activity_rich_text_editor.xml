@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/ActivityBackGround"
     android:orientation="vertical"
     tools:context="whut.qingxie.activity.RichTextEditorActivity">
 
@@ -11,8 +11,8 @@
         android:id="@+id/toolbar_rich_edit_text"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
-        android:background="@color/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+        android:background="@drawable/toolbar_background"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <EditText
         android:id="@+id/et_new_title"
@@ -21,16 +21,16 @@
         android:layout_marginTop="10dp"
         android:background="@null"
         android:hint="请输入标题"
-        android:textSize="18dp"
+        android:padding="16dp"
         android:textColor="#757575"
-        android:padding="16dp"/>
+        android:textSize="18dp" />
 
     <com.sendtion.xrichtext.RichTextEditor
         android:id="@+id/et_new_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"
-        android:textSize="16dp"
-        android:textColor="#757575"/>
+        android:textColor="#757575"
+        android:textSize="16dp" />
 
 </LinearLayout>

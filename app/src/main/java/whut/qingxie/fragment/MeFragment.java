@@ -90,17 +90,16 @@ public class MeFragment extends Fragment {
 
         //设置头像
         String img = Content.getIconAccessPath();
-        if (!img.contains("emu"))
-            img = Content.getServerHost() + img;
+        img = Content.getServerHost() + img;
         Glide.with(getContext()).load(img).fitCenter().into(circleImageView);
 
         textView.setText(Content.getNAME());
         if (Content.getGENDER().equals("M")) {
-            Drawable drawable = getActivity().getResources().getDrawable(R.drawable.ic_favorite_black_24dp);
+            Drawable drawable = getActivity().getResources().getDrawable(R.drawable.ic_man_blue_24dp);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             textView.setCompoundDrawables(null, null, drawable, null);
         } else {
-            Drawable drawable = getActivity().getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp);
+            Drawable drawable = getActivity().getResources().getDrawable(R.drawable.ic_woman_pink_24dp);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             textView.setCompoundDrawables(null, null, drawable, null);
         }
@@ -138,7 +137,6 @@ public class MeFragment extends Fragment {
 
     /**
      * 上传图片
-     *
      * @param imagePath
      */
     private void upload_icon(String imagePath) {

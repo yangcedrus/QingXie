@@ -27,7 +27,6 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import okhttp3.Call;
@@ -45,9 +44,9 @@ import static android.content.ContentValues.TAG;
 /**
  * 主页页面
  */
-public class HomeFragment extends Fragment implements ViewPager.OnPageChangeListener{
+public class HomeFragment extends Fragment implements ViewPager.OnPageChangeListener {
     private static List<VolActivityInfo> cardActivityItems = new ArrayList<>();
-    private static List<String> pictureURLS=new ArrayList<>();
+    private static List<String> pictureURLS = new ArrayList<>();
 
     private static int totalPage = Integer.MAX_VALUE; //页总数
     private static int page = 1;    //当前页
@@ -61,24 +60,24 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     private static View headerView;
 
     //存放图片组,文字组
-    private static int picNum=4;
+    private static int picNum = 4;
     private ViewPager vp;
     private LinearLayout point;
     private ArrayList<ImageView> imageViews;
     private ArrayList<String> strings;
     private TextView textView;
     private int lastPosition;
-    private boolean isRunning=false;// 是否自动轮询
+    private boolean isRunning = false;// 是否自动轮询
 
     @SuppressLint("HandlerLeak")
-    public static Handler eHandler=new Handler(){
-        public void handleMessage(Message message){
+    public static Handler eHandler = new Handler() {
+        public void handleMessage(Message message) {
             super.handleMessage(message);
             try {
                 Msg msg = Msg.parseMapFromJson(message.obj, Content.getClazzMap());
 
             } catch (ClassNotFoundException e) {
-                Log.e(TAG, "handleMessage: "+e.getMessage());
+                Log.e(TAG, "handleMessage: " + e.getMessage());
             }
         }
     };
@@ -86,9 +85,9 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view=inflater.inflate(R.layout.fragment_home,container,false);
+        view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        smartRefreshLayout=(SmartRefreshLayout) view.findViewById(R.id.home_refresh);
+        smartRefreshLayout = (SmartRefreshLayout) view.findViewById(R.id.home_refresh);
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -111,11 +110,11 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        recyclerView=(RecyclerView) view.findViewById(R.id.activity_card_recyclerView);
-        linearLayoutManager =new LinearLayoutManager(getActivity());
+        recyclerView = (RecyclerView) view.findViewById(R.id.activity_card_recyclerView);
+        linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter=new CardActivityItemAdapter(cardActivityItems);
-        headerView=LayoutInflater.from(getActivity()).inflate(R.layout.item_home_header,recyclerView,false);
+        adapter = new CardActivityItemAdapter(cardActivityItems, getContext());
+        headerView = LayoutInflater.from(getActivity()).inflate(R.layout.item_home_header, recyclerView, false);
         adapter.setHeaderView(headerView);
         recyclerView.setAdapter(adapter);
 
@@ -131,7 +130,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     }
 
     //刷新页面
-    public static void reFresh(){
+    public static void reFresh() {
         adapter.notifyDataSetChanged();
     }
 
@@ -143,7 +142,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
             @Override
             public void onFailure(Call call, Exception e) {
                 //FIXME:还有404等，不全是超时
-                Toast.makeText(getContext(),"连接超时，请检查网络连接",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "连接超时，请检查网络连接", Toast.LENGTH_LONG).show();
                 Log.e("HomeFragment", "onFailure: " + e.getMessage());
                 //结束刷新
                 smartRefreshLayout.finishRefresh();
@@ -151,7 +150,15 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
 
             @Override
             public void onResponse(Msg response) {
-                PageInfo<VolActivityInfo> pageInfo=PageInfo.parseFromJson((JSONObject) response.getData().get("PageInfo"),VolActivityInfo.class);
+                PageInfo<VolActivityInfo> pageInfo;
+                try {
+                    pageInfo = PageInfo.parseFromJson((JSONObject) response.getData().get("PageInfo"), VolActivityInfo.class);
+                } catch (Exception e) {
+                    //解析失败处理
+                    Log.d(TAG, "onResponse: " + e.getMessage());
+                    Toast.makeText(getActivity(), "读取信息错误，请稍后重试", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 totalPage = pageInfo.getPages();
 
@@ -164,13 +171,13 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         });
     }
 
-    private void getMoreActivity(){
+    private void getMoreActivity() {
         OkhttpUtil.accessData("GET", "/activity/home?page=" + page++ + "&size=" + SIZE, null, null, new CallBackUtil.CallBackMsg() {
 
             @Override
             public void onFailure(Call call, Exception e) {
                 //FIXME:还有404等，不全是超时
-                Toast.makeText(getContext(),"连接超时，请检查网络连接",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "连接超时，请检查网络连接", Toast.LENGTH_LONG).show();
                 Log.e("HomeFragment", "onFailure: " + e.getMessage());
                 //结束刷新
                 smartRefreshLayout.finishLoadmore();
@@ -178,13 +185,20 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
 
             @Override
             public void onResponse(Msg response) {
-                PageInfo<VolActivityInfo> pageInfo=PageInfo.parseFromJson((JSONObject) response.getData().get("PageInfo"),VolActivityInfo.class);
-
+                PageInfo<VolActivityInfo> pageInfo;
+                try {
+                    pageInfo = PageInfo.parseFromJson((JSONObject) response.getData().get("PageInfo"), VolActivityInfo.class);
+                } catch (Exception e) {
+                    //解析失败处理
+                    Log.d(TAG, "onResponse: " + e.getMessage());
+                    Toast.makeText(getActivity(), "读取信息错误，请稍后重试", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 totalPage = pageInfo.getPages();
 
                 cardActivityItems.addAll(pageInfo.getList());
                 //结束加载更多
-                if (page < totalPage)
+                if (page <= totalPage)
                     smartRefreshLayout.finishLoadmore();
                 else
                     smartRefreshLayout.finishLoadmoreWithNoMoreData();
@@ -194,15 +208,15 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     }
 
     //请求首页图片信息
-    public static void requestForPicturesURLS(){
+    public static void requestForPicturesURLS() {
 
     }
 
     //初始化视图
-    private void initViews(){
-        point=(LinearLayout)headerView.findViewById(R.id.home_viewPager_point);
-        vp=(ViewPager)headerView.findViewById(R.id.home_viewPager);
-        textView=(TextView)headerView.findViewById(R.id.home_viewPager_textView);
+    private void initViews() {
+        point = (LinearLayout) headerView.findViewById(R.id.home_viewPager_point);
+        vp = (ViewPager) headerView.findViewById(R.id.home_viewPager);
+        textView = (TextView) headerView.findViewById(R.id.home_viewPager_textView);
 //        //触摸屏幕停止轮询，有bug
 //        vp.setOnTouchListener(new View.OnTouchListener() {
 //            @Override
@@ -218,49 +232,49 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     }
 
     //初始化数据
-    private void initData(){
-        imageViews=new ArrayList<>();
-        strings=new ArrayList<>();
+    private void initData() {
+        imageViews = new ArrayList<>();
+        strings = new ArrayList<>();
         ImageView imageView;
         String s;
         View pointView;
-        for(int i=0;i<picNum;i++){
-            imageView=new ImageView(getContext());
-            if(i%2==0){
+        for (int i = 0; i < picNum; i++) {
+            imageView = new ImageView(getContext());
+            if (i % 2 == 0) {
                 //Glide.with(this).load(pictureURLS.get(i)).centerCrop().into(imageView);
                 //消除判断
                 imageView.setImageResource(R.drawable.ic_home_black_24dp);
-                s="概况1";
-            } else{
+                s = "概况1";
+            } else {
                 imageView.setImageResource(R.drawable.ic_detail_black_24dp);
-                s="概况2";
+                s = "概况2";
             }
             imageViews.add(imageView);
             strings.add(s);
 
             //加点
-            pointView=new View(getContext());
-            pointView.setBackgroundResource(R.drawable.point_selector);
-            LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(8,8);
-            if(i!=0){
-                layoutParams.leftMargin=10;
+            pointView = new View(getContext());
+            pointView.setBackgroundResource(R.drawable.selector_point);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(8, 8);
+            if (i != 0) {
+                layoutParams.leftMargin = 10;
             }
             pointView.setEnabled(false);
-            point.addView(pointView,layoutParams);
+            point.addView(pointView, layoutParams);
         }
     }
 
     //初始化适配器
-    private void initAdapter(){
+    private void initAdapter() {
         point.getChildAt(0).setEnabled(true);
         textView.setText(strings.get(0));
-        lastPosition=0;
+        lastPosition = 0;
         vp.setAdapter(new MyPagerAdapter());
-        vp.setCurrentItem(picNum*1000);   //防止访问到边界崩溃
+        vp.setCurrentItem(picNum * 1000);   //防止访问到边界崩溃
     }
 
     //自定义适配器
-    class MyPagerAdapter extends PagerAdapter{
+    class MyPagerAdapter extends PagerAdapter {
 
         //返回总条数，设置为最大整数
         @Override
@@ -270,13 +284,13 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
 
         @Override
         public boolean isViewFromObject(View view, Object object) {
-            return view==object;
+            return view == object;
         }
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            int newPosition =position%picNum;//   共有3张图片
-            if(imageViews.get(newPosition).getParent()!=null){
+            int newPosition = position % picNum;//   共有3张图片
+            if (imageViews.get(newPosition).getParent() != null) {
                 container.removeView(imageViews.get(newPosition));
             }
             container.addView(imageViews.get(newPosition));
@@ -285,7 +299,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            int newPosition =position%picNum;//   共有3张图片
+            int newPosition = position % picNum;//   共有3张图片
             container.removeView(imageViews.get(newPosition));
         }
     }
@@ -299,11 +313,11 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     //新的页面被选中
     @Override
     public void onPageSelected(int position) {
-        int newPosition=position%picNum;
+        int newPosition = position % picNum;
         textView.setText(strings.get(newPosition));
         point.getChildAt(lastPosition).setEnabled(false);
         point.getChildAt(newPosition).setEnabled(true);
-        lastPosition=newPosition;
+        lastPosition = newPosition;
     }
 
     //页面滑动状态改变
@@ -318,22 +332,22 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         super.onStart();
 
         //开始轮询
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
-                isRunning=true;
+                isRunning = true;
                 //防止切换Activity时出错
-                Activity activity=getActivity();
-                while(isRunning){
+                Activity activity = getActivity();
+                while (isRunning) {
                     try {
                         Thread.sleep(3000);
-                    }catch (InterruptedException e){
+                    } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            vp.setCurrentItem(vp.getCurrentItem()+1);
+                            vp.setCurrentItem(vp.getCurrentItem() + 1);
                         }
                     });
                 }
@@ -345,13 +359,13 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     @Override
     public void onPause() {
         super.onPause();
-        isRunning=false;
+        isRunning = false;
     }
 
     //界面销毁停止轮询
     @Override
     public void onDestroy() {
         super.onDestroy();
-        isRunning=false;
+        isRunning = false;
     }
 }

@@ -3,14 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="whut.qingxie.activity.MyServiceActivity"
-    android:orientation="vertical">
+    android:background="@color/ActivityBackGround"
+    android:orientation="vertical"
+    tools:context="whut.qingxie.activity.MyServiceActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_my_service"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/toolbar_background"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <TextView
@@ -28,7 +29,7 @@
 
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/service_recyclerView"

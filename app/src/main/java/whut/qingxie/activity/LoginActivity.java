@@ -17,8 +17,6 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
-import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,7 +31,6 @@ import whut.qingxie.network.OkhttpUtil;
 
 /**
  * 用户登录页面
- * FIXME:首要！参考一下别人的本地账户管理的实现
  */
 public class LoginActivity extends AppCompatActivity {
     private int state;
@@ -51,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //显示返回按钮
-        setSupportActionBar(toolbar);
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -61,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //点击登录，登录成功返回信息给上个活动
-                // TODO: 2018/1/9 读取数据库信息
                 TextView textView=(TextView)findViewById(R.id.text_name);
                 TextView textView1=(TextView)findViewById(R.id.text_psw); 
                 String name=textView.getText().toString();
@@ -105,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
         Pattern p = Pattern.compile("[0-9]*");
         Matcher m = p.matcher(name);
 
-        String json = null;
+        String json;
         HashMap<String, String> headerMap = new HashMap<>();
         headerMap.put("content-type", "application/json;charset=UTF-8");
         headerMap.put("user-agent", "android");
@@ -153,7 +148,6 @@ public class LoginActivity extends AppCompatActivity {
 
             int flag=-1;
             switch (user.getFlag()){
-                // TODO: 2018/4/8 S既是学生也是游客，强制下线功能（如果有）无法判断 
                 case "S":flag=0;break;
                 case "Q":flag=1;break;
                 case "A":flag=2;break;
@@ -187,7 +181,7 @@ public class LoginActivity extends AppCompatActivity {
     //显示“帮助”菜单按钮
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar,menu);
+        getMenuInflater().inflate(R.menu.black_help_toolbar,menu);
         return true;
     }
 

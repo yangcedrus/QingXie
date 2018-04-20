@@ -72,17 +72,17 @@ public class MainActivity extends AppCompatActivity {
 
         switch (state){
             case STUDENT:
-                bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_favorite_border_black_24dp);
+                bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_favorite_black_24dp);
                 bottomNavigationView.getMenu().getItem(2).setTitle("收藏");
                 break;
             case WORKER:
-                bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_group_black_24dp);
+                bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_work_black_24dp);
                 bottomNavigationView.getMenu().getItem(2).setTitle("工作");
                 break;
             case ADMIN:
-                bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_group_black_24dp);
+                bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_work_black_24dp);
                 bottomNavigationView.getMenu().getItem(2).setTitle("工作");
-                bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.ic_detail_black_24dp);
+                bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.ic_operation_histroy_black_24dp);
                 bottomNavigationView.getMenu().getItem(1).setTitle("操作历史");
                 break;
             default:break;
@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar,menu);
+        getMenuInflater().inflate(R.menu.main_toolbar,menu);
         return true;
     }
 
@@ -221,7 +221,6 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode){
             case PhotoPicker.REQUEST_CODE:
                 FragmentManager manager=getSupportFragmentManager();
-                // TODO: 2018/3/30 fragment定位
                 Fragment fragment=manager.findFragmentByTag("me_fragment");
                 if(fragment==null){
                     fragment=manager.findFragmentByTag("worker_me_fragment");

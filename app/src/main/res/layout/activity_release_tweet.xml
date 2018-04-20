@@ -3,21 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/ActivityBackGround"
     tools:context="whut.qingxie.activity.ReleaseTweetActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_release_tweet"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/toolbar_background"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="20sp"
-            android:text="发布推文" />
+            android:text="发布推文"
+            android:textSize="20sp" />
     </android.support.v7.widget.Toolbar>
 
     <EditText
@@ -26,14 +27,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/toolbar_release_tweet"
-        android:layout_marginTop="40dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:layout_marginTop="40dp"
         android:background="@android:drawable/edit_text"
         android:enabled="true"
-        android:singleLine="true"
         android:hint="请输入标题"
-        android:textSize="30dp"/>
+        android:singleLine="true"
+        android:textSize="30dp" />
 
     <EditText
         android:id="@+id/release_tweet_edit"
@@ -41,17 +42,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@id/release_tweet_title"
-        android:background="@android:drawable/edit_text"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:background="@android:drawable/edit_text"
         android:enabled="true"
         android:gravity="top"
+        android:hint="请输入推文内容"
         android:inputType="textMultiLine"
         android:maxLines="30"
         android:minLines="20"
-        android:hint="请输入推文内容"
-        android:textSize="15dp"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"
+        android:textSize="15dp" />
 
     <LinearLayout
         android:id="@+id/release_linearlayout1"
@@ -67,28 +68,28 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/ic_home_black_24dp"/>
+            android:background="@drawable/ic_home_black_24dp" />
 
         <Button
             android:id="@+id/release_tweet_button2"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/ic_home_black_24dp"/>
+            android:background="@drawable/ic_home_black_24dp" />
 
         <Button
             android:id="@+id/release_tweet_button3"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/ic_home_black_24dp"/>
+            android:background="@drawable/ic_home_black_24dp" />
 
         <Button
             android:id="@+id/release_tweet_button4"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/ic_home_black_24dp"/>
+            android:background="@drawable/ic_home_black_24dp" />
 
     </LinearLayout>
 
@@ -98,8 +99,8 @@
         android:layout_height="40dp"
         android:layout_alignEnd="@+id/release_linearlayout1"
         android:layout_below="@+id/release_linearlayout1"
-        android:layout_marginTop="10dp"
         android:layout_gravity="right"
+        android:layout_marginTop="10dp"
         android:background="@drawable/shape_blue"
         android:text="发送"
         android:textSize="14dp" />

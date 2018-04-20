@@ -11,7 +11,6 @@ import android.view.MenuItem;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
@@ -20,7 +19,6 @@ import java.util.List;
 import whut.qingxie.Item.MyHoursItem;
 import whut.qingxie.R;
 import whut.qingxie.adapter.MyHoursItemAdapter;
-import whut.qingxie.entity.activity.VolActivityInfo;
 
 /**
  * WorkerMeFragment，MeFragment第四个item
@@ -43,7 +41,6 @@ public class MyHoursActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //显示返回按钮
-        setSupportActionBar(toolbar);
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -64,20 +61,6 @@ public class MyHoursActivity extends AppCompatActivity {
                 smartRefreshLayout.finishRefresh();
             }
         });
-        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-                for(int i=0;i<5;i++){
-                    myHoursItems.add(new MyHoursItem("2018/1/1","敬老院活动",4,false));
-                }
-                //结束加载更多
-                if(myHoursItems.size()<10)
-                    smartRefreshLayout.finishLoadmore();
-                else
-                    smartRefreshLayout.finishLoadmoreWithNoMoreData();
-                reFresh();
-            }
-        });
 
         if(myHoursItems.size()==0)
             init();
@@ -90,7 +73,7 @@ public class MyHoursActivity extends AppCompatActivity {
     //显示“反馈”菜单按钮
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar,menu);
+        getMenuInflater().inflate(R.menu.white_help_toolbar,menu);
         return true;
     }
 
@@ -110,9 +93,8 @@ public class MyHoursActivity extends AppCompatActivity {
     }
 
     private void init(){
-        int num=myHoursItems.size()==0?5:myHoursItems.size();
         myHoursItems.clear();
-        for (int i = 0; i < num; i++) {
+        for (int i = 0; i < 10; i++) {
             myHoursItems.add(new MyHoursItem("2018/1/1","敬老院活动",4,true));
         }
         smartRefreshLayout.resetNoMoreData();

@@ -101,16 +101,15 @@ public class ServiceItemAdapter extends RecyclerView.Adapter<ServiceItemAdapter.
             num = (TextView) view.findViewById(R.id.service_num);
             info = (TextView) view.findViewById(R.id.service_info);
             status = (TextView) view.findViewById(R.id.service_status);
-            drawable0 = view.getResources().getDrawable(R.drawable.ic_detail_black_24dp);
-            drawable1 = view.getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp);
-            drawable2 = view.getResources().getDrawable(R.drawable.ic_check_black_24dp);
-            drawable3 = view.getResources().getDrawable(R.drawable.ic_close_black_24dp);
+            drawable0 = view.getResources().getDrawable(R.drawable.ic_signning_up_yellow_24dp);
+            drawable1 = view.getResources().getDrawable(R.drawable.ic_metting_green_24dp);
+            drawable2 = view.getResources().getDrawable(R.drawable.ic_running_blue_24dp);
+            drawable3 = view.getResources().getDrawable(R.drawable.ic_finish_green_24dp);
 
             drawable0.setBounds(0, 0, drawable0.getMinimumWidth(), drawable0.getMinimumHeight());
             drawable1.setBounds(0, 0, drawable1.getMinimumWidth(), drawable1.getMinimumHeight());
             drawable2.setBounds(0, 0, drawable2.getMinimumWidth(), drawable2.getMinimumHeight());
             drawable3.setBounds(0, 0, drawable3.getMinimumWidth(), drawable3.getMinimumHeight());
-
         }
     }
 }

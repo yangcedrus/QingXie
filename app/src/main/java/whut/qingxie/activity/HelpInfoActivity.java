@@ -17,6 +17,7 @@ public class HelpInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help_info);
+
         //显示返回按钮
         Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar_help);
         toolbar.setTitle("");

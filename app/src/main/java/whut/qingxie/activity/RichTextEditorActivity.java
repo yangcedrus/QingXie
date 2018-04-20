@@ -15,14 +15,21 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.sendtion.xrichtext.RichTextEditor;
 import com.sendtion.xrichtext.SDCardUtil;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import me.iwf.photopicker.PhotoPicker;
+import okhttp3.Call;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -30,6 +37,10 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import whut.qingxie.R;
+import whut.qingxie.common.Content;
+import whut.qingxie.dto.Msg;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * 富文本编写类
@@ -37,14 +48,11 @@ import whut.qingxie.R;
  * WorkerWorkFragment第一个item
  */
 public class RichTextEditorActivity extends AppCompatActivity {
-    private Boolean isSaved=false;
-    private String rich_text;
 
     private RichTextEditor et_new_content;
     private EditText et_new_title;
 
-    private ProgressDialog loadingDialog;
-    private ProgressDialog insertDialog;
+    private List<String> imagePathList=new ArrayList<>();
 
     private Subscription subsLoading;
     private Subscription subsInsert;
@@ -57,13 +65,8 @@ public class RichTextEditorActivity extends AppCompatActivity {
         et_new_title=(EditText)findViewById(R.id.et_new_title);
         et_new_content=(RichTextEditor)findViewById(R.id.et_new_content);
 
-        insertDialog = new ProgressDialog(this);
-        insertDialog.setMessage("正在插入图片...");
-        insertDialog.setCanceledOnTouchOutside(false);
-
-        loadingDialog = new ProgressDialog(this);
-        loadingDialog.setMessage("图片解析中...");
-        loadingDialog.setCanceledOnTouchOutside(false);
+        Intent intent=getIntent();
+        et_new_title.setText(intent.getStringExtra("release_work_title"));
 
         //显示返回按钮
         Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar_rich_edit_text);
@@ -93,30 +96,17 @@ public class RichTextEditorActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.action_new_save:{
-                rich_text=getEditData();
-                isSaved=true;
-                Toast.makeText(RichTextEditorActivity.this, "点击了保存按钮", Toast.LENGTH_SHORT).show();
-                break;
-            }
             case R.id.action_insert_image:{
                 //第三方加载
                 PhotoPicker.builder()
-                        .setPhotoCount(9)
+                        .setPhotoCount(1)
                         .setShowCamera(false)
                         .setPreviewEnabled(false)
                         .start(this);
                 break;
             }
             case android.R.id.home:{
-                Intent intent=new Intent();
-                if(isSaved){
-                    intent.putExtra("rich_text_return",rich_text);
-                    setResult(RESULT_OK,intent);
-                    finish();
-                }else {
-                    showDialog();
-                }
+                showDialog();
                 break;
             }
         }
@@ -140,7 +130,7 @@ public class RichTextEditorActivity extends AppCompatActivity {
 
                     ArrayList<String> photos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
                     for(String s:photos){
-                        Log.d("1111111111111111111:", s);
+                        Log.d("photoPath:", s);
                     }
                 }
             }
@@ -159,9 +149,9 @@ public class RichTextEditorActivity extends AppCompatActivity {
                 try{
                     et_new_content.measure(0, 0);
                     ArrayList<String> photos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
-                    //可以同时插入多张图片
                     for (String imagePath : photos) {
                         //压缩图片
+                        upload_image(imagePath);
                         subscriber.onNext(imagePath);
                     }
                     subscriber.onCompleted();
@@ -177,13 +167,12 @@ public class RichTextEditorActivity extends AppCompatActivity {
                 .subscribe(new Observer<String>() {
                     @Override
                     public void onCompleted() {
-                        insertDialog.dismiss();
                         et_new_content.addEditTextAtIndex(et_new_content.getLastIndex(), "");
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        insertDialog.dismiss();
+
                     }
 
                     @Override
@@ -195,16 +184,17 @@ public class RichTextEditorActivity extends AppCompatActivity {
 
     /**
      * 获取richeditor中的字符串
-     * @return
+     * @return richeditor中的字符串
      */
     private String getEditData() {
+        int flag=0;
         List<RichTextEditor.EditData> editList = et_new_content.buildEditData();
         StringBuffer content = new StringBuffer();
         for (RichTextEditor.EditData itemData : editList) {
             if (itemData.inputStr != null) {
                 content.append(itemData.inputStr);
             } else if (itemData.imagePath != null) {
-                content.append("<img src=\"").append(itemData.imagePath).append("\"/>");
+                content.append("<img src=\"").append(Content.getServerHost()+imagePathList.get(flag++)).append("\"/>");
             }
         }
         return content.toString();
@@ -215,14 +205,7 @@ public class RichTextEditorActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
-        Intent intent=new Intent();
-        if(isSaved){
-            intent.putExtra("rich_text_return",rich_text);
-            setResult(RESULT_OK,intent);
-            finish();
-        }else {
-            showDialog();
-        }
+        showDialog();
     }
 
     /**
@@ -230,7 +213,7 @@ public class RichTextEditorActivity extends AppCompatActivity {
      */
     private void showDialog(){
         AlertDialog dialog = new AlertDialog.Builder(this)
-                .setIcon(R.drawable.ic_home_black_24dp)//设置标题的图片
+                .setIcon(R.drawable.ic_exit_black_24dp)//设置标题的图片
                 .setTitle("退出")//设置对话框的标题
                 .setMessage("是否要保存内容")//设置对话框的内容
                 //设置对话框的按钮
@@ -254,5 +237,46 @@ public class RichTextEditorActivity extends AppCompatActivity {
                     }
                 }).create();
         dialog.show();
+    }
+
+    /**
+     * 上传图片
+     * @param imagePath
+     */
+    private void upload_image(String imagePath) {
+        File file = new File(imagePath);
+
+        if (!file.exists())
+            return;
+        HashMap<String, String> headerMap = new HashMap<>();
+        headerMap.put("content-type", "multipart/form-data; boundary=" + UUID.randomUUID().toString());
+        headerMap.put("connection", "keep-alive");
+        headerMap.put("user-agent", "android");
+
+        //FIXME 原本Okhttputil无法完成
+        OkHttpUtils.post()//
+                .addFile("pic", file.getName(), file)
+                .url(Content.getServerHost() + "/activity/" + Content.getUserId() + "/pic/add")
+                .headers(headerMap)
+                .build()//
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Toast.makeText(RichTextEditorActivity.this, "连接超时，请检查网络连接", Toast.LENGTH_LONG).show();
+                        Log.d(TAG, "onFailure: " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        Gson gson = new Gson();
+                        Msg msg = gson.fromJson(response, Msg.class);
+                        if (msg.getStatus().equals("error")) {
+                            Toast.makeText(RichTextEditorActivity.this, "图片上传失败", Toast.LENGTH_LONG).show();
+                        } else {
+                            String image = (String) msg.getData().get("picAccessPath");
+                            imagePathList.add(image);
+                        }
+                    }
+                });
     }
 }

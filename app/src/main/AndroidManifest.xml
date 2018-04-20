@@ -30,10 +30,8 @@
         <activity android:name=".activity.MyServiceActivity" />
         <activity android:name=".activity.MyResumeActivity" />
         <activity android:name=".activity.MyMessageActivity" />
-        <activity android:name=".activity.MyInfoActivity" />
         <activity android:name=".activity.ReleaseWorkActivity" />
         <activity android:name=".activity.ReleaseTweetActivity" />
-        <activity android:name=".activity.ManageWorkTimeActivity" />
         <activity android:name=".activity.ManageWorkAvtivity" />
         <activity android:name=".activity.ReleaseNoticeActivity" />
         <activity android:name=".activity.ManageWorkerAccountActivity" />
@@ -49,7 +47,8 @@
         <activity
             android:name="me.iwf.photopicker.PhotoPagerActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.MyWorkActivity"></activity>
+        <activity android:name=".activity.MyWorkActivity" />
+        <activity android:name=".activity.VolunteerSignActivity"/>
     </application>
 
 </manifest>

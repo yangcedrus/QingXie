@@ -4,8 +4,8 @@
 
     <item
         android:id="@+id/settings"
-        android:icon="@drawable/ic_settings_black_24dp"
-        android:title="Settings"
-        app:showAsAction="always" />
+        android:icon="@drawable/ic_help_white_24dp"
+        app:showAsAction="always"
+        android:title="帮助" />
 
 </menu>

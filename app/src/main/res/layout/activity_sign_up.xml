@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ActivityBackGround"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_sign_up"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/toolbar_background"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="20sp"
-            android:text="活动报名" />
+            android:text="活动报名"
+            android:textSize="20sp" />
     </android.support.v7.widget.Toolbar>
 
     <ScrollView
@@ -32,18 +34,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
                 android:text="武汉理工大学管理学院"
-                android:textSize="20dp"/>
+                android:textSize="20dp" />
 
             <com.sendtion.xrichtext.RichTextView
                 android:id="@+id/sign_up_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/sign_up_info"
-                android:textSize="16dp"
-                android:textColor="#616161"/>
+                android:textColor="#616161"
+                android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/textView"
@@ -51,8 +53,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@id/sign_up_info"
                 android:layout_below="@id/sign_up_description"
-                android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
                 android:text="已报名：" />
 
             <TextView
@@ -67,8 +69,8 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toStartOf="@id/textView_people_needed"
                 android:layout_alignTop="@id/textView_people_needed"
+                android:layout_toStartOf="@id/textView_people_needed"
                 android:text="共需要：" />
 
             <TextView
@@ -84,9 +86,9 @@
                 android:id="@+id/sign_up_confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
+                android:layout_below="@id/textView"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
-                android:layout_below="@id/textView"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/shape_blue"
                 android:text="点此快速报名" />

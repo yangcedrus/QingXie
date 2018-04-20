@@ -1,6 +1,7 @@
 package whut.qingxie.fragment;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -33,6 +35,7 @@ import rx.schedulers.Schedulers;
 import whut.qingxie.R;
 import whut.qingxie.activity.ManageWorkerAccountActivity;
 import whut.qingxie.activity.ReleaseNoticeActivity;
+import whut.qingxie.activity.RichTextEditorActivity;
 import whut.qingxie.common.Content;
 import whut.qingxie.dto.Msg;
 
@@ -49,6 +52,7 @@ public class AdministratorFragment extends Fragment {
     private RelativeLayout layout3;
 
     private CircleImageView circleImageView;
+    private TextView textView;
 
     private Subscription subsInsert;
 
@@ -67,6 +71,7 @@ public class AdministratorFragment extends Fragment {
         layout2 = (RelativeLayout) getActivity().findViewById(R.id.admin_layout2);
         layout3 = (RelativeLayout) getActivity().findViewById(R.id.admin_layout3);
         circleImageView = (CircleImageView) getActivity().findViewById(R.id.admin_icon_me);
+        textView = (TextView) getActivity().findViewById(R.id.admin_name_me);
 
         layout1.setOnClickListener(new AdministratorFragment.MyListener());
         layout2.setOnClickListener(new AdministratorFragment.MyListener());
@@ -82,6 +87,22 @@ public class AdministratorFragment extends Fragment {
                         .start(getActivity());
             }
         });
+
+        //设置头像
+        String img = Content.getIconAccessPath();
+        img = Content.getServerHost() + img;
+        Glide.with(getContext()).load(img).fitCenter().into(circleImageView);
+
+        textView.setText(Content.getNAME());
+        if (Content.getGENDER().equals("M")) {
+            Drawable drawable = getActivity().getResources().getDrawable(R.drawable.ic_man_blue_24dp);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            textView.setCompoundDrawables(null, null, drawable, null);
+        } else {
+            Drawable drawable = getActivity().getResources().getDrawable(R.drawable.ic_woman_pink_24dp);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            textView.setCompoundDrawables(null, null, drawable, null);
+        }
     }
 
     /**
@@ -204,7 +225,7 @@ public class AdministratorFragment extends Fragment {
                     startActivity(intent);
                     break;
                 case R.id.admin_layout3:
-                    intent = new Intent(getActivity(), ReleaseNoticeActivity.class);
+                    intent = new Intent(getActivity(), RichTextEditorActivity.class);
                     startActivity(intent);
                     break;
             }
