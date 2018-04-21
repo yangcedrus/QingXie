@@ -72,18 +72,23 @@ public class MainActivity extends AppCompatActivity {
 
         switch (state){
             case STUDENT:
+                bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.ic_me_black_24dp);
+                bottomNavigationView.getMenu().getItem(1).setTitle("我");
                 bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_favorite_black_24dp);
                 bottomNavigationView.getMenu().getItem(2).setTitle("收藏");
                 break;
             case WORKER:
+                bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.ic_me_black_24dp);
+                bottomNavigationView.getMenu().getItem(1).setTitle("我");
                 bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_work_black_24dp);
                 bottomNavigationView.getMenu().getItem(2).setTitle("工作");
                 break;
             case ADMIN:
-                bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_work_black_24dp);
-                bottomNavigationView.getMenu().getItem(2).setTitle("工作");
                 bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.ic_operation_histroy_black_24dp);
                 bottomNavigationView.getMenu().getItem(1).setTitle("操作历史");
+                bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_work_black_24dp);
+                bottomNavigationView.getMenu().getItem(2).setTitle("工作");
+
                 break;
             default:break;
         }

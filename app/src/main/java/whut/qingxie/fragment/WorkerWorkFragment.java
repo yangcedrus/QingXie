@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import whut.qingxie.R;
 import whut.qingxie.activity.ManageVolunteerActivity;
@@ -22,6 +23,7 @@ public class WorkerWorkFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        ((TextView)getActivity().findViewById(R.id.toolbar_app_name)).setText("我的工作");
         return inflater.inflate(R.layout.fragment_worker_work, container, false);
     }
 
@@ -50,6 +52,7 @@ public class WorkerWorkFragment extends Fragment {
             switch (v.getId()) {
                 case R.id.worker_me_layout5:
                     intent = new Intent(getActivity(), RichTextEditorActivity.class);
+                    intent.putExtra("title","推文编辑");
                     startActivity(intent);
                     break;
                 case R.id.worker_me_layout7:

@@ -1,6 +1,7 @@
 package whut.qingxie.activity;
 
 import android.app.ProgressDialog;
+import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,11 +9,15 @@ import android.graphics.BitmapFactory;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -67,10 +72,17 @@ public class RichTextEditorActivity extends AppCompatActivity {
 
         Intent intent=getIntent();
         et_new_title.setText(intent.getStringExtra("release_work_title"));
+        String title=intent.getStringExtra("title");
 
+        Button button=(Button)findViewById(R.id.editor_send);
+        if(title!=null&&title.equals("推文编辑")) {
+            button.setVisibility(View.VISIBLE);
+        }
+
+        ((TextView)findViewById(R.id.editor_title)).setText(title);
         //显示返回按钮
         Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar_rich_edit_text);
-        toolbar.setTitle("编辑");
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

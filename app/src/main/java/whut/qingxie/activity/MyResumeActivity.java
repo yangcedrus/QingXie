@@ -202,11 +202,11 @@ public class MyResumeActivity extends AppCompatActivity {
         }
         tx_name.setText(Content.getNAME());
         if (Content.getGENDER().equals("M")) {
-            Drawable drawable = getResources().getDrawable(R.drawable.ic_favorite_black_24dp);
+            Drawable drawable = getResources().getDrawable(R.drawable.ic_man_blue_24dp);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             tx_name.setCompoundDrawables(null, null, drawable, null);
         } else {
-            Drawable drawable = getResources().getDrawable(R.drawable.ic_favorite_border_black_24dp);
+            Drawable drawable = getResources().getDrawable(R.drawable.ic_woman_pink_24dp);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             tx_name.setCompoundDrawables(null, null, drawable, null);
         }

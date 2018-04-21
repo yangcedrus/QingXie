@@ -121,6 +121,7 @@ public class ReleaseWorkActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ReleaseWorkActivity.this, RichTextEditorActivity.class);
                 intent.putExtra("release_work_title", title.getText().toString());
+                intent.putExtra("title","活动详情");
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });

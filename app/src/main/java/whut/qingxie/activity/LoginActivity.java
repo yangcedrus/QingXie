@@ -181,7 +181,7 @@ public class LoginActivity extends AppCompatActivity {
     //显示“帮助”菜单按钮
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.black_help_toolbar,menu);
+        getMenuInflater().inflate(R.menu.white_help_toolbar,menu);
         return true;
     }
 

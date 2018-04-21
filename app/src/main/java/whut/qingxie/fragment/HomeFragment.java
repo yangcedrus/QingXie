@@ -85,6 +85,8 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        ((TextView)getActivity().findViewById(R.id.toolbar_app_name)).setText(R.string.app_name);
+
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         smartRefreshLayout = (SmartRefreshLayout) view.findViewById(R.id.home_refresh);
@@ -242,11 +244,8 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
             imageView = new ImageView(getContext());
             if (i % 2 == 0) {
                 //Glide.with(this).load(pictureURLS.get(i)).centerCrop().into(imageView);
-                //消除判断
-                imageView.setImageResource(R.drawable.ic_home_black_24dp);
                 s = "概况1";
             } else {
-                imageView.setImageResource(R.drawable.ic_detail_black_24dp);
                 s = "概况2";
             }
             imageViews.add(imageView);

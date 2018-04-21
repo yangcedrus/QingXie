@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
         android:layout_alignParentStart="true"
-        android:background="#00000000"
-        android:theme="@style/login_toolbar_theme">
+        android:background="@drawable/toolbar_background"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <TextView
             android:layout_width="wrap_content"
@@ -19,9 +19,26 @@
             android:textSize="20sp" />
     </android.support.v7.widget.Toolbar>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:gravity="center_vertical"
+        android:layout_below="@+id/toolbar_login"
+        android:background="@drawable/toolbar_background">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/app_name"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/login_app_name" />
+
+    </RelativeLayout>
+
     <EditText
         android:id="@+id/text_name"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
@@ -35,7 +52,7 @@
 
     <EditText
         android:id="@+id/text_psw"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/text_name"
         android:layout_below="@+id/text_name"
@@ -47,13 +64,7 @@
         android:singleLine="true"
         android:textSize="@dimen/text_size" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp"
-        android:text="@string/app_name"
-        android:textSize="@dimen/login_app_name" />
+
 
     <Button
         android:id="@+id/Login_login"
@@ -64,7 +75,8 @@
         android:layout_marginTop="44dp"
         android:background="@drawable/shape_blue"
         android:gravity="center"
-        android:text="@string/button_text_login" />
+        android:text="@string/button_text_login"
+        android:textSize="@dimen/text_size"/>
 
     <TextView
         android:layout_width="wrap_content"

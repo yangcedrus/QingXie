@@ -22,7 +22,7 @@
         android:layout_alignStart="@id/manage_work_title"
         android:layout_below="@id/manage_work_title"
         android:layout_marginTop="10dp"
-        android:text="组长"
+        android:text="主办方"
         android:textSize="@dimen/title_size" />
 
     <TextView

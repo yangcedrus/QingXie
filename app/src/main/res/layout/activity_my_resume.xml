@@ -26,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="108dp"
         android:layout_weight="1"
+        android:background="@drawable/toolbar_background"
         android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -41,8 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:drawableRight="@drawable/ic_home_black_24dp"
-            android:textSize="15dp" />
+            android:textSize="@dimen/text_size" />
 
     </LinearLayout>
 
@@ -87,7 +87,7 @@
             android:layout_alignBaseline="@+id/text2"
             android:layout_alignBottom="@+id/text2"
             android:layout_marginStart="14dp"
-            android:layout_toEndOf="@+id/text2"/>
+            android:layout_toEndOf="@+id/text2" />
 
         <TextView
             android:id="@+id/class_resume"
@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/text3"
             android:layout_alignBottom="@+id/text3"
-            android:layout_alignStart="@+id/birth_resume"/>
+            android:layout_alignStart="@+id/birth_resume" />
 
         <TextView
             android:id="@+id/text4"

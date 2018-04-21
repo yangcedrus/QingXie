@@ -63,6 +63,7 @@ public class WorkerMeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        ((TextView)getActivity().findViewById(R.id.toolbar_app_name)).setText("我");
         return inflater.inflate(R.layout.fragment_worker_me, container, false);
     }
 
