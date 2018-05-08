@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -91,7 +92,11 @@ public class MeFragment extends Fragment {
         //设置头像
         String img = Content.getIconAccessPath();
         img = Content.getServerHost() + img;
-        Glide.with(getContext()).load(img).fitCenter().into(circleImageView);
+        RequestOptions myOptions = new RequestOptions().fitCenter();
+        Glide.with(getContext())
+                .load(img)
+                .apply(myOptions)
+                .into(circleImageView);
 
         textView.setText(Content.getNAME());
         if (Content.getGENDER().equals("M")) {
@@ -231,7 +236,11 @@ public class MeFragment extends Fragment {
 
                     @Override
                     public void onNext(String imagePath) {
-                        Glide.with(getContext()).load(imagePath).fitCenter().into(circleImageView);
+                        RequestOptions myOptions = new RequestOptions().fitCenter();
+                        Glide.with(getContext())
+                                .load(imagePath)
+                                .apply(myOptions)
+                                .into(circleImageView);
                     }
                 });
     }

@@ -20,8 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
@@ -54,7 +54,7 @@ public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityIt
         mContext = context;
     }
 
-    public class tempFork{
+    public class tempFork {
         private Integer userId;
         private Integer activityId;
 
@@ -86,15 +86,15 @@ public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityIt
         holder.favourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Content.getUserId()==-1){
-                    Toast.makeText(mContext,"请先登录",Toast.LENGTH_SHORT).show();
+                if (Content.getUserId() == -1) {
+                    Toast.makeText(mContext, "请先登录", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 int pos = getRealPosition(holder);
                 VolActivityInfo item = cardActivityItemList.get(pos);
                 String json;
-                Gson gson=new Gson();
-                tempFork tempFork=new tempFork(Content.getUserId(),item.getId());
+                Gson gson = new Gson();
+                tempFork tempFork = new tempFork(Content.getUserId(), item.getId());
                 json = gson.toJson(tempFork);
                 HashMap<String, String> headerMap = new HashMap<>();
                 headerMap.put("content-type", "application/json;charset=UTF-8");
@@ -102,13 +102,13 @@ public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityIt
                 OkhttpUtil.okHttpPostJson("/activity/addFork", json, headerMap, new CallBackUtil.CallBackMsg() {
                     @Override
                     public void onFailure(Call call, Exception e) {
-                        Toast.makeText(mContext,"收藏失败",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "收藏失败", Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
 
                     @Override
                     public void onResponse(Msg response) {
-                            Toast.makeText(mContext,response.getMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, response.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -129,11 +129,11 @@ public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityIt
             holder.title_background.setBackground(drawable);
         } else {
             Glide.with(mContext)
-                    .load(Content.getServerHost() + cardActivityItem.getHomePagePath())
                     .asBitmap()
+                    .load(Content.getServerHost() + cardActivityItem.getHomePagePath())
                     .into(new SimpleTarget<Bitmap>() {
                         @Override
-                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
                             resource = getBlackImage(resource);
                             Drawable drawable = new BitmapDrawable(resource);
                             //设置图片透明度

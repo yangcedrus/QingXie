@@ -28,6 +28,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -278,7 +279,11 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         View pointView;
         for (int i = 0; i < picNum; i++) {
             imageView = new ImageView(mContext);
-            Glide.with(mContext).load(Content.getServerHost() + homepagePictures.get(i).getHomePagePic()).fitCenter().into(imageView);
+            RequestOptions myOptions = new RequestOptions().fitCenter();
+            Glide.with(mContext)
+                    .load(Content.getServerHost() + homepagePictures.get(i).getHomePagePic())
+                    .apply(myOptions)
+                    .into(imageView);
             imageViews.add(imageView);
 
             //加点
@@ -306,7 +311,11 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         homepagePictures.add(homepagePictureNULL);
 
         imageView = new ImageView(mContext);
-        Glide.with(mContext).load(Content.getServerHost() + homepagePictures.get(0).getHomePagePic()).fitCenter().into(imageView);
+        RequestOptions myOptions = new RequestOptions().fitCenter();
+        Glide.with(mContext)
+                .load(Content.getServerHost() + homepagePictures.get(0).getHomePagePic())
+                .apply(myOptions)
+                .into(imageView);
         imageViews.add(imageView);
 
         //加点

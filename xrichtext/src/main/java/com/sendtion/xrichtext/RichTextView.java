@@ -12,6 +12,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 /**
  * Created by sendtion on 2016/6/24.
@@ -119,7 +122,12 @@ public class RichTextView extends ScrollView {
 
         final RelativeLayout imageLayout = createImageLayout();
         DataImageView imageView = (DataImageView) imageLayout.findViewById(R.id.edit_imageView);
-        Glide.with(getContext()).load(imagePath).crossFade().centerCrop().into(imageView);
+        RequestOptions myOptions = new RequestOptions().centerCrop();
+        Glide.with(getContext())
+                .load(imagePath)
+                .transition(withCrossFade())
+                .apply(myOptions)
+                .into(imageView);
         //imageView.setImageBitmap(bmp);//这里改用Glide加载图片
         //imageView.setBitmap(bmp);//这句去掉，保留下面的图片地址即可，优化图片占用
         imageView.setAbsolutePath(imagePath);

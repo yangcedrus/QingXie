@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -214,7 +215,11 @@ public class MyResumeActivity extends AppCompatActivity {
         }
         tx_wechat.setText(resume.getWechat());
         tx_phone.setText(resume.getTelephone());
-        Glide.with(MyResumeActivity.this).load(Content.getServerHost() + Content.getIconAccessPath()).fitCenter().into(circleImageView);
+        RequestOptions myOptions = new RequestOptions().fitCenter();
+        Glide.with(MyResumeActivity.this)
+                .load(Content.getServerHost() + Content.getIconAccessPath())
+                .apply(myOptions)
+                .into(circleImageView);
 
 //        //保存到本地
 //        SharedPreferences.Editor editor=getSharedPreferences("user_info",MODE_PRIVATE).edit();
