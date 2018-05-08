@@ -38,17 +38,20 @@
         <activity android:name=".activity.ManageVolunteerActivity" />
         <activity android:name=".activity.RichTextEditorActivity" />
         <activity
-            android:name=".activity.SystemSettingsActivity"
-            android:label="系统设置"
-            android:theme="@style/SettingsTheme" />
-        <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="me.iwf.photopicker.PhotoPagerActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.MyWorkActivity" />
-        <activity android:name=".activity.VolunteerSignActivity"/>
+        <activity android:name=".activity.VolunteerSignActivity" />
+        <activity android:name=".activity.FeedbackMessageActivity" />
+        <activity android:name=".activity.EditResumeActivity" />
+        <activity android:name=".activity.EditTextActivity" />
+        <activity android:name=".activity.EditExperienceActivity" />
+        <activity android:name=".activity.SystemSettingsActivity"/>
+        <activity android:name=".activity.SettingPreference"
+            android:theme="@style/SettingsTheme"/>
     </application>
 
 </manifest>

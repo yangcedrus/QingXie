@@ -25,6 +25,9 @@ public class Content extends Application {
         CLAZZ_MAP.put("Resume", "whut.qingxie.entity.user.Resume");
         CLAZZ_MAP.put("Experience", "whut.qingxie.entity.user.UserExperience");
         CLAZZ_MAP.put("UserActivity", "whut.qingxie.entity.activity.Activity4User");
+        CLAZZ_MAP.put("HomePagePicture", "whut.qingxie.entity.activity.HomepagePicture");
+        CLAZZ_MAP.put("MyHours", "whut.qingxie.Item.MyHoursItem");
+        CLAZZ_MAP.put("UserSign", "whut.qingxie.entity.user.UserSign");
     }
 
     /**

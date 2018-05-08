@@ -34,10 +34,10 @@ public class MyHoursItemAdapter extends RecyclerView.Adapter<MyHoursItemAdapter.
     @Override
     public void onBindViewHolder(MyHoursItemAdapter.ViewHolder holder, int position) {
         MyHoursItem myHoursItem = myHoursItems.get(position);
-        holder.time.setText(myHoursItem.getServiceTime());
-        holder.name.setText(myHoursItem.getServiceName());
-        holder.hour.setText(Double.toString(myHoursItem.getHours()));
-        holder.status.setText(myHoursItem.getStatus() ? "已认证" : "未认证");
+        holder.time.setText(myHoursItem.getActivityStarTime());
+        holder.name.setText(myHoursItem.getActivityName());
+        holder.hour.setText(Double.toString(myHoursItem.getVoluntaryHours()));
+        holder.count.setText(myHoursItem.getCount()+"");
     }
 
     @Override
@@ -46,14 +46,14 @@ public class MyHoursItemAdapter extends RecyclerView.Adapter<MyHoursItemAdapter.
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView time, name, hour, status;
+        TextView time, name, hour, count;
 
         private ViewHolder(View view) {
             super(view);
             time = (TextView) view.findViewById(R.id.my_hours_time);
             name = (TextView) view.findViewById(R.id.my_hours_name);
             hour = (TextView) view.findViewById(R.id.my_hours_hours);
-            status = (TextView) view.findViewById(R.id.my_hours_status);
+            count = (TextView) view.findViewById(R.id.my_hours_count);
         }
     }
 }

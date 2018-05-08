@@ -12,6 +12,7 @@
     <dimen name="text_size">15sp</dimen>
     <dimen name="login_app_name">40sp</dimen>
 
+    <dimen name="scroll_text_height">30dp</dimen>
 
     <!--登录页面-->
     <dimen name="login_edit_width">200dp</dimen>

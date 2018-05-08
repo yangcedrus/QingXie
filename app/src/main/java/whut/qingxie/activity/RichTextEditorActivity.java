@@ -265,7 +265,6 @@ public class RichTextEditorActivity extends AppCompatActivity {
         headerMap.put("connection", "keep-alive");
         headerMap.put("user-agent", "android");
 
-        //FIXME 原本Okhttputil无法完成
         OkHttpUtils.post()//
                 .addFile("pic", file.getName(), file)
                 .url(Content.getServerHost() + "/activity/" + Content.getUserId() + "/pic/add")

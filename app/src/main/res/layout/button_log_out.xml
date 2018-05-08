@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ActivityLayout"
+    android:background="@color/ActivityBackGround"
     android:orientation="vertical">
 
     <ListView
@@ -10,11 +10,18 @@
         android:layout_width="match_parent"
         android:layout_height="360dp" />
 
-    <Button
-        android:id="@+id/button_log_out"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="?android:attr/selectableItemBackground"
-        android:text="注销" />
+        android:background="@color/ActivityLayout">
+
+        <Button
+            android:id="@+id/button_log_out"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="注销" />
+
+    </LinearLayout>
 </LinearLayout>

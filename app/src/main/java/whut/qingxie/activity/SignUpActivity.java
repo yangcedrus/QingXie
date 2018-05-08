@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.sendtion.xrichtext.RichTextView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import okhttp3.Call;
@@ -107,7 +108,6 @@ public class SignUpActivity extends AppCompatActivity {
             public void onResponse(Msg response) {
                 final VolActivityInfo activityInfo = (VolActivityInfo) response.getData().get("Activity");
                 if (activityInfo == null) {
-
                     return;
                 }
 
@@ -117,12 +117,16 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                     button_sign_up.setVisibility(View.INVISIBLE);
                 }
+
                 //加载布局
                 TextView title = (TextView) findViewById(R.id.sign_up_info);
                 et_new_content = (RichTextView) findViewById(R.id.sign_up_description);
-                TextView people_have = (TextView) findViewById(R.id.textView_people_have);
+                TextView sponsor =(TextView)findViewById(R.id.textView_sponsor);
+                TextView count=(TextView)findViewById(R.id.textView_activity_count);
+                TextView endTime=(TextView)findViewById(R.id.textView_sign_up_end_time);
                 TextView people_needed = (TextView) findViewById(R.id.textView_people_needed);
-
+                TextView place=(TextView)findViewById(R.id.textView_place);
+                TextView total_hours=(TextView)findViewById(R.id.textView_total_hours);
                 title.setText(activityInfo.getName());
                 et_new_content.post(new Runnable() {
                     @Override
@@ -130,8 +134,29 @@ public class SignUpActivity extends AppCompatActivity {
                         showTextData(activityInfo.getDescriptions());
                     }
                 });
-                people_have.setText(Integer.toString(activityInfo.getNeedVolunteers()));
+                sponsor.setText(activityInfo.getSponsor());
+                int counts=(int) (activityInfo.getHours()/activityInfo.getHourPerTime());
+                count.setText(counts+"");
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                endTime.setText(sdf.format(activityInfo.getRegEndTime()));
                 people_needed.setText(Integer.toString(activityInfo.getNeedVolunteers()));
+                place.setText(activityInfo.getPlace());
+                total_hours.setText((activityInfo.getHours()).toString());
+            }
+        });
+
+        OkhttpUtil.okHttpGet("/activity/"+thisActivityId+"/getApplyNumber", new CallBackUtil.CallBackMsg() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                Toast.makeText(SignUpActivity.this, "连接超时，请检查网络连接", Toast.LENGTH_LONG).show();
+                Log.e("SignUpActivity", "onFailure: " + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Msg response) {
+                TextView people_have = (TextView) findViewById(R.id.textView_people_have);
+                people_have.setText( response.getData().get("applyNumber")+"");
             }
         });
     }

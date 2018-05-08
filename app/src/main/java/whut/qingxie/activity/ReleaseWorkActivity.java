@@ -27,6 +27,8 @@ import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -47,12 +49,11 @@ import static android.content.ContentValues.TAG;
 /**
  * WorkerWorkFragment第五个item
  * 发布志愿活动
- * todo 界面待修改
  */
 public class ReleaseWorkActivity extends AppCompatActivity {
     private EditText title, sponsor, participant, place, general, people, people_requirement, reg_end_time;
-    private ImageView home_image,set_hours, edit_description;
-    private TextView show_hours;
+    private ImageView home_image, set_hours, edit_description, set_hours_per;
+    private TextView show_hours, show_hours_per;
 
     private VolActivityInfo activityInfo;
     private List<Double> data = new ArrayList<>();
@@ -68,7 +69,7 @@ public class ReleaseWorkActivity extends AppCompatActivity {
 
         //控件初始化
         activityInfo = new VolActivityInfo();
-        home_image=(ImageView)findViewById(R.id.release_edit_homeImage);
+        home_image = (ImageView) findViewById(R.id.release_edit_homeImage);
         home_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,12 +84,13 @@ public class ReleaseWorkActivity extends AppCompatActivity {
         title = (EditText) findViewById(R.id.release_edit_title);
         sponsor = (EditText) findViewById(R.id.release_edit_sponsor);
         participant = (EditText) findViewById(R.id.release_edit_participant);
-        place=(EditText)findViewById(R.id.release_edit_place);
+        place = (EditText) findViewById(R.id.release_edit_place);
         general = (EditText) findViewById(R.id.release_edit_general);
         people = (EditText) findViewById(R.id.release_edit_people);
         people_requirement = (EditText) findViewById(R.id.release_edit_people_requirement);
         reg_end_time = (EditText) findViewById(R.id.release_edit_regEnd_time);
         set_hours = (ImageView) findViewById(R.id.release_edit_hours);
+        show_hours = (TextView) findViewById(R.id.release_show_hours);
         set_hours.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,14 +116,40 @@ public class ReleaseWorkActivity extends AppCompatActivity {
                 });
             }
         });
-        show_hours = (TextView) findViewById(R.id.release_show_hours);
+        set_hours_per = (ImageView) findViewById(R.id.release_edit_hours_per);
+        show_hours_per = (TextView) findViewById(R.id.release_show_hours_per);
+        set_hours_per.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final View popupWindow = ReleaseWorkActivity.this.getLayoutInflater().inflate(R.layout.popupwindow_hours, null);
+
+                ListView listView = (ListView) popupWindow.findViewById(R.id.release_work_hours_list);
+                listView.setAdapter(new ArrayAdapter<Double>(ReleaseWorkActivity.this, android.R.layout.simple_list_item_1, data));
+
+                final PopupWindow window = new PopupWindow(popupWindow, 170, 400);
+                window.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#F8F8F8")));
+                window.setFocusable(true);
+                window.setOutsideTouchable(true);
+                window.update();
+                window.showAsDropDown(set_hours_per, -100, 20);
+
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        String s = data.get(position).toString();
+                        show_hours_per.setText(s);
+                        window.dismiss();
+                    }
+                });
+            }
+        });
         edit_description = (ImageView) findViewById(R.id.release_edit_description);
         edit_description.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ReleaseWorkActivity.this, RichTextEditorActivity.class);
                 intent.putExtra("release_work_title", title.getText().toString());
-                intent.putExtra("title","活动详情");
+                intent.putExtra("title", "活动详情");
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
@@ -129,9 +157,8 @@ public class ReleaseWorkActivity extends AppCompatActivity {
         sendActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!checkActivityInfo()) {
+                if (checkActivityInfo()) {
                     releaseWork();
-                    finish();
                 }
             }
         });
@@ -147,6 +174,7 @@ public class ReleaseWorkActivity extends AppCompatActivity {
 
     /**
      * FIXME 检查发布的活动是否符合
+     *
      * @return 是否符合规范, true为符合
      */
     private boolean checkActivityInfo() {
@@ -160,7 +188,7 @@ public class ReleaseWorkActivity extends AppCompatActivity {
         if (participant.getText().toString().equals(""))
             return false;
         //检查地点字数
-        if(place.getText().toString().equals(""))
+        if (place.getText().toString().equals(""))
             return false;
         //检查概况字数
         if (general.getText().toString().equals(""))
@@ -178,7 +206,7 @@ public class ReleaseWorkActivity extends AppCompatActivity {
     }
 
     /**
-     * TODO 发布活动，接口未完成
+     * 发布活动
      */
     private void releaseWork() {
         formActivity();
@@ -193,13 +221,16 @@ public class ReleaseWorkActivity extends AppCompatActivity {
         OkhttpUtil.okHttpPostJson("/activity/releaseActivity", json, headerMap, new CallBackUtil.CallBackMsg() {
             @Override
             public void onFailure(Call call, Exception e) {
-
+                Toast.makeText(ReleaseWorkActivity.this, "发送失败，检查网络连接", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onResponse(Msg response) {
-                if(response.getStatus().equals("success"))
-                    Toast.makeText(ReleaseWorkActivity.this,"发布成功",Toast.LENGTH_SHORT).show();
+                if (response.getStatus().equals("success"))
+                    Toast.makeText(ReleaseWorkActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
+                else {
+                    Toast.makeText(ReleaseWorkActivity.this, "发送失败,如有问题请反馈", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -207,16 +238,20 @@ public class ReleaseWorkActivity extends AppCompatActivity {
     private void formActivity() {
         activityInfo.setName(title.getText().toString());
         activityInfo.setManagerId(Content.getUserId());
-        activityInfo.setCreateTime(new Date());
+        //activityInfo.setCreateTime(new Date());
+        activityInfo.setSponsor(sponsor.getText().toString());
         activityInfo.setGeneral(general.getText().toString());
-        //FIXME 每次工时
-        activityInfo.setHourPerTime(1.0);
-        activityInfo.setHours(Double.parseDouble(show_hours.getText().toString()));
+        activityInfo.setHourPerTime(show_hours_per.getText().toString().equals("") ? 0 : Double.parseDouble(show_hours_per.getText().toString()));
+        activityInfo.setHours(show_hours.getText().toString().equals("") ? 0 : Double.parseDouble(show_hours.getText().toString()));
         activityInfo.setNeedVolunteers(Integer.parseInt(people.getText().toString()));
         activityInfo.setStatus(1);
         activityInfo.setPlace(place.getText().toString());
+
+        activityInfo.setType("2");
+        activityInfo.setManagerId(Content.getUserId());
     }
 
+    //设置工时选项
     private void initData() {
         data.add(0.5);
         data.add(1.0);
@@ -241,27 +276,25 @@ public class ReleaseWorkActivity extends AppCompatActivity {
     }
 
     /**
-     * 返回活动详情
-     *
      * @param requestCode
      * @param resultCode
      * @param data
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode==RESULT_OK){
-            switch (requestCode){
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
                 case REQUEST_CODE:
                     if (data != null) {
-                        String s = data.getDataString();
+                        String s = data.getStringExtra("rich_text_return");
                         if (s != null)
                             activityInfo.setDescriptions(s);
                     }
                     break;
                 case PhotoPicker.REQUEST_CODE:
-                    if(data!=null){
+                    if (data != null) {
                         ArrayList<String> photos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
-                        for(String s:photos){
+                        for (String s : photos) {
                             Log.d("photoPath:", s);
                             upload_image(s);
                         }
@@ -311,6 +344,7 @@ public class ReleaseWorkActivity extends AppCompatActivity {
 
     /**
      * 上传图片
+     *
      * @param imagePath
      */
     private void upload_image(String imagePath) {
@@ -323,7 +357,6 @@ public class ReleaseWorkActivity extends AppCompatActivity {
         headerMap.put("connection", "keep-alive");
         headerMap.put("user-agent", "android");
 
-        //FIXME 原本Okhttputil无法完成
         OkHttpUtils.post()//
                 .addFile("pic", file.getName(), file)
                 .url(Content.getServerHost() + "/activity/" + Content.getUserId() + "/pic/add")
@@ -343,6 +376,7 @@ public class ReleaseWorkActivity extends AppCompatActivity {
                         if (msg.getStatus().equals("error")) {
                             Toast.makeText(ReleaseWorkActivity.this, "图片上传失败", Toast.LENGTH_LONG).show();
                         } else {
+                            Toast.makeText(ReleaseWorkActivity.this, "图片上传成功", Toast.LENGTH_LONG).show();
                             String image = (String) msg.getData().get("picAccessPath");
                             activityInfo.setHomePagePath(image);
                         }

@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
@@ -46,21 +45,6 @@ public class ManageWorkerAccountActivity extends AppCompatActivity {
                 smartRefreshLayout.finishRefresh();
             }
         });
-        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-                for(int i=0;i<5;i++) {
-                    manageWorkerAccountItemList.add(new ManageWorkerAccountItem("923","0121","是","2018/01/01"));
-                }
-
-                //结束加载更多
-                if(manageWorkerAccountItemList.size()<10)
-                    smartRefreshLayout.finishLoadmore();
-                else
-                    smartRefreshLayout.finishLoadmoreWithNoMoreData();
-                reFresh();
-            }
-        });
 
         if(manageWorkerAccountItemList.size()==0)
             init();
@@ -73,7 +57,7 @@ public class ManageWorkerAccountActivity extends AppCompatActivity {
     private void init(){
         manageWorkerAccountItemList.clear();
         for(int i=0;i<5;i++) {
-            manageWorkerAccountItemList.add(new ManageWorkerAccountItem("923","0121","是","2018/01/01"));
+            manageWorkerAccountItemList.add(new ManageWorkerAccountItem("923","0121","张三"));
         }
         reFresh();
         smartRefreshLayout.resetNoMoreData();

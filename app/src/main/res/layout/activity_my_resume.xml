@@ -51,7 +51,15 @@
         android:layout_width="match_parent"
         android:layout_height="121dp"
         android:layout_marginTop="20dp"
+        android:background="@color/ActivityLayout"
         android:layout_weight="1">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/center_line_resume"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_centerHorizontal="true"/>
 
         <TextView
             android:id="@+id/text1"
@@ -62,6 +70,15 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:text="基本信息" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/TitleBackground"
+            android:layout_below="@id/text1"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"/>
 
         <TextView
             android:id="@+id/text2"
@@ -77,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/text2"
             android:layout_below="@+id/text2"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             android:text="专业班级" />
 
         <TextView
@@ -103,10 +120,9 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/birth_resume"
             android:layout_alignBottom="@+id/birth_resume"
-            android:layout_marginStart="70dp"
-            android:layout_toEndOf="@+id/birth_resume"
+            android:layout_alignStart="@id/center_line_resume"
             android:gravity="left"
-            android:text=" 年龄" />
+            android:text="年龄" />
 
         <TextView
             android:id="@+id/text5"
@@ -133,12 +149,48 @@
             android:layout_alignBottom="@+id/text5"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/text5" />
+
+        <TextView
+            android:id="@+id/text8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/text3"
+            android:layout_below="@id/text3"
+            android:layout_marginTop="10dp"
+            android:text="微信号码"/>
+
+        <TextView
+            android:id="@+id/wechat_resume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/text8"
+            android:layout_alignBottom="@id/text8"
+            android:layout_toEndOf="@id/text8"/>
+
+        <TextView
+            android:id="@+id/text9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/text4"
+            android:layout_alignTop="@id/text8"
+            android:text="手机号码" />
+
+        <TextView
+            android:id="@+id/phone_resume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/text9"
+            android:layout_alignBottom="@id/text9"
+            android:layout_toEndOf="@id/text9"
+            android:layout_marginStart="10dp"/>
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/relative2"
         android:layout_width="match_parent"
-        android:layout_height="138dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/ActivityLayout"
         android:layout_weight="1">
 
         <TextView
@@ -150,6 +202,15 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:text="个人技能" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/TitleBackground"
+            android:layout_below="@id/text6"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"/>
 
         <TextView
             android:id="@+id/profile_resume"
@@ -165,9 +226,9 @@
     <RelativeLayout
         android:id="@+id/relative3"
         android:layout_width="match_parent"
-        android:layout_height="138dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_height="140dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/ActivityLayout"
         android:layout_weight="1">
 
         <TextView
@@ -179,6 +240,15 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:text="志愿经历" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/TitleBackground"
+            android:layout_below="@id/text7"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"/>
 
         <ListView
             android:id="@+id/experience_resume"

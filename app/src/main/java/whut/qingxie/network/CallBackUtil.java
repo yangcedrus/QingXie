@@ -97,7 +97,7 @@ public abstract class CallBackUtil<T> {
                 return Msg.parseMapFromJson(response.body().string(), Content.getClazzMap());
             } catch (ClassNotFoundException | IOException e) {
                 e.printStackTrace();
-                Log.e("MyResumeActivity", "handleMessage: " + e.getMessage());
+                Log.e("CallbackMsg", "handleMessage: " + e.getMessage());
             }
             return null;
         }

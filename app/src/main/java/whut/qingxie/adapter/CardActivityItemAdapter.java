@@ -17,18 +17,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.Call;
 import whut.qingxie.R;
 import whut.qingxie.activity.SignUpActivity;
 import whut.qingxie.common.Content;
+import whut.qingxie.dto.Msg;
 import whut.qingxie.entity.activity.VolActivityInfo;
+import whut.qingxie.network.CallBackUtil;
+import whut.qingxie.network.OkhttpUtil;
 
 /**
  * 首页卡片式布局适配器
@@ -45,6 +52,16 @@ public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityIt
     public CardActivityItemAdapter(List<VolActivityInfo> cardActivityItems, Context context) {
         cardActivityItemList = cardActivityItems;
         mContext = context;
+    }
+
+    public class tempFork{
+        private Integer userId;
+        private Integer activityId;
+
+        public tempFork(Integer userId, Integer activityId) {
+            this.userId = userId;
+            this.activityId = activityId;
+        }
     }
 
     @Override
@@ -69,7 +86,31 @@ public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityIt
         holder.favourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: 2018/2/10 点击收藏按钮
+                if(Content.getUserId()==-1){
+                    Toast.makeText(mContext,"请先登录",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                int pos = getRealPosition(holder);
+                VolActivityInfo item = cardActivityItemList.get(pos);
+                String json;
+                Gson gson=new Gson();
+                tempFork tempFork=new tempFork(Content.getUserId(),item.getId());
+                json = gson.toJson(tempFork);
+                HashMap<String, String> headerMap = new HashMap<>();
+                headerMap.put("content-type", "application/json;charset=UTF-8");
+                headerMap.put("user-agent", "android");
+                OkhttpUtil.okHttpPostJson("/activity/addFork", json, headerMap, new CallBackUtil.CallBackMsg() {
+                    @Override
+                    public void onFailure(Call call, Exception e) {
+                        Toast.makeText(mContext,"收藏失败",Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(Msg response) {
+                            Toast.makeText(mContext,response.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
         return holder;
@@ -105,13 +146,6 @@ public class CardActivityItemAdapter extends RecyclerView.Adapter<CardActivityIt
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String days = sdf.format(cardActivityItem.getCreateTime());
         holder.days.setText(days);
-        // TODO: 2018/3/12 收藏按钮变化
-            /*收藏按钮变化
-        if(cardActivityItem.getFavourite()==true)
-            holder.favourite.setCompoundDrawables(img1,null,null,null);
-        else
-            holder.favourite.setCompoundDrawables(img2,null,null,null);
-        */
     }
 
     @Override

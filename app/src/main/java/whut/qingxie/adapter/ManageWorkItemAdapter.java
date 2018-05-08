@@ -55,7 +55,7 @@ public class ManageWorkItemAdapter extends RecyclerView.Adapter<ManageWorkItemAd
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        MoveStatus(item.getId(), parent.getContext());
+                        MoveStatus(item.getActivityId(), parent.getContext());
                         dialog.dismiss();
                     }
                 });
@@ -93,7 +93,7 @@ public class ManageWorkItemAdapter extends RecyclerView.Adapter<ManageWorkItemAd
     }
 
     private void MoveStatus(Integer activityId, final Context context) {
-        OkhttpUtil.okHttpPut("/manage/" + Content.getUserId() + "/" + activityId + "/move", new CallBackUtil.CallBackMsg() {
+        OkhttpUtil.okHttpPost("/activity/" + activityId + "/boostActivity", new CallBackUtil.CallBackMsg() {
             @Override
             public void onFailure(Call call, Exception e) {
                 Toast.makeText(context, "状态推进失败", Toast.LENGTH_LONG).show();
@@ -102,10 +102,7 @@ public class ManageWorkItemAdapter extends RecyclerView.Adapter<ManageWorkItemAd
 
             @Override
             public void onResponse(Msg response) {
-                if (response.getStatus().equals("error"))
-                    Toast.makeText(context, "状态推进失败", Toast.LENGTH_LONG).show();
-                else
-                    Toast.makeText(context, "状态已推进", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, response.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

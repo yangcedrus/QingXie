@@ -12,18 +12,13 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import whut.qingxie.Item.ExperienceItem;
 import whut.qingxie.R;
 import whut.qingxie.entity.user.UserExperience;
 
-/**
- * MyResume个人简历页面
- * 我的志愿经历witem适配器
- */
-public class MyExperienceItemAdapter extends ArrayAdapter {
+public class EditExperienceAdapter extends ArrayAdapter {
     private int resourceId;
 
-    public MyExperienceItemAdapter(Context context, int textViewResourceId, List<UserExperience> objects) {
+    public EditExperienceAdapter(Context context, int textViewResourceId, List<UserExperience> objects) {
         super(context, textViewResourceId, objects);
         resourceId = textViewResourceId;
     }

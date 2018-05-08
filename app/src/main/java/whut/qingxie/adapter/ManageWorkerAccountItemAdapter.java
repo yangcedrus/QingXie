@@ -35,7 +35,6 @@ public class ManageWorkerAccountItemAdapter extends RecyclerView.Adapter<ManageW
         holder.ID.setText(manageWorkerAccountItem.getS1());
         holder.accountID.setText(manageWorkerAccountItem.getS2());
         holder.IsOrNo.setText(manageWorkerAccountItem.getS3());
-        holder.Date.setText(manageWorkerAccountItem.getS4());
     }
 
     @Override
@@ -44,14 +43,13 @@ public class ManageWorkerAccountItemAdapter extends RecyclerView.Adapter<ManageW
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView ID, accountID, IsOrNo, Date;
+        TextView ID, accountID, IsOrNo;
 
         private ViewHolder(View view) {
             super(view);
             ID = (TextView) view.findViewById(R.id.manage_id);
             accountID = (TextView) view.findViewById(R.id.manage_account_id);
-            IsOrNo = (TextView) view.findViewById(R.id.manage_IsOrNo);
-            Date = (TextView) view.findViewById(R.id.manage_date);
+            IsOrNo = (TextView) view.findViewById(R.id.manage_name);
         }
     }
 }

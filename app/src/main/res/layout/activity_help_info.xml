@@ -10,31 +10,33 @@
         android:id="@+id/toolbar_help"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
-        android:background="@drawable/toolbar_background"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:background="@drawable/toolbar_background"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="20sp"
-            android:text="帮助" />
+            android:text="帮助"
+            android:textSize="20sp" />
     </android.support.v7.widget.Toolbar>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
         android:layout_below="@id/toolbar_help"
-        android:layout_alignParentStart="true">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/helps_info"
             android:layout_width="match_parent"
             android:layout_height="@android:dimen/thumbnail_width"
-
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="4.00"
             android:text="帮助信息" />
 
@@ -47,11 +49,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="3.18"
                 android:layout_gravity="center"
+                android:layout_weight="3.18"
+                android:gravity="center"
                 android:text="请问该信息是否对你有帮助"
-                android:textSize="20sp"
-                />
+                android:textSize="@dimen/title_size" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -61,7 +63,10 @@
                     android:id="@+id/helps_YES"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:text="是"
                     tools:ignore="ButtonStyle" />
@@ -70,6 +75,10 @@
                     android:id="@+id/helps_NO"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:text="否" />
 

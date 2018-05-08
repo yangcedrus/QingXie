@@ -1,8 +1,10 @@
 package whut.qingxie.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -38,14 +40,10 @@ import whut.qingxie.network.OkhttpUtil;
  * 个人信息页面
  */
 public class MyResumeActivity extends AppCompatActivity {
-    private List<ExperienceItem> list = new ArrayList<>();
-    private TextView tx_birthdate;
-    private TextView tx_age;
-    private TextView tx_profile;
-    private TextView tx_politics;
-    private TextView tx_class;
+    private List<UserExperience> list = new ArrayList<>();
+    private Resume resume;
+    private TextView tx_birthdate, tx_age, tx_profile, tx_politics, tx_class, tx_name, tx_wechat, tx_phone;
     private CircleImageView circleImageView;
-    private TextView tx_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +56,8 @@ public class MyResumeActivity extends AppCompatActivity {
         tx_birthdate = (TextView) findViewById(R.id.birth_resume);
         circleImageView = (CircleImageView) findViewById(R.id.icon_resume);
         tx_name = (TextView) findViewById(R.id.name_resume);
+        tx_wechat = (TextView) findViewById(R.id.wechat_resume);
+        tx_phone = (TextView) findViewById(R.id.phone_resume);
 
         if (Content.getGENDER().equals("M")) {
             Drawable drawable = getResources().getDrawable(R.drawable.ic_man_blue_24dp);
@@ -100,7 +100,7 @@ public class MyResumeActivity extends AppCompatActivity {
             @Override
             public void onResponse(Msg msg) {
                 if (msg.getStatus().equals("success")) {
-                    Resume resume = (Resume) msg.getData().get("Resume");
+                    resume = (Resume) msg.getData().get("Resume");
                     if (resume == null) {
                         // TODO: 2018/3/24 未返回数据的处理,直接从本地获取或者返回错误信息
                         return;
@@ -175,7 +175,10 @@ public class MyResumeActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.action_edit_resume:
-                //TODO 修改简历信息
+                Intent intent=new Intent(MyResumeActivity.this,EditResumeActivity.class);
+                intent.putExtra("my_resume", resume);
+
+                startActivityForResult(intent,147);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -184,9 +187,8 @@ public class MyResumeActivity extends AppCompatActivity {
     private void setDefaultViews(Resume resume) {
         List<UserExperience> experiences = resume.getExperiences();
         if (experiences != null && experiences.size() != 0) {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             for (UserExperience exp : experiences) {
-                list.add(new ExperienceItem(format.format(exp.getEnd()), exp.getActivityName()));
+                list.add(new UserExperience(exp.getActivityName(),exp.getBegin(),exp.getEnd()));
             }
             MyExperienceItemAdapter adapter = new MyExperienceItemAdapter(MyResumeActivity.this, R.layout.item_experience, list);
             ListView listView = (ListView) findViewById(R.id.experience_resume);
@@ -210,6 +212,8 @@ public class MyResumeActivity extends AppCompatActivity {
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             tx_name.setCompoundDrawables(null, null, drawable, null);
         }
+        tx_wechat.setText(resume.getWechat());
+        tx_phone.setText(resume.getTelephone());
         Glide.with(MyResumeActivity.this).load(Content.getServerHost() + Content.getIconAccessPath()).fitCenter().into(circleImageView);
 
 //        //保存到本地
@@ -234,5 +238,14 @@ public class MyResumeActivity extends AppCompatActivity {
 //        editor.putString("user_experiences",json);
 //
 //        editor.apply();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==147&&resultCode==RESULT_OK){
+            resume=data.getParcelableExtra("my_resume");
+            setDefaultViews(resume);
+        }
     }
 }

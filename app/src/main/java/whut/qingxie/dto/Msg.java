@@ -31,6 +31,18 @@ public class Msg {
     public static Msg parseMapFromJson(Object object, Map<String, String> clazzMap) throws ClassNotFoundException {
         //解析Msg对象
         Msg msgFromJson = JsonUtil.parseObject(object, Msg.class);
+        if(msgFromJson.getData().containsKey("homePagePics")){
+            msgFromJson.getData().put("HomePagePictureList",msgFromJson.getData().get("homePagePics"));
+            msgFromJson.getData().remove("homePagePics");
+        }
+        if(msgFromJson.getData().containsKey("userActivityHours")){
+            msgFromJson.getData().put("MyHoursList",msgFromJson.getData().get("userActivityHours"));
+            msgFromJson.getData().remove("userActivityHours");
+        }
+        if(msgFromJson.getData().containsKey("volunteers")){
+            msgFromJson.getData().put("UserSignList",msgFromJson.getData().get("volunteers"));
+            msgFromJson.getData().remove("volunteers");
+        }
         msgFromJson.setData(JsonUtil.parseMap(msgFromJson.getData(), clazzMap));
         return msgFromJson;
     }

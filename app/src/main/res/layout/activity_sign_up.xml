@@ -29,64 +29,181 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/sign_up_info"
+            <LinearLayout
+                android:id="@+id/sign_up_title_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                android:text="武汉理工大学管理学院"
-                android:textSize="20dp" />
+                android:background="@drawable/toolbar_background">
+
+                <TextView
+                    android:id="@+id/sign_up_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:text="武汉理工大学管理学院"
+                    android:textColor="@color/ActivityLayout"
+                    android:textSize="@dimen/title_size" />
+
+            </LinearLayout>
 
             <com.sendtion.xrichtext.RichTextView
                 android:id="@+id/sign_up_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/sign_up_info"
-                android:textColor="#616161"
-                android:textSize="16dp" />
+                android:layout_alignEnd="@id/sign_up_title_layout"
+                android:layout_alignStart="@id/sign_up_title_layout"
+                android:layout_below="@id/sign_up_title_layout"
+                android:background="@color/ActivityLayout"
+                android:textSize="@dimen/text_size" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/sign_up_linearLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@id/sign_up_info"
+                android:layout_alignEnd="@id/sign_up_description"
+                android:layout_alignStart="@id/sign_up_description"
                 android:layout_below="@id/sign_up_description"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:text="已报名：" />
+                android:layout_marginTop="10dp"
+                android:background="@color/ActivityLayout"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView_people_have"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/textView"
-                android:layout_toEndOf="@+id/textView"
-                android:text="TextView" />
+                <LinearLayout
+                    android:id="@+id/center_line_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="horizontal" />
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@id/textView_people_needed"
-                android:layout_toStartOf="@id/textView_people_needed"
-                android:text="共需要：" />
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="10dp"
+                    android:text="报名人数：" />
 
-            <TextView
-                android:id="@+id/textView_people_needed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@id/sign_up_info"
-                android:layout_alignTop="@id/textView"
-                android:layout_marginEnd="20dp"
-                android:text="TextView" />
+                <TextView
+                    android:id="@+id/textView_people_have"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@id/textView" />
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/textView"
+                    android:layout_below="@id/textView"
+                    android:layout_marginTop="10dp"
+                    android:text="活动举办：" />
+
+                <TextView
+                    android:id="@+id/textView_sponsor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@id/textView1"
+                    android:layout_alignTop="@id/textView1"/>
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/textView1"
+                    android:layout_below="@id/textView1"
+                    android:layout_marginTop="10dp"
+                    android:text="活动次数：" />
+
+                <TextView
+                    android:id="@+id/textView_activity_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@id/textView2"
+                    android:layout_alignTop="@id/textView2"/>
+
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@id/textView2"
+                    android:layout_below="@id/textView2"
+                    android:layout_marginTop="10dp"
+                    android:text="截至时间：" />
+
+                <TextView
+                    android:id="@+id/textView_sign_up_end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@id/textView3"
+                    android:layout_alignTop="@id/textView3"/>
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/textView"
+                    android:layout_alignStart="@+id/center_line_sign"
+                    android:text="需要人数：" />
+
+                <TextView
+                    android:id="@+id/textView_people_needed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/textView4"
+                    android:layout_marginStart="10dp"
+                    android:layout_alignTop="@id/textView4"/>
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/center_line_sign"
+                    android:layout_alignTop="@+id/textView1"
+                    android:layout_gravity="start"
+                    android:text="活动地点：" />
+
+                <TextView
+                    android:id="@+id/textView_place"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/textView5"
+                    android:layout_alignTop="@id/textView5"
+                    android:layout_marginStart="10dp" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/center_line_sign"
+                    android:layout_alignTop="@+id/textView2"
+                    android:layout_gravity="start"
+                    android:text="工时总计：" />
+
+                <TextView
+                    android:id="@+id/textView_total_hours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/textView6"
+                    android:layout_marginStart="10dp"
+                    android:layout_alignTop="@id/textView6"/>
+
+            </RelativeLayout>
 
             <Button
                 android:id="@+id/sign_up_confirm"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:layout_below="@id/textView"
+                android:layout_below="@id/sign_up_linearLayout"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="20dp"

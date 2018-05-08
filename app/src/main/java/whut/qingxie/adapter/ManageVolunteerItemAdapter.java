@@ -17,10 +17,10 @@ import whut.qingxie.entity.activity.Activity4User;
 import whut.qingxie.entity.activity.VolActivityInfo;
 
 public class ManageVolunteerItemAdapter extends RecyclerView.Adapter<ManageVolunteerItemAdapter.ViewHolder> {
-    private List<VolActivityInfo> activityInfoList;
+    private List<Activity4User> activityInfoList;
     private Context mContext;
 
-    public ManageVolunteerItemAdapter(List<VolActivityInfo> activityInfoList) {
+    public ManageVolunteerItemAdapter(List<Activity4User> activityInfoList) {
         this.activityInfoList = activityInfoList;
     }
 
@@ -33,11 +33,14 @@ public class ManageVolunteerItemAdapter extends RecyclerView.Adapter<ManageVolun
             @Override
             public void onClick(View v) {
                 int pos=holder.getLayoutPosition();
-                VolActivityInfo item=activityInfoList.get(pos);
+                Activity4User item=activityInfoList.get(pos);
                 if (mContext == null)
                     mContext = parent.getContext();
                 Intent intent=new Intent(mContext, VolunteerSignActivity.class);
-                intent.putExtra("activityID",item.getManagerId());
+                intent.putExtra("activityID",item.getActivityId());
+                intent.putExtra("title",item.getName());
+                if(item.getSponsor()!=null)
+                    intent.putExtra("sponsor",item.getSponsor());
                 mContext.startActivity(intent);
             }
         });
@@ -46,10 +49,10 @@ public class ManageVolunteerItemAdapter extends RecyclerView.Adapter<ManageVolun
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        VolActivityInfo activityInfo=activityInfoList.get(position);
+        Activity4User activityInfo=activityInfoList.get(position);
 
         holder.title.setText(activityInfo.getName());
-        holder.manager.setText(activityInfo.getManagerId()+"");
+        holder.manager.setText(activityInfo.getSponsor());
     }
 
     @Override

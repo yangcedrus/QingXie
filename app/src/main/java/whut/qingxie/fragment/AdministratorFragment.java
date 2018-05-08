@@ -33,6 +33,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import whut.qingxie.R;
+import whut.qingxie.activity.FeedbackMessageActivity;
 import whut.qingxie.activity.ManageWorkerAccountActivity;
 import whut.qingxie.activity.ReleaseNoticeActivity;
 import whut.qingxie.activity.RichTextEditorActivity;
@@ -220,6 +221,8 @@ public class AdministratorFragment extends Fragment {
             Intent intent;
             switch (v.getId()) {
                 case R.id.admin_layout1:
+                    intent=new Intent(getActivity(), FeedbackMessageActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.admin_layout2:
                     intent = new Intent(getActivity(), ManageWorkerAccountActivity.class);
@@ -227,6 +230,7 @@ public class AdministratorFragment extends Fragment {
                     break;
                 case R.id.admin_layout3:
                     intent = new Intent(getActivity(), RichTextEditorActivity.class);
+                    intent.putExtra("title","发布公告");
                     startActivity(intent);
                     break;
             }
