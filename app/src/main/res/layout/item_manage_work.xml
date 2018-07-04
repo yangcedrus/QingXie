@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp"
+    android:background="@color/ActivityLayout">
+
+    <TextView
+        android:id="@+id/manage_work_title"
+        android:layout_width="276dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:singleLine="true"
+        android:textSize="@dimen/title_size" />
+
+    <TextView
+        android:id="@+id/manage_work_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/manage_work_title"
+        android:layout_below="@id/manage_work_title"
+        android:layout_marginTop="10dp"
+        android:text="主办方"
+        android:textSize="@dimen/title_size" />
+
+    <TextView
+        android:id="@+id/manage_work_manager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/manage_work_textview"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/manage_work_textview"
+        android:textSize="@dimen/title_size" />
+
+    <ImageView
+        android:id="@+id/manage_work_image1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/manage_work_textview"
+        android:layout_marginLeft="100dp"
+        android:layout_toRightOf="@id/manage_work_textview"
+        android:src="@drawable/ic_manager_black_24dp" />
+
+    <ImageView
+        android:id="@+id/manage_work_image2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/ic_more_right_black_24dp" />
+
+</RelativeLayout>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ActivityBackGround"
+    tools:context=".activity.VolunteerSignActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_vol_sign"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@drawable/toolbar_background"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="活动签到"
+            android:textSize="20sp" />
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/volunteer_sign_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/toolbar_vol_sign"
+        android:layout_marginTop="20dp"
+        android:background="@color/ActivityLayout"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/volunteer_sign_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:textSize="@dimen/title_size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:text="举办方"
+                android:textSize="@dimen/title_size" />
+
+            <TextView
+                android:id="@+id/volunteer_sign_manager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:textSize="@dimen/title_size" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right">
+
+            <Button
+                android:id="@+id/volunteer_sign_confirm"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="40dp"
+                android:gravity="center"
+                android:background="?android:attr/selectableItemBackground"
+                android:text="确认"
+                android:textSize="@dimen/text_size" />
+
+            <Button
+                android:id="@+id/volunteer_sign_edit"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:background="?android:attr/selectableItemBackground"
+                android:text="修改"
+                android:textSize="@dimen/text_size" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/vol_sign_recyclerList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/volunteer_sign_layout1"
+        android:layout_marginTop="20dp" />
+
+</RelativeLayout>

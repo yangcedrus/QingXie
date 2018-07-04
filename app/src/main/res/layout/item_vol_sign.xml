@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp"
+    android:background="@color/ActivityLayout"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/vol_sign_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="40dp"
+        android:text="name"
+        android:textSize="@dimen/title_size" />
+
+    <TextView
+        android:id="@+id/vol_sign_yes_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="40dp"
+        android:layout_toLeftOf="@id/vol_sign_no_text"
+        android:text="已到"
+        android:textSize="@dimen/title_size" />
+
+    <CheckBox
+        android:id="@+id/vol_sign_yes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="-40dp"
+        android:layout_toEndOf="@+id/vol_sign_yes_text" />
+
+    <TextView
+        android:id="@+id/vol_sign_no_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="40dp"
+        android:text="未到"
+        android:textSize="@dimen/title_size" />
+
+    <CheckBox
+        android:id="@+id/vol_sign_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="-40dp"
+        android:layout_toEndOf="@+id/vol_sign_no_text" />
+</RelativeLayout>

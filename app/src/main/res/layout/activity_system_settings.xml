@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ActivityBackGround"
+    android:orientation="vertical"
+    tools:context=".activity.SystemSettingsActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_sys_settings"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@drawable/toolbar_background"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="设置"
+            android:textSize="@dimen/title_size" />
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/ActivityLayout"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/sys_layout1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:text="新消息提醒"
+                android:textSize="@dimen/title_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_more_right_black_24dp" />
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#eee"/>
+        <RelativeLayout
+            android:id="@+id/sys_layout2"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:text="通用设置"
+                android:textSize="@dimen/title_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_more_right_black_24dp" />
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#eee"/>
+        <RelativeLayout
+            android:id="@+id/sys_layout3"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:text="密码设置"
+                android:textSize="@dimen/title_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_more_right_black_24dp" />
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#eee"/>
+        <RelativeLayout
+            android:id="@+id/sys_layout4"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:text="检查更新"
+                android:textSize="@dimen/title_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_more_right_black_24dp" />
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#eee"/>
+        <RelativeLayout
+            android:id="@+id/sys_layout5"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:text="版本说明"
+                android:textSize="@dimen/title_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_more_right_black_24dp" />
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#eee"/>
+        <RelativeLayout
+            android:id="@+id/sys_layout6"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:text="反馈"
+                android:textSize="@dimen/title_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_more_right_black_24dp" />
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/ActivityBackGround"/>
+        <RelativeLayout
+            android:id="@+id/sys_log_out"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/system_setting_logout"
+                android:textSize="@dimen/title_size" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+
+</LinearLayout>

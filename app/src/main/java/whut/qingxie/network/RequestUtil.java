@@ -1,6 +1,7 @@
 package whut.qingxie.network;
 
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +22,8 @@ import okio.BufferedSink;
 import okio.ForwardingSink;
 import okio.Okio;
 import okio.Sink;
+import whut.qingxie.activity.LoginActivity;
+import whut.qingxie.common.Content;
 
 /**
  * reference to https://github.com/guozhengXia/OkHttpUtils
@@ -39,10 +42,19 @@ class RequestUtil {
     private String mFileType;//文件类型的参数，与file同时存在
     private Map<String, String> mHeaderMap;//头参数
     private CallBackUtil mCallBack;//回调接口
-    private OkHttpClient mOkHttpClient;//OKhttpClient对象
+    private static OkHttpClient mOkHttpClient;//OKhttpClient对象
     private Request mOkHttpRequest;//请求对象
     private Request.Builder mRequestBuilder;//请求对象的构建者
 
+    static {
+        mOkHttpClient=new OkHttpClient();
+//        new OkHttpClient.Builder()
+////                .addInterceptor(new LoggerInterceptor("TAG"))
+//                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
+//                .readTimeout(10000L, TimeUnit.MILLISECONDS)
+//                //其他配置
+//                .build();
+    }
 
     RequestUtil(String methodType, String url, Map<String, String> paramsMap, Map<String, String> headerMap, CallBackUtil callBack) {
         this(methodType, url, null, null, null, null, null, null, paramsMap, headerMap, callBack);
@@ -79,12 +91,16 @@ class RequestUtil {
         getInstance();
     }
 
+    private OkHttpClient getmOkHttpClient(){
+        return mOkHttpClient;
+    }
 
     /**
      * 创建OKhttpClient实例。
      */
     private void getInstance() {
-        mOkHttpClient = new OkHttpClient();
+        //FIXME: 此处没有用单例
+        mOkHttpClient =getmOkHttpClient();
         mRequestBuilder = new Request.Builder();
         if (mFile != null || mfileList != null || mfileMap != null) {//先判断是否有文件，
             setFile();
@@ -259,8 +275,14 @@ class RequestUtil {
 
             @Override
             public void onResponse(final Call call, final Response response) throws IOException {
-                if (mCallBack != null) {
+                //FIXME:404 时返回到这
+                if(response.code()==404){
+
+                }
+                if (mCallBack != null&&response.isSuccessful()) {
                     mCallBack.onSeccess(call, response);
+                }else{
+                    mCallBack.onError(call,new RuntimeException(response.message()));
                 }
             }
 

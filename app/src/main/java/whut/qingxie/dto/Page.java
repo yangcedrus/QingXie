@@ -1,13 +1,11 @@
 package whut.qingxie.dto;
 
-/**
- * Created by evans on 2018/3/24.
- */
-
-
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 页
+ */
 public class Page<E> extends ArrayList<E> {
     private static final long serialVersionUID = 1L;
     private int pageNum;

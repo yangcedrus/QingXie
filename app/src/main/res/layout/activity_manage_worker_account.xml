@@ -3,72 +3,77 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="whut.qingxie.activity.ManageWorkerAccountActivity"
-    android:orientation="vertical">
+    android:background="@color/ActivityBackGround"
+    android:orientation="vertical"
+    tools:context="whut.qingxie.activity.ManageWorkerAccountActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_manage_worker_account"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@drawable/toolbar_background"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="工作者账号管理"
+            android:textSize="20sp" />
+    </android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:id="@+id/manage_worker_account_linearlayout"
-        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
+        android:layout_below="@+id/toolbar_manage_worker_account"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_gravity="center"
-            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="ID"/>
+            android:gravity="center"
+            android:text="ID" />
 
         <TextView
-            android:layout_gravity="center"
-            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="账号ID"/>
+            android:gravity="center"
+            android:text="账号ID" />
 
         <TextView
-            android:layout_gravity="center"
-            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="是否授权"/>
+            android:gravity="center"
+            android:text="姓名 " />
 
-        <TextView
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="时间"/>
     </LinearLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/manage_worker_account_refresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@id/manage_worker_account_linearlayout"
         android:layout_alignEnd="@id/manage_worker_account_linearlayout"
+        android:layout_alignStart="@id/manage_worker_account_linearlayout"
         android:layout_below="@id/manage_worker_account_linearlayout"
         android:layout_marginTop="10dp">
 
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/manage_worker_account_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </RelativeLayout>

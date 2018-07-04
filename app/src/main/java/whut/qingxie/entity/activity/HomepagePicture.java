@@ -7,9 +7,19 @@ public class HomepagePicture {
 
     private Integer activityId;
 
-    private String pictureUrl;
+    private String general;
+
+    private String homePagePic;
 
     private Date createTime;
+
+    public String getGeneral() {
+        return general;
+    }
+
+    public void setGeneral(String general) {
+        this.general = general;
+    }
 
     public Integer getId() {
         return id;
@@ -27,12 +37,12 @@ public class HomepagePicture {
         this.activityId = activityId;
     }
 
-    public String getPictureUrl() {
-        return pictureUrl;
+    public String getHomePagePic() {
+        return homePagePic;
     }
 
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl == null ? null : pictureUrl.trim();
+    public void setHomePagePic(String homePagePic) {
+        this.homePagePic = homePagePic == null ? null : homePagePic.trim();
     }
 
     public Date getCreateTime() {

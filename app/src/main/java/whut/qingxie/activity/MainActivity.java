@@ -2,6 +2,8 @@ package whut.qingxie.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -13,8 +15,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.lang.reflect.Field;
+
 import me.iwf.photopicker.PhotoPicker;
 import whut.qingxie.R;
+import whut.qingxie.common.Content;
 import whut.qingxie.helper.BottomNavigationViewHelper;
 import whut.qingxie.fragment.AdministratorFragment;
 import whut.qingxie.fragment.FavouriteFragment;
@@ -24,14 +29,17 @@ import whut.qingxie.fragment.OperationHistoryFragment;
 import whut.qingxie.fragment.WorkerMeFragment;
 import whut.qingxie.fragment.WorkerWorkFragment;
 
+/**
+ * LauncherActivity
+ */
 public class MainActivity extends AppCompatActivity {
     public static Activity activity;
 
-    private static final int NO_LOGIN=0;     //未登录
-    private static final int STUDENT=1;     //学生
-    private static final int WORKER=2;      //工作人员
-    private static final int ADMIN=3;       //管理员
-    private static final int LOG_IN=101;
+    private static final int NO_LOGIN=-1;     //未登录
+    private static final int STUDENT=0;     //学生
+    private static final int WORKER=1;      //工作人员
+    private static final int ADMIN=2;       //管理员
+
     private static final int LOG_OUT=102;
 
     public static int state=NO_LOGIN;
@@ -64,22 +72,27 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
 
         //根据登录状态修改页面
-        Intent intent=getIntent();
-        state=intent.getIntExtra("user_state",0);
+        state= Content.getFLAG();
+
         switch (state){
             case STUDENT:
-                bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_favorite_border_black_24dp);
+                bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.ic_me_black_24dp);
+                bottomNavigationView.getMenu().getItem(1).setTitle("我");
+                bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_favorite_black_24dp);
                 bottomNavigationView.getMenu().getItem(2).setTitle("收藏");
                 break;
             case WORKER:
-                bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_group_black_24dp);
+                bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.ic_me_black_24dp);
+                bottomNavigationView.getMenu().getItem(1).setTitle("我");
+                bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_work_black_24dp);
                 bottomNavigationView.getMenu().getItem(2).setTitle("工作");
                 break;
             case ADMIN:
-                bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_group_black_24dp);
-                bottomNavigationView.getMenu().getItem(2).setTitle("工作");
-                bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.ic_detail_black_24dp);
+                bottomNavigationView.getMenu().getItem(1).setIcon(R.drawable.ic_operation_histroy_black_24dp);
                 bottomNavigationView.getMenu().getItem(1).setTitle("操作历史");
+                bottomNavigationView.getMenu().getItem(2).setIcon(R.drawable.ic_work_black_24dp);
+                bottomNavigationView.getMenu().getItem(2).setTitle("工作");
+
                 break;
             default:break;
         }
@@ -186,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar,menu);
+        getMenuInflater().inflate(R.menu.main_toolbar,menu);
         return true;
     }
 
@@ -214,17 +227,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==PhotoPicker.REQUEST_CODE){
-            FragmentManager manager=getSupportFragmentManager();
-            // TODO: 2018/3/30 fragment定位 
-            Fragment fragment=manager.findFragmentByTag("me_fragment");
-            if(fragment==null){
-                fragment=manager.findFragmentByTag("worker_me_fragment");
-            }
-            if(fragment==null){
-                fragment=manager.findFragmentByTag("admin_work_fragment");
-            }
-            fragment.onActivityResult(requestCode,resultCode,data);
+        switch (requestCode){
+            case PhotoPicker.REQUEST_CODE:
+                FragmentManager manager=getSupportFragmentManager();
+                Fragment fragment=manager.findFragmentByTag("me_fragment");
+                if(fragment==null){
+                    fragment=manager.findFragmentByTag("worker_me_fragment");
+                }
+                if(fragment==null){
+                    fragment=manager.findFragmentByTag("admin_work_fragment");
+                }
+                fragment.onActivityResult(requestCode,resultCode,data);
+                break;
+
+                default:break;
         }
     }
 }

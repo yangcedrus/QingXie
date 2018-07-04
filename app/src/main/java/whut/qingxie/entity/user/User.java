@@ -247,7 +247,6 @@ public class User implements Parcelable,Serializable {
         dest.writeString(politicalStatus);
         dest.writeInt(age==null?18:age);
         dest.writeLong(lastLoginTime == null ? -1L : lastLoginTime.getTime());
-
     }
 
     //Parcelable方法传递对象

@@ -5,15 +5,15 @@ package whut.qingxie.Item;
  */
 
 public class OperationHistoryItem {
-    private String title,date,text;
+    private String title, date, text;
 
-    public OperationHistoryItem(String title,String date,String text){
-        this.title=title;
-        this.date=date;
-        if(text.length()>=70)
-            this.text=text.substring(0,70)+"...";
+    public OperationHistoryItem(String title, String date, String text) {
+        this.title = title;
+        this.date = date;
+        if (text.length() >= 70)
+            this.text = text.substring(0, 70) + "...";
         else
-            this.text=text;
+            this.text = text;
     }
 
     public String getText() {

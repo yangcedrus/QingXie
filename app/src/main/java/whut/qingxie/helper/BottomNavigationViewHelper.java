@@ -1,13 +1,11 @@
 package whut.qingxie.helper;
 
-import android.os.Build;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.util.Log;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
 /**
  * 底部导航栏工具类

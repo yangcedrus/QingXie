@@ -1,29 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guide_line"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-
-    <TextView
-        android:id="@+id/experience_time"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/guide_line" />
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/experience_name"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="right"
-        app:layout_constraintLeft_toRightOf="@id/guide_line"
-        app:layout_constraintRight_toRightOf="parent"/>
+        android:textSize="@dimen/text_size"/>
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/experience_begin_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/experience_end_time"
+        android:layout_marginEnd="20dp"
+        android:textSize="@dimen/text_size"/>
+
+    <TextView
+        android:layout_width="10dp"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/experience_end_time"
+        android:layout_marginEnd="5dp"
+        android:text="--" />
+
+    <TextView
+        android:id="@+id/experience_end_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:textSize="@dimen/text_size"/>
+
+</RelativeLayout>

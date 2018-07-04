@@ -1,9 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/ActivityBackGround"
     tools:context="whut.qingxie.activity.ManageVolunteerActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_manage_volunteer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@drawable/toolbar_background"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="志愿活动管理"
+            android:textSize="20sp" />
+    </android.support.v7.widget.Toolbar>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="20dp"
+        android:text="+ 创建群组"
+        android:background="?android:attr/selectableItemBackgroundBorderless" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/manage_volunteer_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/manage_volunteer_recyclerList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+
+</LinearLayout>

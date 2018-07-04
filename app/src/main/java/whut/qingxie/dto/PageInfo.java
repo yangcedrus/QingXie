@@ -8,7 +8,7 @@ import java.util.List;
 import whut.qingxie.network.JsonUtil;
 
 /**
- * Created by evans on 2018/3/24.
+ * 页信息
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class PageInfo<T> implements Serializable {
@@ -102,6 +102,18 @@ public class PageInfo<T> implements Serializable {
         }
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public static <T> PageInfo<T> parseFromJson(JSONObject jsonObject, Class<T> clazz) {
+        PageInfo<T> pageInfo = JsonUtil.parseObject(jsonObject, PageInfo.class);
+        if (pageInfo.getList() != null) {
+            pageInfo.setList(JsonUtil.parseList(pageInfo.getList().toString(), Page.class, clazz));
+        }
+        return pageInfo;
+    }
+
     /**
      * 计算导航页
      */
@@ -164,52 +176,8 @@ public class PageInfo<T> implements Serializable {
         hasNextPage = pageNum < pages;
     }
 
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
-    }
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public void setStartRow(int startRow) {
-        this.startRow = startRow;
-    }
-
-    public void setEndRow(int endRow) {
-        this.endRow = endRow;
-    }
-
-    public void setTotal(long total) {
-        this.total = total;
-    }
-
-    public void setPages(int pages) {
-        this.pages = pages;
-    }
-
-    public void setList(List<T> list) {
-        this.list = list;
-    }
-
     public void setFirstPage(int firstPage) {
         this.firstPage = firstPage;
-    }
-
-    public void setPrePage(int prePage) {
-        this.prePage = prePage;
-    }
-
-    public void setNextPage(int nextPage) {
-        this.nextPage = nextPage;
     }
 
     public void setLastPage(int lastPage) {
@@ -220,80 +188,104 @@ public class PageInfo<T> implements Serializable {
         return isFirstPage;
     }
 
-    public void setFirstPage(boolean firstPage) {
-        isFirstPage = firstPage;
-    }
-
     public boolean isLastPage() {
         return isLastPage;
-    }
-
-    public void setLastPage(boolean lastPage) {
-        isLastPage = lastPage;
-    }
-
-    public void setHasPreviousPage(boolean hasPreviousPage) {
-        this.hasPreviousPage = hasPreviousPage;
-    }
-
-    public void setHasNextPage(boolean hasNextPage) {
-        this.hasNextPage = hasNextPage;
-    }
-
-    public void setNavigatePages(int navigatePages) {
-        this.navigatePages = navigatePages;
-    }
-
-    public void setNavigatepageNums(int[] navigatepageNums) {
-        this.navigatepageNums = navigatepageNums;
     }
 
     public int getPageNum() {
         return pageNum;
     }
 
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
+    }
+
     public int getPageSize() {
         return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 
     public int getSize() {
         return size;
     }
 
+    public void setSize(int size) {
+        this.size = size;
+    }
+
     public int getStartRow() {
         return startRow;
+    }
+
+    public void setStartRow(int startRow) {
+        this.startRow = startRow;
     }
 
     public int getEndRow() {
         return endRow;
     }
 
+    public void setEndRow(int endRow) {
+        this.endRow = endRow;
+    }
+
     public long getTotal() {
         return total;
+    }
+
+    public void setTotal(long total) {
+        this.total = total;
     }
 
     public int getPages() {
         return pages;
     }
 
+    public void setPages(int pages) {
+        this.pages = pages;
+    }
+
     public List<T> getList() {
         return list;
+    }
+
+    public void setList(List<T> list) {
+        this.list = list;
     }
 
     public int getFirstPage() {
         return firstPage;
     }
 
+    public void setFirstPage(boolean firstPage) {
+        isFirstPage = firstPage;
+    }
+
     public int getPrePage() {
         return prePage;
+    }
+
+    public void setPrePage(int prePage) {
+        this.prePage = prePage;
     }
 
     public int getNextPage() {
         return nextPage;
     }
 
+    public void setNextPage(int nextPage) {
+        this.nextPage = nextPage;
+    }
+
     public int getLastPage() {
         return lastPage;
+    }
+
+    public void setLastPage(boolean lastPage) {
+        isLastPage = lastPage;
     }
 
     public boolean isIsFirstPage() {
@@ -308,25 +300,34 @@ public class PageInfo<T> implements Serializable {
         return hasPreviousPage;
     }
 
+    public void setHasPreviousPage(boolean hasPreviousPage) {
+        this.hasPreviousPage = hasPreviousPage;
+    }
+
     public boolean isHasNextPage() {
         return hasNextPage;
+    }
+
+    public void setHasNextPage(boolean hasNextPage) {
+        this.hasNextPage = hasNextPage;
     }
 
     public int getNavigatePages() {
         return navigatePages;
     }
 
+    public void setNavigatePages(int navigatePages) {
+        this.navigatePages = navigatePages;
+    }
+
     public int[] getNavigatepageNums() {
         return navigatepageNums;
     }
 
-    public static <T> PageInfo<T> parseFromJson(JSONObject jsonObject, Class<T> clazz){
-        PageInfo<T> pageInfo = JsonUtil.parseObject(jsonObject, PageInfo.class);
-        if(pageInfo.getList()!=null){
-            pageInfo.setList(JsonUtil.parseList(pageInfo.getList().toString(),Page.class, clazz));
-        }
-        return pageInfo;
+    public void setNavigatepageNums(int[] navigatepageNums) {
+        this.navigatepageNums = navigatepageNums;
     }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("PageInfo{");

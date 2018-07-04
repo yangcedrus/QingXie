@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.MyResumeActivity">
+
+    <item
+        android:id="@+id/action_edit_resume"
+        android:icon="@drawable/ic_edit_white_24dp"
+        android:orderInCategory="100"
+        app:showAsAction="always"
+        android:title="edit" />
+</menu>

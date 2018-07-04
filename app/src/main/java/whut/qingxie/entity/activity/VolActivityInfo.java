@@ -33,7 +33,7 @@ public class VolActivityInfo implements Parcelable, Serializable {
 
     private Date regEndTime;
 
-    private Date interviewTime;
+    private Date interviewTime; //面试时间
 
     private Date startTime;
 
@@ -41,9 +41,9 @@ public class VolActivityInfo implements Parcelable, Serializable {
 
     private Date createTime;
 
-    private String sponser;
+    private String sponsor; //举办方
 
-    private String homepagePic;
+    private String homePagePath;
 
     public VolActivityInfo() {
     }
@@ -198,20 +198,20 @@ public class VolActivityInfo implements Parcelable, Serializable {
         this.createTime = createTime;
     }
 
-    public String getSponser() {
-        return sponser;
+    public String getSponsor() {
+        return sponsor;
     }
 
-    public void setSponser(String sponser) {
-        this.sponser = sponser;
+    public void setSponsor(String sponsor) {
+        this.sponsor = sponsor;
     }
 
-    public String getHomepagePic() {
-        return homepagePic;
+    public String getHomePagePath() {
+        return homePagePath;
     }
 
-    public void setHomepagePic(String homepagePic) {
-        this.homepagePic = homepagePic;
+    public void setHomePagePath(String homepagePath) {
+        this.homePagePath = homepagePath;
     }
 
     @Override
@@ -238,8 +238,8 @@ public class VolActivityInfo implements Parcelable, Serializable {
         dest.writeLong(startTime == null ? -1 : startTime.getTime());
         dest.writeLong(endTime == null ? -1 : endTime.getTime());
         dest.writeLong(createTime == null ? -1 : createTime.getTime());
-        dest.writeString(sponser);
-        dest.writeString(homepagePic);
+        dest.writeString(sponsor);
+        dest.writeString(homePagePath);
     }
 
     public static final Parcelable.Creator<VolActivityInfo> CREATOR = new Parcelable.Creator<VolActivityInfo>() {
@@ -282,8 +282,8 @@ public class VolActivityInfo implements Parcelable, Serializable {
             if (date > 0) {
                 item.createTime = new Date(date);
             }
-            item.sponser = source.readString();
-            item.homepagePic = source.readString();
+            item.sponsor = source.readString();
+            item.homePagePath = source.readString();
             return item;
         }
 

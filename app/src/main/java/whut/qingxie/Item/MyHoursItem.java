@@ -6,47 +6,40 @@ package whut.qingxie.Item;
  */
 
 public class MyHoursItem {
-    String serviceTime; //服务时间
-    String serviceName;    //服务名称
-    double hours;   //工时
-    boolean status;  //认证状况
+    String activityStarTime; //服务时间
+    String activityName;    //服务名称
+    Integer count;  //参加次数
+    double voluntaryHours;   //工时
 
-    public MyHoursItem(String serviceTime, String serviceName, double hours, boolean state) {
-        this.serviceTime = serviceTime;
-        this.serviceName = serviceName;
-        this.hours = hours;
-        this.status = state;
+    public String getActivityStarTime() {
+        return activityStarTime;
     }
 
-    public String getServiceTime() {
-        return serviceTime;
+    public void setActivityStarTime(String activityStarTime) {
+        this.activityStarTime = activityStarTime;
     }
 
-    public void setServiceTime(String serviceTime) {
-        this.serviceTime = serviceTime;
+    public String getActivityName() {
+        return activityName;
     }
 
-    public String getServiceName() {
-        return serviceName;
+    public void setActivityName(String activityName) {
+        this.activityName = activityName;
     }
 
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
+    public Integer getCount() {
+        return count;
     }
 
-    public double getHours() {
-        return hours;
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
-    public void setHours(double hours) {
-        this.hours = hours;
+    public double getVoluntaryHours() {
+        return voluntaryHours;
     }
 
-    public boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setVoluntaryHours(double voluntaryHours) {
+        this.voluntaryHours = voluntaryHours;
     }
 }

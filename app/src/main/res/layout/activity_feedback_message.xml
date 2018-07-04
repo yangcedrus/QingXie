@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ActivityBackGround"
+    android:orientation="vertical"
+    tools:context="whut.qingxie.activity.MyMessageActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@drawable/toolbar_background"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="反馈信息"
+            android:textSize="@dimen/title_size" />
+    </android.support.v7.widget.Toolbar>
+
+    <ListView
+        android:id="@+id/feedback_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="#00000000"
+        android:dividerHeight="20dp" />
+
+</LinearLayout>

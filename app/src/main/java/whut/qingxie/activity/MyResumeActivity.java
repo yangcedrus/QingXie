@@ -1,41 +1,50 @@
 package whut.qingxie.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.IOException;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.Call;
-import okhttp3.Response;
+import whut.qingxie.Item.ExperienceItem;
 import whut.qingxie.R;
 import whut.qingxie.adapter.MyExperienceItemAdapter;
-import whut.qingxie.Item.ExperienceItem;
 import whut.qingxie.common.Content;
 import whut.qingxie.dto.Msg;
 import whut.qingxie.entity.user.Resume;
 import whut.qingxie.entity.user.UserExperience;
-import whut.qingxie.entity.user.User;
 import whut.qingxie.network.CallBackUtil;
 import whut.qingxie.network.OkhttpUtil;
 
+/**
+ * WorkerMeFragment,MeFragment第一个item
+ * 个人信息页面
+ */
 public class MyResumeActivity extends AppCompatActivity {
-    private List<ExperienceItem> list = new ArrayList<>();
-    private TextView tx_age;
-    private TextView tx_profile;
-    private TextView tx_politics;
-    private TextView tx_class;
+    private List<UserExperience> list = new ArrayList<>();
+    private Resume resume;
+    private TextView tx_birthdate, tx_age, tx_profile, tx_politics, tx_class, tx_name, tx_wechat, tx_phone;
+    private CircleImageView circleImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +54,21 @@ public class MyResumeActivity extends AppCompatActivity {
         tx_politics = (TextView) findViewById(R.id.pilitics_resume);
         tx_profile = (TextView) findViewById(R.id.profile_resume);
         tx_class = (TextView) findViewById(R.id.class_resume);
+        tx_birthdate = (TextView) findViewById(R.id.birth_resume);
+        circleImageView = (CircleImageView) findViewById(R.id.icon_resume);
+        tx_name = (TextView) findViewById(R.id.name_resume);
+        tx_wechat = (TextView) findViewById(R.id.wechat_resume);
+        tx_phone = (TextView) findViewById(R.id.phone_resume);
+
+        if (Content.getGENDER().equals("M")) {
+            Drawable drawable = getResources().getDrawable(R.drawable.ic_man_blue_24dp);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            tx_name.setCompoundDrawables(null, null, drawable, null);
+        } else {
+            Drawable drawable = getResources().getDrawable(R.drawable.ic_woman_pink_24dp);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            tx_name.setCompoundDrawables(null, null, drawable, null);
+        }
 
         //显示返回按钮
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_myresume);
@@ -54,72 +78,35 @@ public class MyResumeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        Intent intent = getIntent();
-        User myInfo = (User) intent.getParcelableExtra("user_info");
+        if (list.size() == 0) {
+//            init();
+            getExperience();
+        }
 
-        if (list.size() == 0)
-            init();
         MyExperienceItemAdapter adapter = new MyExperienceItemAdapter(MyResumeActivity.this, R.layout.item_experience, list);
         ListView listView = (ListView) findViewById(R.id.experience_resume);
         listView.setAdapter(adapter);
-        // TODO: 2018/3/9 无信息可写 
     }
 
-    @SuppressLint("HandlerLeak")
-    private Handler eHandler = new Handler() {
-        public void handleMessage(Message message) {
-            super.handleMessage(message);
-            try {
-                Msg msg = Msg.parseMapFromJson(message.obj, Content.CLAZZ_MAP);
-                Resume resume = (Resume) msg.getData().get("Resume");
-                List<UserExperience> experiences = resume.getExperiences();
-                for (UserExperience exp : experiences) {
-                    list.add(new ExperienceItem(exp.getEnd().toString(), exp.getActivityName()));
-                }
-            } catch (ClassNotFoundException e) {
-                Log.e("MyResumeActivity", "handleMessage: " + e.getMessage());
-            }
-        }
-    };
-
     private void getExperience() {
-        OkhttpUtil.accessData("GET", "/user/3/resume", null, null, new CallBackUtil<Msg>() {
-            @Override
-            public Msg onParseResponse(Call call, Response response) {
-                try {
-                    return Msg.parseMapFromJson(response.body().string(), Content.CLAZZ_MAP);
-                } catch (ClassNotFoundException | IOException e) {
-                    e.printStackTrace();
-                    Log.e("MyResumeActivity", "handleMessage: " + e.getMessage());
-                }
-                return null;
-            }
-
+        OkhttpUtil.accessData("GET", "/user/" + Content.getUserId() + "/resume", null, null, new CallBackUtil.CallBackMsg() {
             @Override
             public void onFailure(Call call, Exception e) {
+                //网络访问错误，则从本地读取信息
+                // FIXME 网络不好，本地无信息，则显示默认页面
+//                init();
                 Log.e("MyResumeActivity", "onFailure: " + e.getMessage());
             }
 
             @Override
             public void onResponse(Msg msg) {
-                if (msg != null) {
-                    Resume resume = (Resume) msg.getData().get("Resume");
-                    if(resume==null){
-                        // TODO: 2018/3/24 未返回数据的处理 
+                if (msg.getStatus().equals("success")) {
+                    resume = (Resume) msg.getData().get("Resume");
+                    if (resume == null) {
+                        // TODO: 2018/3/24 未返回数据的处理,直接从本地获取或者返回错误信息
                         return;
                     }
-                    List<UserExperience> experiences = resume.getExperiences();
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                    for (UserExperience exp : experiences) {
-                        list.add(new ExperienceItem(format.format(exp.getEnd()), exp.getActivityName()));
-                    }
-                    MyExperienceItemAdapter adapter = new MyExperienceItemAdapter(MyResumeActivity.this, R.layout.item_experience, list);
-                    ListView listView = (ListView) findViewById(R.id.experience_resume);
-                    listView.setAdapter(adapter);
-                    tx_age.setText(resume.getAge()+"岁");
-                    tx_class.setText(resume.getClassName());
-                    tx_politics.setText(resume.getPoliticalStatus());
-                    tx_profile.setText(resume.getProfile());
+                    setDefaultViews(resume);
                 }
 
             }
@@ -127,21 +114,143 @@ public class MyResumeActivity extends AppCompatActivity {
     }
 
     public void init() {
-        getExperience();
-//        try {
-//            Thread.sleep(3000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        list.add(new ExperienceItem("2012.12.07","参加兮然项目"));
-//        list.add(new ExperienceItem("2015.08.03","参加青柠檬项目"));
+        //查看本地数据
+        // TODO: 2018/4/4 根据session判断是否从本地获取
+        SharedPreferences preferences = getSharedPreferences("user_info", MODE_PRIVATE);
+        Integer id = preferences.getInt("user_id", -1);
+        if (id != -1) {
+            Resume resume = new Resume();
+            resume.setUserId(preferences.getInt("user_id", -1));
+            resume.setStudentId(preferences.getString("user_student_id", null));
+            resume.setAge(preferences.getInt("user_age", 0));
+
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = null;
+            try {
+                date = format.parse(preferences.getString("user_birthday", null));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            resume.setBirthDate(date);
+
+            resume.setPoliticalStatus(preferences.getString("user_political_status", null));
+            resume.setEmail(preferences.getString("user_email", null));
+            resume.setName(preferences.getString("user_name", null));
+            resume.setProfile(preferences.getString("user_profile", null));
+            resume.setQq(preferences.getString("user_qq", null));
+            resume.setTelephone(preferences.getString("user_telephone", null));
+            resume.setWechat(preferences.getString("user_wechat", null));
+            resume.setGender(preferences.getString("user_gender", "M"));
+
+            String json = preferences.getString("user_experiences", null);
+            if (json != null) {
+                Gson gson = new Gson();
+                List<UserExperience> experience = gson.fromJson(json, new TypeToken<List<UserExperience>>() {
+                }.getType());
+                resume.setExperiences(experience);
+            }
+
+            setDefaultViews(resume);
+        } else {
+            getExperience();
+        }
+    }
+
+    /**
+     * 特殊按钮显示
+     *
+     * @param menu
+     * @return
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.resume_toolbar, menu);
+        return true;
     }
 
     //返回按钮响应
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home)
-            finish();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.action_edit_resume:
+                Intent intent=new Intent(MyResumeActivity.this,EditResumeActivity.class);
+                intent.putExtra("my_resume", resume);
+
+                startActivityForResult(intent,147);
+                break;
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setDefaultViews(Resume resume) {
+        List<UserExperience> experiences = resume.getExperiences();
+        if (experiences != null && experiences.size() != 0) {
+            for (UserExperience exp : experiences) {
+                list.add(new UserExperience(exp.getActivityName(),exp.getBegin(),exp.getEnd()));
+            }
+            MyExperienceItemAdapter adapter = new MyExperienceItemAdapter(MyResumeActivity.this, R.layout.item_experience, list);
+            ListView listView = (ListView) findViewById(R.id.experience_resume);
+            listView.setAdapter(adapter);
+        }
+        tx_age.setText(resume.getAge() + "岁");
+        tx_class.setText(resume.getClassName());
+        tx_politics.setText(resume.getPoliticalStatus());
+        tx_profile.setText(resume.getProfile());
+        if (resume.getBirthDate() != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            tx_birthdate.setText(sdf.format(resume.getBirthDate()));
+        }
+        tx_name.setText(Content.getNAME());
+        if (Content.getGENDER().equals("M")) {
+            Drawable drawable = getResources().getDrawable(R.drawable.ic_man_blue_24dp);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            tx_name.setCompoundDrawables(null, null, drawable, null);
+        } else {
+            Drawable drawable = getResources().getDrawable(R.drawable.ic_woman_pink_24dp);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            tx_name.setCompoundDrawables(null, null, drawable, null);
+        }
+        tx_wechat.setText(resume.getWechat());
+        tx_phone.setText(resume.getTelephone());
+        RequestOptions myOptions = new RequestOptions().fitCenter();
+        Glide.with(MyResumeActivity.this)
+                .load(Content.getServerHost() + Content.getIconAccessPath())
+                .apply(myOptions)
+                .into(circleImageView);
+
+//        //保存到本地
+//        SharedPreferences.Editor editor=getSharedPreferences("user_info",MODE_PRIVATE).edit();
+//        editor.putInt("user_id",resume.getUserId());
+//        editor.putString("user_student_id",resume.getStudentId());
+//        editor.putInt("user_age",resume.getAge());
+//        editor.putString("user_political_status",resume.getPoliticalStatus());
+//        editor.putString("user_email",resume.getEmail());
+//        editor.putString("user_name",resume.getName());
+//        editor.putString("user_profile",resume.getProfile());
+//        editor.putString("user_qq",resume.getQq());
+//        editor.putString("user_telephone",resume.getTelephone());
+//        editor.putString("user_wechat",resume.getWechat());
+//        editor.putString("user_gender",resume.getGender());
+//
+//        String date=format.format(resume.getBirthDate());
+//        editor.putString("user_birthday",date);
+//
+//        Gson gson=new Gson();
+//        String json=gson.toJson(resume.getExperiences());
+//        editor.putString("user_experiences",json);
+//
+//        editor.apply();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==147&&resultCode==RESULT_OK){
+            resume=data.getParcelableExtra("my_resume");
+            setDefaultViews(resume);
+        }
     }
 }

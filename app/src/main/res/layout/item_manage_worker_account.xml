@@ -20,19 +20,12 @@
         android:layout_weight="1" />
 
     <TextView
-        android:id="@+id/manage_IsOrNo"
+        android:id="@+id/manage_name"
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
-    <TextView
-        android:id="@+id/manage_date"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
 
 </LinearLayout>

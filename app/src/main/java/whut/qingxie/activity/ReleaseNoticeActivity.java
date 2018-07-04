@@ -7,6 +7,10 @@ import android.view.MenuItem;
 
 import whut.qingxie.R;
 
+/**
+ * Administrator第三个item
+ * 发布公告
+ */
 public class ReleaseNoticeActivity extends AppCompatActivity {
 
     @Override

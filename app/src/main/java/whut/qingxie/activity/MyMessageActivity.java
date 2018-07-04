@@ -13,6 +13,10 @@ import whut.qingxie.R;
 import whut.qingxie.adapter.MyMessageItemAdapter;
 import whut.qingxie.Item.MyMessageItem;
 
+/**
+ * WorkerMeFragment,MeFragment第二个item
+ * 我的消息页面
+ */
 public class MyMessageActivity extends AppCompatActivity {
     private List<MyMessageItem> myMessageItemArrayList=new ArrayList<>();
 
@@ -39,11 +43,11 @@ public class MyMessageActivity extends AppCompatActivity {
     }
 
     private void initItems(){
-        myMessageItemArrayList.add(new MyMessageItem("张三","你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊",R.drawable.ic_home_black_24dp));
-        myMessageItemArrayList.add(new MyMessageItem("张三","你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊",R.drawable.ic_home_black_24dp));
-        myMessageItemArrayList.add(new MyMessageItem("张三","你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊",R.drawable.ic_home_black_24dp));
-        myMessageItemArrayList.add(new MyMessageItem("张三","你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊",R.drawable.ic_home_black_24dp));
-        myMessageItemArrayList.add(new MyMessageItem("张三","你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊",R.drawable.ic_home_black_24dp));
+        myMessageItemArrayList.add(new MyMessageItem("张三","你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊",R.mipmap.ic_qingxie));
+        myMessageItemArrayList.add(new MyMessageItem("张三","你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊",R.mipmap.ic_qingxie));
+        myMessageItemArrayList.add(new MyMessageItem("张三","你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊",R.mipmap.ic_qingxie));
+        myMessageItemArrayList.add(new MyMessageItem("张三","你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊",R.mipmap.ic_qingxie));
+        myMessageItemArrayList.add(new MyMessageItem("张三","你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊",R.mipmap.ic_qingxie));
     }
 
     //返回按钮响应

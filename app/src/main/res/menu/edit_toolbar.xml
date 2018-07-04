@@ -9,10 +9,4 @@
         android:orderInCategory="100"
         android:title="图片"
         app:showAsAction="always" />
-
-    <item
-        android:id="@+id/action_new_save"
-        android:orderInCategory="100"
-        android:title="完成"
-        app:showAsAction="always" />
 </menu>

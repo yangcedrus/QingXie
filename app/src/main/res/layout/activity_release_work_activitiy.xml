@@ -1,42 +1,419 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ActivityBackGround"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_release_work"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@drawable/toolbar_background"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="20sp"
-            android:text="发布活动" />
+            android:text="发布活动"
+            android:textSize="20sp" />
     </android.support.v7.widget.Toolbar>
 
-    <ListView
-        android:id="@+id/release_listview"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/info_text1"
-        android:layout_marginTop="15dp"
-        android:divider="#00000000"
-        android:dividerHeight="10dp"/>
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/release_work_button"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_gravity="right"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/shape_blue"
-        android:text="发送"
-        android:textSize="14dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="40dp"
+                android:background="@color/ActivityLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/activity_homeImage"
+                    android:textSize="@dimen/title_size" />
+
+                <ImageView
+                    android:id="@+id/release_edit_homeImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_edit_black_24dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/ActivityLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/activity_title"
+                    android:textSize="@dimen/title_size" />
+
+                <EditText
+                    android:id="@+id/release_edit_title"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="40dp"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:textSize="@dimen/title_size" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/ActivityLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/activity_sponsor"
+                    android:textSize="@dimen/title_size" />
+
+                <EditText
+                    android:id="@+id/release_edit_sponsor"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="40dp"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:textSize="@dimen/title_size" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/ActivityLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/activity_participant"
+                    android:textSize="@dimen/title_size" />
+
+                <EditText
+                    android:id="@+id/release_edit_participant"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="40dp"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:textSize="@dimen/title_size" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/ActivityLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/activity_place"
+                    android:textSize="@dimen/title_size" />
+
+                <EditText
+                    android:id="@+id/release_edit_place"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="40dp"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:textSize="@dimen/title_size" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/ActivityLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/activity_general"
+                    android:textSize="@dimen/title_size" />
+
+                <EditText
+                    android:id="@+id/release_edit_general"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="40dp"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:textSize="@dimen/title_size" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/ActivityLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/activity_description"
+                    android:textSize="@dimen/title_size" />
+
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="40dp"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:text="编辑详情"
+                    android:textSize="@dimen/title_size" />
+
+                <ImageView
+                    android:id="@+id/release_edit_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_edit_black_24dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/ActivityLayout">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:text="@string/activity_hours"
+                android:textSize="@dimen/title_size" />
+
+            <TextView
+                android:id="@+id/release_show_hours"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="40dp"
+                android:background="@null"
+                android:gravity="right"
+                android:singleLine="true"
+                android:textSize="@dimen/title_size" />
+
+            <ImageView
+                android:id="@+id/release_edit_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_more_down_black_24dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/ActivityLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:text="每次工时"
+                    android:textSize="@dimen/title_size" />
+
+                <TextView
+                    android:id="@+id/release_show_hours_per"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="40dp"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:textSize="@dimen/title_size" />
+
+                <ImageView
+                    android:id="@+id/release_edit_hours_per"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_more_down_black_24dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/ActivityLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/activity_people"
+                    android:textSize="@dimen/title_size" />
+
+                <EditText
+                    android:id="@+id/release_edit_people"
+                    android:layout_width="102dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="40dp"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:textSize="@dimen/title_size" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/ActivityLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/activity_people_requirement"
+                    android:textSize="@dimen/title_size" />
+
+                <EditText
+                    android:id="@+id/release_edit_people_requirement"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="40dp"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:textSize="@dimen/title_size" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/ActivityLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/activity_regEnd_time"
+                    android:textSize="@dimen/title_size" />
+
+                <EditText
+                    android:id="@+id/release_edit_regEnd_time"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="40dp"
+                    android:background="@null"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:textSize="@dimen/title_size" />
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/release_work_button"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/shape_blue"
+                android:text="发布"
+                android:textSize="@dimen/title_size" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

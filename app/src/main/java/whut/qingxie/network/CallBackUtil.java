@@ -21,7 +21,7 @@ import whut.qingxie.dto.Msg;
  * reference to https://github.com/guozhengXia/OkHttpUtils
  * Created by evans on 2018/3/7.
  */
-
+//TODO:重构CallBackUtil
 public abstract class CallBackUtil<T> {
     public static Handler mMainHandler = new Handler(Looper.getMainLooper());
 
@@ -94,10 +94,10 @@ public abstract class CallBackUtil<T> {
         @Override
         public Msg onParseResponse(Call call, Response response) {
             try {
-                return Msg.parseMapFromJson(response.body().string(), Content.CLAZZ_MAP);
+                return Msg.parseMapFromJson(response.body().string(), Content.getClazzMap());
             } catch (ClassNotFoundException | IOException e) {
                 e.printStackTrace();
-                Log.e("MyResumeActivity", "handleMessage: " + e.getMessage());
+                Log.e("CallbackMsg", "handleMessage: " + e.getMessage());
             }
             return null;
         }

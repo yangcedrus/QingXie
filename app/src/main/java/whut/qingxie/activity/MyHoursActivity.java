@@ -8,20 +8,28 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Call;
 import whut.qingxie.Item.MyHoursItem;
 import whut.qingxie.R;
 import whut.qingxie.adapter.MyHoursItemAdapter;
-import whut.qingxie.entity.activity.VolActivityInfo;
+import whut.qingxie.common.Content;
+import whut.qingxie.dto.Msg;
+import whut.qingxie.network.CallBackUtil;
+import whut.qingxie.network.OkhttpUtil;
 
+/**
+ * WorkerMeFragment，MeFragment第四个item
+ * 我的志愿工时
+ */
 public class MyHoursActivity extends AppCompatActivity {
     private List<MyHoursItem> myHoursItems=new ArrayList<>();
 
@@ -39,10 +47,12 @@ public class MyHoursActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //显示返回按钮
-        setSupportActionBar(toolbar);
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        if(myHoursItems.size()==0)
+            init();
 
         RecyclerView recyclerView=(RecyclerView)findViewById(R.id.my_hours_recyclerView);
         LinearLayoutManager linearLayoutManager =new LinearLayoutManager(this);
@@ -56,27 +66,8 @@ public class MyHoursActivity extends AppCompatActivity {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 init();
-                //结束刷新
-                smartRefreshLayout.finishRefresh();
             }
         });
-        smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-                for(int i=0;i<5;i++){
-                    myHoursItems.add(new MyHoursItem("2018/1/1","敬老院活动",4,false));
-                }
-                //结束加载更多
-                if(myHoursItems.size()<10)
-                    smartRefreshLayout.finishLoadmore();
-                else
-                    smartRefreshLayout.finishLoadmoreWithNoMoreData();
-                reFresh();
-            }
-        });
-
-        if(myHoursItems.size()==0)
-            init();
     }
 
     private static void reFresh(){
@@ -86,7 +77,7 @@ public class MyHoursActivity extends AppCompatActivity {
     //显示“反馈”菜单按钮
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar,menu);
+        getMenuInflater().inflate(R.menu.white_help_toolbar,menu);
         return true;
     }
 
@@ -106,12 +97,20 @@ public class MyHoursActivity extends AppCompatActivity {
     }
 
     private void init(){
-        int num=myHoursItems.size()==0?5:myHoursItems.size();
         myHoursItems.clear();
-        for (int i = 0; i < num; i++) {
-            myHoursItems.add(new MyHoursItem("2018/1/1","敬老院活动",4,true));
-        }
-        smartRefreshLayout.resetNoMoreData();
-        reFresh();
+        OkhttpUtil.okHttpGet("/vhours/" + Content.getUserId() + "/detailsByUserId", new CallBackUtil.CallBackMsg() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                Toast.makeText(MyHoursActivity.this,"请求失败，请稍后再试",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onResponse(Msg response) {
+                List<MyHoursItem> list=(List<MyHoursItem>)response.getData().get("MyHoursList");
+                myHoursItems.addAll(list);
+                smartRefreshLayout.finishRefresh();
+                reFresh();
+            }
+        });
     }
 }

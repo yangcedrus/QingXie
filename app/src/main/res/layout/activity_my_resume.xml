@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="whut.qingxie.activity.MyResumeActivity"
-    android:orientation="vertical">
+    android:background="@color/ActivityBackGround"
+    android:orientation="vertical"
+    tools:context="whut.qingxie.activity.MyResumeActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_myresume"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/colorPrimary"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@drawable/toolbar_background"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <TextView
@@ -25,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="108dp"
         android:layout_weight="1"
+        android:background="@drawable/toolbar_background"
         android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -40,9 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:drawableRight="@drawable/ic_home_black_24dp"
-            android:text="TextView"
-            android:textSize="15dp" />
+            android:textSize="@dimen/text_size" />
 
     </LinearLayout>
 
@@ -50,8 +50,16 @@
         android:id="@+id/relative1"
         android:layout_width="match_parent"
         android:layout_height="121dp"
-        android:layout_weight="1"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:background="@color/ActivityLayout"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/center_line_resume"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_centerHorizontal="true"/>
 
         <TextView
             android:id="@+id/text1"
@@ -62,6 +70,15 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:text="基本信息" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/TitleBackground"
+            android:layout_below="@id/text1"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"/>
 
         <TextView
             android:id="@+id/text2"
@@ -77,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/text2"
             android:layout_below="@+id/text2"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             android:text="专业班级" />
 
         <TextView
@@ -87,8 +104,7 @@
             android:layout_alignBaseline="@+id/text2"
             android:layout_alignBottom="@+id/text2"
             android:layout_marginStart="14dp"
-            android:layout_toEndOf="@+id/text2"
-            android:text="TextView" />
+            android:layout_toEndOf="@+id/text2" />
 
         <TextView
             android:id="@+id/class_resume"
@@ -96,8 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/text3"
             android:layout_alignBottom="@+id/text3"
-            android:layout_alignStart="@+id/birth_resume"
-            android:text="TextView" />
+            android:layout_alignStart="@+id/birth_resume" />
 
         <TextView
             android:id="@+id/text4"
@@ -105,10 +120,9 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/birth_resume"
             android:layout_alignBottom="@+id/birth_resume"
-            android:layout_marginStart="70dp"
-            android:layout_toEndOf="@+id/birth_resume"
+            android:layout_alignStart="@id/center_line_resume"
             android:gravity="left"
-            android:text=" 年龄" />
+            android:text="年龄" />
 
         <TextView
             android:id="@+id/text5"
@@ -125,8 +139,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/text4"
             android:layout_alignBottom="@+id/text4"
-            android:layout_alignStart="@+id/pilitics_resume"
-            android:text="TextView" />
+            android:layout_alignStart="@+id/pilitics_resume" />
 
         <TextView
             android:id="@+id/pilitics_resume"
@@ -135,14 +148,49 @@
             android:layout_alignBaseline="@+id/text5"
             android:layout_alignBottom="@+id/text5"
             android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/text5"
-            android:text="TextView" />
+            android:layout_toEndOf="@+id/text5" />
+
+        <TextView
+            android:id="@+id/text8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/text3"
+            android:layout_below="@id/text3"
+            android:layout_marginTop="10dp"
+            android:text="微信号码"/>
+
+        <TextView
+            android:id="@+id/wechat_resume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/text8"
+            android:layout_alignBottom="@id/text8"
+            android:layout_toEndOf="@id/text8"/>
+
+        <TextView
+            android:id="@+id/text9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/text4"
+            android:layout_alignTop="@id/text8"
+            android:text="手机号码" />
+
+        <TextView
+            android:id="@+id/phone_resume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/text9"
+            android:layout_alignBottom="@id/text9"
+            android:layout_toEndOf="@id/text9"
+            android:layout_marginStart="10dp"/>
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/relative2"
         android:layout_width="match_parent"
-        android:layout_height="138dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/ActivityLayout"
         android:layout_weight="1">
 
         <TextView
@@ -155,14 +203,22 @@
             android:layout_marginTop="15dp"
             android:text="个人技能" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/TitleBackground"
+            android:layout_below="@id/text6"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"/>
+
         <TextView
             android:id="@+id/profile_resume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/text6"
             android:layout_below="@+id/text6"
-            android:layout_marginTop="15dp"
-            android:text="我特别能吃。。。。。。。。苦" />
+            android:layout_marginTop="15dp" />
 
 
     </RelativeLayout>
@@ -170,9 +226,9 @@
     <RelativeLayout
         android:id="@+id/relative3"
         android:layout_width="match_parent"
-        android:layout_height="138dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_height="140dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/ActivityLayout"
         android:layout_weight="1">
 
         <TextView
@@ -185,17 +241,26 @@
             android:layout_marginTop="15dp"
             android:text="志愿经历" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/TitleBackground"
+            android:layout_below="@id/text7"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"/>
+
         <ListView
             android:id="@+id/experience_resume"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@id/text7"
             android:layout_below="@id/text7"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="15dp"
             android:layout_marginBottom="5dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="15dp"
             android:divider="#00000000"
-            android:listSelector="@android:color/transparent"/>
+            android:listSelector="@android:color/transparent" />
     </RelativeLayout>
 
 </LinearLayout>

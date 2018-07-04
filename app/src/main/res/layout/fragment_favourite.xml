@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/favourite_refresh"
@@ -10,18 +11,15 @@
 
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/favourite_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/ActivityBackGround"
             android:divider="#00000000"
-            android:dividerHeight="20dp"/>
-
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:dividerHeight="20dp" />
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

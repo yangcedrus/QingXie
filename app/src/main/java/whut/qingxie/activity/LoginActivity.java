@@ -15,14 +15,26 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import okhttp3.Call;
 import whut.qingxie.R;
 import whut.qingxie.common.Content;
 import whut.qingxie.dto.Msg;
+import whut.qingxie.entity.user.User;
+import whut.qingxie.network.CallBackUtil;
+import whut.qingxie.network.OkhttpUtil;
 
+/**
+ * 用户登录页面
+ */
 public class LoginActivity extends AppCompatActivity {
-    //储存登录信息
-    private int state=0;
-    
+    private int state;
+
     private static String TAG="LoginActivity";
 
     @Override
@@ -36,7 +48,6 @@ public class LoginActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //显示返回按钮
-        setSupportActionBar(toolbar);
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -46,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //点击登录，登录成功返回信息给上个活动
-                // TODO: 2018/1/9 读取数据库信息
                 TextView textView=(TextView)findViewById(R.id.text_name);
                 TextView textView1=(TextView)findViewById(R.id.text_psw); 
                 String name=textView.getText().toString();
@@ -55,25 +65,104 @@ public class LoginActivity extends AppCompatActivity {
                 if(name.length()==0){
                     Toast.makeText(LoginActivity.this,"请输入账号",Toast.LENGTH_SHORT).show();
                     return;
-             //   }else if(psw.length()==0){
-                    //Toast.makeText(LoginActivity.this,"请输入密码",Toast.LENGTH_SHORT).show();
-                    // TODO: 2018/3/9 密码为空 
+                }else if(psw.length()==0){
+                    Toast.makeText(LoginActivity.this,"请输入密码",Toast.LENGTH_SHORT).show();
+                    return;
                 }else{
-                    // TODO: 2018/3/9 判断是否登陆成功 
-                    state=Integer.parseInt(name);
-                    // TODO: 2018/3/9 拉取个人信息,在个人页面中获取 
+                    login(name,psw);
                 }
-                
-//                Intent intent=new Intent();
-//                intent.putExtra("login_state_return",state);
-//                setResult(RESULT_OK,intent);
-
-                Intent intent =new Intent(LoginActivity.this,MainActivity.class);
-                intent.putExtra("user_state",state);
-                startActivity(intent);
-                finish();
             }
         });
+    }
+
+    public class A {
+        String studentId;
+        String password;
+
+        public A(String studentId, String password) {
+            this.studentId = studentId;
+            this.password = password;
+        }
+    }
+
+    public class B {
+        String name;
+        String password;
+
+        public B(String name, String password) {
+            this.name = name;
+            this.password = password;
+        }
+    }
+
+    public void login(String name, String psw) {
+        //判断是否全部为数字
+        Pattern p = Pattern.compile("[0-9]*");
+        Matcher m = p.matcher(name);
+
+        String json;
+        HashMap<String, String> headerMap = new HashMap<>();
+        headerMap.put("content-type", "application/json;charset=UTF-8");
+        headerMap.put("user-agent", "android");
+
+        if (m.matches()) {
+            //用户id登录
+            json = new Gson().toJson(new A(name, psw));
+        } else {
+            //用户名登录
+            json = new Gson().toJson(new B(name, psw));
+        }
+        OkhttpUtil.okHttpPostJson("/user/login", json, headerMap, new CallBackUtil.CallBackMsg() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                Content.setUserId(-1);
+                Toast.makeText(LoginActivity.this,"登录失败，请重新登录",Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "Login()onFailure: "+e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Msg msg) {
+                if(msg.getStatus().equals("success")){
+                    Toast.makeText(LoginActivity.this,"登录成功",Toast.LENGTH_SHORT).show();
+
+                    praseMSG(msg);
+
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else {
+                    Toast.makeText(LoginActivity.this,"登录失败，账号密码错误",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    /**
+     * 将数据存到本地
+     * @param msg
+     */
+    public void praseMSG(Msg msg){
+        try{
+            User user=(User)msg.getData().get("User");
+            String iconAccessPath=(String)msg.getData().get("iconAccessPath");
+
+            int flag=-1;
+            switch (user.getFlag()){
+                case "S":flag=0;break;
+                case "Q":flag=1;break;
+                case "A":flag=2;break;
+                default:break;
+            }
+
+            Content.setIconAccessPath(iconAccessPath);
+            Content.setUserId(user.getId());
+            Content.setStudentId(user.getStudentId());
+            Content.setNAME(user.getName());
+            Content.setFLAG(flag);
+            Content.setGENDER(user.getGender());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @SuppressLint("HandlerLeak")
@@ -81,7 +170,7 @@ public class LoginActivity extends AppCompatActivity {
         public void handleMessage(Message message){
             super.handleMessage(message);
             try {
-                Msg msg=Msg.parseMapFromJson(message.obj,Content.CLAZZ_MAP);
+                Msg msg = Msg.parseMapFromJson(message.obj, Content.getClazzMap());
 
             } catch (ClassNotFoundException e) {
                 Log.e(TAG, "handleMessage: "+e.getMessage());
@@ -92,7 +181,7 @@ public class LoginActivity extends AppCompatActivity {
     //显示“帮助”菜单按钮
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar,menu);
+        getMenuInflater().inflate(R.menu.white_help_toolbar,menu);
         return true;
     }
 
@@ -107,9 +196,8 @@ public class LoginActivity extends AppCompatActivity {
                 break;
             case android.R.id.home:
             {
-                //点击返回键返回信息给上个活动
+                //点击返回键
                 intent =new Intent(LoginActivity.this,MainActivity.class);
-                intent.putExtra("user_state",state);
                 startActivity(intent);
                 finish();
                 break;
@@ -120,9 +208,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //点击虚拟返回按钮返回信息给上个活动
+        //点击虚拟返回按钮
         Intent intent =new Intent(LoginActivity.this,MainActivity.class);
-        intent.putExtra("user_state",state);
         startActivity(intent);
         finish();
         super.onBackPressed();
