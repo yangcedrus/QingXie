@@ -11,6 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +38,7 @@ public class VolunteerSignActivity extends AppCompatActivity {
         setContentView(R.layout.activity_volunteer_sign);
 
         Intent intent = getIntent();
-        Integer activityId = intent.getIntExtra("activityID", -1);
+        final Integer activityId = intent.getIntExtra("activityID", -1);
         String title = intent.getStringExtra("title");
         String sponsor = intent.getStringExtra("sponsor");
 
@@ -66,6 +69,19 @@ public class VolunteerSignActivity extends AppCompatActivity {
                 headerMap.put("content-type", "application/json;charset=UTF-8");
                 headerMap.put("user-agent", "android");
                 formStatus();
+                json=new Gson().toJson(statusList);
+
+                OkhttpUtil.okHttpPostJson("/activity/"+activityId+"/arriveConfirm", json, headerMap, new CallBackUtil.CallBackMsg() {
+                    @Override
+                    public void onFailure(Call call, Exception e) {
+                        Log.d("", "onFailure: ");
+                    }
+
+                    @Override
+                    public void onResponse(Msg response) {
+                        Toast.makeText(VolunteerSignActivity.this,"成功确认",Toast.LENGTH_SHORT).show();
+                    }
+                });
 
             }
         });
@@ -77,7 +93,19 @@ public class VolunteerSignActivity extends AppCompatActivity {
                 headerMap.put("content-type", "application/json;charset=UTF-8");
                 headerMap.put("user-agent", "android");
                 formStatus();
+                json=new Gson().toJson(statusList);
 
+                OkhttpUtil.okHttpPostJson("/activity/"+activityId+"/modifyConfirm", json, headerMap, new CallBackUtil.CallBackMsg() {
+                    @Override
+                    public void onFailure(Call call, Exception e) {
+                        Log.d("", "onFailure: ");
+                    }
+
+                    @Override
+                    public void onResponse(Msg response) {
+                        Toast.makeText(VolunteerSignActivity.this,"成功修改",Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 

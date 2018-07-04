@@ -97,6 +97,7 @@ public class MyHoursActivity extends AppCompatActivity {
     }
 
     private void init(){
+        myHoursItems.clear();
         OkhttpUtil.okHttpGet("/vhours/" + Content.getUserId() + "/detailsByUserId", new CallBackUtil.CallBackMsg() {
             @Override
             public void onFailure(Call call, Exception e) {

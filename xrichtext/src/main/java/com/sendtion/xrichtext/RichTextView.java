@@ -3,9 +3,12 @@ package com.sendtion.xrichtext;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -14,6 +17,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import static android.content.ContentValues.TAG;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 /**
@@ -118,8 +126,6 @@ public class RichTextView extends ScrollView {
      * 在特定位置添加ImageView
      */
     public void addImageViewAtIndex(final int index, String imagePath) {
-        Bitmap bmp = BitmapFactory.decodeFile(imagePath);
-
         final RelativeLayout imageLayout = createImageLayout();
         DataImageView imageView = (DataImageView) imageLayout.findViewById(R.id.edit_imageView);
         RequestOptions myOptions = new RequestOptions().centerCrop();
@@ -130,19 +136,72 @@ public class RichTextView extends ScrollView {
                 .into(imageView);
         //imageView.setImageBitmap(bmp);//这里改用Glide加载图片
         //imageView.setBitmap(bmp);//这句去掉，保留下面的图片地址即可，优化图片占用
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);//裁剪剧中
         imageView.setAbsolutePath(imagePath);
 
         // 调整imageView的高度
-        int imageHeight = 500;
-        if (bmp != null) {
-            imageHeight = allLayout.getWidth() * bmp.getHeight() / bmp.getWidth();
-            // 使用之后，还是回收掉吧
-            bmp.recycle();
+        BitmapFactory.Options opt = new BitmapFactory.Options();
+        // 这个isjustdecodebounds很重要
+        opt.inJustDecodeBounds = true;//只解析边缘，有效防止oom
+
+        // TODO: 2018/5/17 冗余网络操作，可替换为Glide得到宽高 
+        HttpURLConnection conn = null;
+        try {
+            URL myUri = new URL(imagePath); // 创建URL对象
+            // 创建链接
+            conn = (HttpURLConnection) myUri.openConnection();
+            conn.setConnectTimeout(10000);// 设置链接超时
+            conn.setReadTimeout(5000);
+            conn.setRequestMethod("GET");// 设置请求方法为get
+            conn.connect();// 开始连接
+            int responseCode = conn.getResponseCode();
+            if (responseCode == 200) {
+                InputStream is = conn.getInputStream();
+                // 根据流数据创建 一个Bitmap位图对象
+                Bitmap bmp = BitmapFactory.decodeStream(is,(Rect) null,opt);
+                int imageHeight = 500;
+                try {
+                    imageHeight = allLayout.getWidth() * opt.outHeight / opt.outWidth;
+                    bmp.recycle();
+                    bmp = null;
+                    System.gc();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // TODO: 17/3/1 调整图片高度，这里是否有必要，如果出现微博长图，可能会很难看
+                RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
+                        LayoutParams.MATCH_PARENT, imageHeight);//设置图片固定高度
+                lp.bottomMargin = 10;
+                imageView.setLayoutParams(lp);
+                // 访问成功
+            } else {
+                Log.i(TAG, "访问失败：responseCode=" + responseCode);
+            }
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+
+            }
         }
-        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
-                LayoutParams.MATCH_PARENT, imageHeight);
-        lp.bottomMargin = 10;
-        imageView.setLayoutParams(lp);
+//        Bitmap bmp = BitmapFactory.decodeFile(imagePath,opt);
+//        int imageHeight = 500;
+//        try {
+//            imageHeight = allLayout.getWidth() * opt.outHeight / opt.outWidth;
+//            bmp.recycle();
+//            bmp = null;
+//            System.gc();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        // TODO: 17/3/1 调整图片高度，这里是否有必要，如果出现微博长图，可能会很难看
+//        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
+//                LayoutParams.MATCH_PARENT, imageHeight);//设置图片固定高度
+//        lp.bottomMargin = 10;
+//        imageView.setLayoutParams(lp);
 
         allLayout.addView(imageLayout, index);
     }

@@ -22,13 +22,12 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.File;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -40,7 +39,7 @@ import okhttp3.Call;
 import whut.qingxie.R;
 import whut.qingxie.common.Content;
 import whut.qingxie.dto.Msg;
-import whut.qingxie.entity.activity.VolActivityInfo;
+import whut.qingxie.entity.activity.TempActivity;
 import whut.qingxie.network.CallBackUtil;
 import whut.qingxie.network.OkhttpUtil;
 
@@ -55,7 +54,7 @@ public class ReleaseWorkActivity extends AppCompatActivity {
     private ImageView home_image, set_hours, edit_description, set_hours_per;
     private TextView show_hours, show_hours_per;
 
-    private VolActivityInfo activityInfo;
+    private TempActivity activityInfo;
     private List<Double> data = new ArrayList<>();
 
     private final static int REQUEST_CODE = 777;
@@ -68,7 +67,7 @@ public class ReleaseWorkActivity extends AppCompatActivity {
         initData();
 
         //控件初始化
-        activityInfo = new VolActivityInfo();
+        activityInfo = new TempActivity();
         home_image = (ImageView) findViewById(R.id.release_edit_homeImage);
         home_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,7 +177,7 @@ public class ReleaseWorkActivity extends AppCompatActivity {
      * @return 是否符合规范, true为符合
      */
     private boolean checkActivityInfo() {
-        //检查标题字数
+//        检查标题字数
         if (title.getText().toString().equals(""))
             return false;
         //检查举办方字数
@@ -216,9 +215,9 @@ public class ReleaseWorkActivity extends AppCompatActivity {
         headerMap.put("content-type", "application/json;charset=UTF-8");
         headerMap.put("user-agent", "android");
 
-        json = new Gson().toJson(activityInfo);
+        json = JSONObject.toJSONString(activityInfo);
 
-        OkhttpUtil.okHttpPostJson("/activity/releaseActivity", json, headerMap, new CallBackUtil.CallBackMsg() {
+        OkhttpUtil.okHttpPostJson("/activity/releaseActivity" + Content.getUserId(), json, headerMap, new CallBackUtil.CallBackMsg() {
             @Override
             public void onFailure(Call call, Exception e) {
                 Toast.makeText(ReleaseWorkActivity.this, "发送失败，检查网络连接", Toast.LENGTH_SHORT).show();
@@ -229,7 +228,7 @@ public class ReleaseWorkActivity extends AppCompatActivity {
                 if (response.getStatus().equals("success"))
                     Toast.makeText(ReleaseWorkActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
                 else {
-                    Toast.makeText(ReleaseWorkActivity.this, "发送失败,如有问题请反馈", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ReleaseWorkActivity.this, response.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -246,6 +245,28 @@ public class ReleaseWorkActivity extends AppCompatActivity {
         activityInfo.setNeedVolunteers(Integer.parseInt(people.getText().toString()));
         activityInfo.setStatus(1);
         activityInfo.setPlace(place.getText().toString());
+
+//        Date date=new Date();
+//        Format format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        activityInfo.setCreateTime(format.format(date));
+//        activityInfo.setEndTime(format.format(date));
+//        activityInfo.setRegTime(format.format(date));
+//        try {
+//            date=(Date)format.parseObject(reg_end_time.getText().toString()+" 00:00:00");
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        activityInfo.setRegEndTime(format.format(date));
+//        activityInfo.setInterviewTime(format.format(date));
+//        activityInfo.setStartTime(format.format(date));
+
+        Date date = new Date();
+        activityInfo.setCreateTime(date);
+        activityInfo.setEndTime(date);
+        activityInfo.setRegTime(date);
+        activityInfo.setRegEndTime(date);
+        activityInfo.setInterviewTime(date);
+        activityInfo.setStartTime(date);
 
         activityInfo.setType("2");
         activityInfo.setManagerId(Content.getUserId());
@@ -378,7 +399,7 @@ public class ReleaseWorkActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(ReleaseWorkActivity.this, "图片上传成功", Toast.LENGTH_LONG).show();
                             String image = (String) msg.getData().get("picAccessPath");
-                            activityInfo.setHomePagePath(image);
+                            activityInfo.setHomepagePic(image);
                         }
                     }
                 });

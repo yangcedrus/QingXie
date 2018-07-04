@@ -43,11 +43,11 @@ public class MyMessageActivity extends AppCompatActivity {
     }
 
     private void initItems(){
-        myMessageItemArrayList.add(new MyMessageItem("张三","你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊",R.drawable.ic_home_black_24dp));
-        myMessageItemArrayList.add(new MyMessageItem("张三","你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊",R.drawable.ic_home_black_24dp));
-        myMessageItemArrayList.add(new MyMessageItem("张三","你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊",R.drawable.ic_home_black_24dp));
-        myMessageItemArrayList.add(new MyMessageItem("张三","你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊",R.drawable.ic_home_black_24dp));
-        myMessageItemArrayList.add(new MyMessageItem("张三","你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊",R.drawable.ic_home_black_24dp));
+        myMessageItemArrayList.add(new MyMessageItem("张三","你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊",R.mipmap.ic_qingxie));
+        myMessageItemArrayList.add(new MyMessageItem("张三","你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊",R.mipmap.ic_qingxie));
+        myMessageItemArrayList.add(new MyMessageItem("张三","你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊",R.mipmap.ic_qingxie));
+        myMessageItemArrayList.add(new MyMessageItem("张三","你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊",R.mipmap.ic_qingxie));
+        myMessageItemArrayList.add(new MyMessageItem("张三","你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊你好啊",R.mipmap.ic_qingxie));
     }
 
     //返回按钮响应

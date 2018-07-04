@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,12 +16,22 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import okhttp3.Call;
 import whut.qingxie.R;
 import whut.qingxie.adapter.MyExperienceItemAdapter;
+import whut.qingxie.common.Content;
+import whut.qingxie.dto.Msg;
 import whut.qingxie.entity.user.UserExperience;
+import whut.qingxie.network.CallBackUtil;
+import whut.qingxie.network.OkhttpUtil;
 
 public class EditExperienceActivity extends AppCompatActivity {
     private ArrayList<UserExperience> userExperiences = new ArrayList<>();
@@ -55,12 +66,13 @@ public class EditExperienceActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final int Position = position;
                 final View popupWindow = EditExperienceActivity.this.getLayoutInflater().inflate(R.layout.popupwindow_hours, null);
 
                 ListView listView2 = (ListView) popupWindow.findViewById(R.id.release_work_hours_list);
                 listView2.setAdapter(new ArrayAdapter<String>(EditExperienceActivity.this, android.R.layout.simple_list_item_1, data));
 
-                final PopupWindow window = new PopupWindow(popupWindow, dp2px(EditExperienceActivity.this,65), dp2px(EditExperienceActivity.this,145));
+                final PopupWindow window = new PopupWindow(popupWindow, dp2px(EditExperienceActivity.this, 65), dp2px(EditExperienceActivity.this, 145));
                 window.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#F8F8F8")));
                 window.setFocusable(true);
                 window.setOutsideTouchable(true);
@@ -77,6 +89,9 @@ public class EditExperienceActivity extends AppCompatActivity {
                                 Toast.makeText(EditExperienceActivity.this, s + "完成", Toast.LENGTH_SHORT).show();
                                 break;
                             case "删除":
+//                                deleteExperience(userExperiences.get(Position));
+//                                userExperiences.remove(Position);
+//                                listView.notify();
                                 Toast.makeText(EditExperienceActivity.this, s + "完成", Toast.LENGTH_SHORT).show();
                                 break;
                             case "修改":
@@ -89,7 +104,36 @@ public class EditExperienceActivity extends AppCompatActivity {
         });
     }
 
-    public void deleteExperience(int position) {
+    private class A {
+        Integer id;
+        Integer userId;
+        String activityName;
+        Date end;
+
+        public A(Integer id, Integer userId, String activityName, Date end) {
+            this.id = id;
+            this.userId = userId;
+            this.activityName = activityName;
+            this.end = end;
+        }
+    }
+
+    public void deleteExperience(UserExperience item) {
+        String json;
+
+        json = com.alibaba.fastjson.JSONObject.toJSONString(new A(item.getId(), Content.getUserId(), item.getActivityName(), item.getEnd()));
+
+        OkhttpUtil.okHttpPostJson("/user/"+Content.getUserId()+"/experience/delete", json, new CallBackUtil.CallBackMsg() {
+            @Override
+            public void onFailure(Call call, Exception e) {
+                Log.d("", "onFailure: ");
+            }
+
+            @Override
+            public void onResponse(Msg response) {
+                Log.d("", "onResponse: ");
+            }
+        });
     }
 
     public void addExperience() {

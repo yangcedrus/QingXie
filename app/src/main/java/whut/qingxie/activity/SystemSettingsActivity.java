@@ -60,18 +60,20 @@ public class SystemSettingsActivity extends AppCompatActivity {
         Intent intent = new Intent(SystemSettingsActivity.this, MainActivity.class);
         //状态设置为未登录
         Content.setFLAG(-1);
-        OkhttpUtil.okHttpDelete("/user/logout", new CallBackUtil.CallBackMsg() {
-            @Override
-            public void onFailure(Call call, Exception e) {
-                Toast.makeText(SystemSettingsActivity.this, "注销失败", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onResponse(Msg response) {
-                Toast.makeText(SystemSettingsActivity.this, "注销成功", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, Content.getUserId() + new Date().toString() + "注销");
-            }
-        });
+        // TODO: 2018/5/17 注销接口存在问题
+//        OkhttpUtil.okHttpDelete("/user/logout", new CallBackUtil.CallBackMsg() {
+//            @Override
+//            public void onFailure(Call call, Exception e) {
+//                Toast.makeText(SystemSettingsActivity.this, "注销失败", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onResponse(Msg response) {
+//                Toast.makeText(SystemSettingsActivity.this, "注销成功", Toast.LENGTH_SHORT).show();
+//                Log.d(TAG, Content.getUserId() + new Date().toString() + "注销");
+//            }
+//        });
+        Toast.makeText(SystemSettingsActivity.this, "注销成功", Toast.LENGTH_SHORT).show();
         MainActivity.activity.finish();
         startActivity(intent);
         finish();

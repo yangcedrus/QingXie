@@ -39,18 +39,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@null"
+        android:background="@android:drawable/edit_text"
         android:hint="请输入标题"
         android:padding="16dp"
         android:textColor="#757575"
-        android:textSize="18dp" />
+        android:textSize="@dimen/title_size" />
 
     <com.sendtion.xrichtext.RichTextEditor
         android:id="@+id/et_new_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:drawable/edit_text"
         android:layout_marginTop="20dp"
         android:textColor="#757575"
-        android:textSize="16dp" />
+        android:textSize="@dimen/text_size" />
 
 </LinearLayout>

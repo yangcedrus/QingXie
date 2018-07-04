@@ -182,15 +182,6 @@ public class SignUpActivity extends AppCompatActivity {
                 et_new_content.measure(0, 0);
                 if (text.contains("http")) {
                     et_new_content.addImageViewAtIndex(et_new_content.getLastIndex(), imagePath);
-                } else {
-                    //文件读取图片
-                    //待删除
-                    Bitmap bitmap = ImageUtils.getSmallBitmap(imagePath, width, height);
-                    if (bitmap != null) {
-                        et_new_content.addImageViewAtIndex(et_new_content.getLastIndex(), imagePath);
-                    } else {
-                        et_new_content.addTextViewAtIndex(et_new_content.getLastIndex(), text);
-                    }
                 }
             } else {
                 et_new_content.addTextViewAtIndex(et_new_content.getLastIndex(), text);

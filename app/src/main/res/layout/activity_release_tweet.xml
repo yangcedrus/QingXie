@@ -30,11 +30,10 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="40dp"
-        android:background="@android:drawable/edit_text"
         android:enabled="true"
         android:hint="请输入标题"
         android:singleLine="true"
-        android:textSize="30dp" />
+        android:textSize="@dimen/title_size" />
 
     <EditText
         android:id="@+id/release_tweet_edit"
@@ -52,7 +51,7 @@
         android:maxLines="30"
         android:minLines="20"
         android:scrollbars="vertical"
-        android:textSize="15dp" />
+        android:textSize="@dimen/text_size" />
 
     <LinearLayout
         android:id="@+id/release_linearlayout1"
